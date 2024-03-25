@@ -4,7 +4,7 @@ import (
     "fmt"
     "net/http"
 
-	"servidor/db"
+	"app/db"
 )
 
 func main() {
