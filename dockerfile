@@ -2,13 +2,12 @@ FROM golang:alpine
 
 WORKDIR /app
 
-COPY main.go .
+COPY . .
 
 RUN go build main.go
 
-# Expose port 8080 to the outside world
+RUN go mod download
 
 EXPOSE 8080
 
-# Command to run the executable
 CMD ["./main"]
