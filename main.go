@@ -20,7 +20,7 @@ func main() {
     defer db.Close()
 
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintf(w, "¡Hola, localhost con PostgreSQL!")
+        http.ServeFile(w, r, "index.html")
     })
 
     fmt.Println("El servidor está escuchando en http://localhost:8080")
