@@ -17,4 +17,36 @@ func InitializeDB() {
         panic(err)
     }
     defer db.Close()
+
+    createTables := `
+    CREATE TABLE IF NOT EXISTS grupos (
+        id SERIAL PRIMARY KEY,
+        nombre VARCHAR(255) NOT NULL,
+        descripcion TEXT,
+        FOREIGN KEY (grupo_id) REFERENCES grupos(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS unidades (
+        id SERIAL PRIMARY KEY,
+        nombre VARCHAR(255) NOT NULL,
+        descripcion TEXT,
+        grupo_id INT,
+        FOREIGN KEY (grupo_id) REFERENCES grupos(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS dependencias (
+        unidad_id INT,
+        depende_de_unidad_id INT,
+        PRIMARY KEY (unidad_id, depende_de_unidad_id),
+        FOREIGN KEY (unidad_id) REFERENCES unidades(id),
+        FOREIGN KEY (depende_de_unidad_id) REFERENCES unidades(id)
+    );`
+
+    // Ejecutar los comandos SQL
+    _, err = db.Exec(createTables)
+    if err != nil {
+        panic(err)
+    }
+
+    fmt.Println("Tablas creadas con éxito")
 }
