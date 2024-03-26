@@ -1,0 +1,10 @@
+{{ define "main" }}
+
+<a href="/units/">Back</a>
+
+<h1>{{ .Unit.Name }} </h1>
+<p>{{ .Unit.Description }}</p>
+
+<a href="/units/{{ .Unit.ID }}/delete" hx-delete="/units/{{ .Unit.ID }}/delete" hx-target="body" hx-swap="outerHTML">Delete</a>
+
+{{ end }}

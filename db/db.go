@@ -8,10 +8,13 @@ import (
     _ "github.com/lib/pq"
 )
 
-func InitializeDB() {
-    connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-        os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"))
+var db *sql.DB
 
+var connStr = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+    os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"))
+
+
+func InitializeDB() {
     db, err := sql.Open("postgres", connStr)
     if err != nil {
         panic(err)
@@ -58,9 +61,6 @@ type Unit struct {
 }
 
 func GetUnits() []Unit {
-    connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-        os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"))
-
     db, err := sql.Open("postgres", connStr)
     if err != nil {
         panic(err)
@@ -87,9 +87,6 @@ func GetUnits() []Unit {
 }
 
 func CreateUnit(u Unit) {
-    connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-        os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"))
-
     db, err := sql.Open("postgres", connStr)
     if err != nil {
         panic(err)
@@ -97,6 +94,35 @@ func CreateUnit(u Unit) {
     defer db.Close()
 
     _, err = db.Exec("INSERT INTO unidades (nombre, descripcion) VALUES ($1, $2)", u.Name, u.Description)
+    if err != nil {
+        panic(err)
+    }
+}
+
+func GetUnit(id int) Unit {
+    db, err := sql.Open("postgres", connStr)
+    if err != nil {
+        panic(err)
+    }
+    defer db.Close()
+
+    var u Unit
+    err = db.QueryRow("SELECT id, nombre, descripcion FROM unidades WHERE id = $1", id).Scan(&u.ID, &u.Name, &u.Description)
+    if err != nil {
+        panic(err)
+    }
+
+    return u
+}
+
+func DeleteUnit(id int) {
+    db, err := sql.Open("postgres", connStr)
+    if err != nil {
+        panic(err)
+    }
+    defer db.Close()
+
+    _, err = db.Exec("DELETE FROM unidades WHERE id = $1", id)
     if err != nil {
         panic(err)
     }

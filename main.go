@@ -12,6 +12,8 @@ func main() {
     db.InitializeDB()
     http.HandleFunc("/units", unitsHandler)
     http.HandleFunc("/units/create", createUnitHandler)
+    http.HandleFunc("/units/{id}", detailUnitHandler)
+    http.HandleFunc("/units/{id}/delete", deleteUnitHandler)
     
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
         http.ServeFile(w, r, "web/index.html")
@@ -57,9 +59,47 @@ func createUnitHandler(w http.ResponseWriter, r *http.Request) {
             Name:        name,
             Description: description,
         }
-
+        
         db.CreateUnit(u)
 
         http.Redirect(w, r, "/units", http.StatusSeeOther)
     }
+}
+
+func detailUnitHandler(w http.ResponseWriter, r *http.Request) {
+    // Parsea la plantilla base y la específica
+    tmpl, err := template.ParseFiles("web/base.html", "web/unit.html")
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+
+    // Obtiene el ID de la URL
+    id := 0
+    fmt.Sscanf(r.URL.Path, "/units/%d", &id)
+
+    // Datos que se pasarán a la plantilla
+    data := struct {
+        Title string
+        Unit  db.Unit
+    }{
+        Title: "Detalle de la Unidad",
+        Unit:  db.GetUnit(id),
+    }
+
+    // Ejecuta la plantilla, automáticamente "extiende" la base
+    err = tmpl.ExecuteTemplate(w, "base.html", data)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+    }
+}
+
+func deleteUnitHandler(w http.ResponseWriter, r *http.Request) {
+    // Obtiene el ID de la URL
+    id := 0
+    fmt.Sscanf(r.URL.Path, "/units/%d/delete", &id)
+
+    db.DeleteUnit(id)
+
+    http.Redirect(w, r, "/units", http.StatusSeeOther)
 }
