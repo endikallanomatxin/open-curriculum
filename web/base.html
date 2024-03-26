@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/htmx.org"></script>
+    <title>{{ .Title }}</title>
+</head>
+<body>
+    <header>
+        <!-- Contenido del encabezado aquí -->
+    </header>
+
+    {{ block "main" . }}{{ end }}
+
+    <footer>
+        <!-- Contenido del pie de página aquí -->
+    </footer>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{{ define "main" }}
+    <div id="contenido">
+        <h1>Unidades</h1>
+
+        <h2>Crear unidad</h2>
+        <!-- Formulario para crear una nueva unidad -->
+        <form id="create-unit-form" method="POST" action="/units/create" hx-post="/units/create" hx-target="body" hx-swap="outerHTML">
+            <input type="text" name="nombre" placeholder="Nombre de la Unidad" required>
+            <textarea name="descripcion" placeholder="Descripción de la Unidad" required></textarea>
+            <button type="submit">Crear Unidad</button>
+        </form>
+
+        <!-- Donde las nuevas unidades se mostrarán -->
+        <h2>Lista de unidades</h2>
+        <div id="lista-unidades">
+            {{ range .Units }}
+                <div class="unidad">
+                    <h2>{{ .Name }}</h2>
+                    <p>{{ .Description }}</p>
+                    <a href="/units/{{ .ID }}">Ver Detalles</a>
+                </div>
+            {{ end }}
+    </div>
+{{ end }}
