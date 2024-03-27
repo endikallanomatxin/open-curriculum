@@ -22,27 +22,28 @@ func InitializeDB() {
     defer db.Close()
 
     createTables := `
-    CREATE TABLE IF NOT EXISTS grupos (
+    CREATE TABLE IF NOT EXISTS groups (
         id SERIAL PRIMARY KEY,
-        nombre VARCHAR(255) NOT NULL,
-        descripcion TEXT,
-        FOREIGN KEY (grupo_id) REFERENCES grupos(id)
+        name VARCHAR(255) NOT NULL,
+        description TEXT,
+        group_id INT,
+        FOREIGN KEY (group_id) REFERENCES groups(id)
     );
 
-    CREATE TABLE IF NOT EXISTS unidades (
+    CREATE TABLE IF NOT EXISTS units (
         id SERIAL PRIMARY KEY,
-        nombre VARCHAR(255) NOT NULL,
-        descripcion TEXT,
-        grupo_id INT,
-        FOREIGN KEY (grupo_id) REFERENCES grupos(id)
+        name VARCHAR(255) NOT NULL,
+        description TEXT,
+        group_id INT,
+        FOREIGN KEY (group_id) REFERENCES groups(id)
     );
 
-    CREATE TABLE IF NOT EXISTS dependencias (
-        unidad_id INT,
-        depende_de_unidad_id INT,
-        PRIMARY KEY (unidad_id, depende_de_unidad_id),
-        FOREIGN KEY (unidad_id) REFERENCES unidades(id),
-        FOREIGN KEY (depende_de_unidad_id) REFERENCES unidades(id)
+    CREATE TABLE IF NOT EXISTS dependencies (
+        unit_id INT,
+        depends_on_id INT,
+        PRIMARY KEY (unit_id, depends_on_id),
+        FOREIGN KEY (unit_id) REFERENCES units(id),
+        FOREIGN KEY (depends_on_id) REFERENCES units(id)
     );`
 
     // Ejecutar los comandos SQL
@@ -67,7 +68,7 @@ func GetUnits() []Unit {
     }
     defer db.Close()
 
-    rows, err := db.Query("SELECT id, nombre, descripcion FROM unidades")
+    rows, err := db.Query("SELECT id, name, description FROM units")
     if err != nil {
         panic(err)
     }
@@ -93,7 +94,7 @@ func CreateUnit(u Unit) {
     }
     defer db.Close()
 
-    _, err = db.Exec("INSERT INTO unidades (nombre, descripcion) VALUES ($1, $2)", u.Name, u.Description)
+    _, err = db.Exec("INSERT INTO units (name, description) VALUES ($1, $2)", u.Name, u.Description)
     if err != nil {
         panic(err)
     }
@@ -107,7 +108,7 @@ func GetUnit(id int) Unit {
     defer db.Close()
 
     var u Unit
-    err = db.QueryRow("SELECT id, nombre, descripcion FROM unidades WHERE id = $1", id).Scan(&u.ID, &u.Name, &u.Description)
+    err = db.QueryRow("SELECT id, name, description FROM units WHERE id = $1", id).Scan(&u.ID, &u.Name, &u.Description)
     if err != nil {
         panic(err)
     }
@@ -122,7 +123,7 @@ func DeleteUnit(id int) {
     }
     defer db.Close()
 
-    _, err = db.Exec("DELETE FROM unidades WHERE id = $1", id)
+    _, err = db.Exec("DELETE FROM units WHERE id = $1", id)
     if err != nil {
         panic(err)
     }
