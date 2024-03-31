@@ -123,7 +123,54 @@ func DeleteUnit(id int) {
     }
     defer db.Close()
 
+    // Eliminar las dependencias
+    _, err = db.Exec("DELETE FROM dependencies WHERE unit_id = $1 OR depends_on_id = $1", id)
+    if err != nil {
+        panic(err)
+    }
+
     _, err = db.Exec("DELETE FROM units WHERE id = $1", id)
+    if err != nil {
+        panic(err)
+    }
+}
+
+
+func GetDependencies(id int) []Unit {
+    db, err := sql.Open("postgres", connStr)
+    if err != nil {
+        panic(err)
+    }
+    defer db.Close()
+
+    rows, err := db.Query("SELECT u.id, u.name, u.description FROM units u JOIN dependencies d ON u.id = d.depends_on_id WHERE d.unit_id = $1", id)
+    if err != nil {
+        panic(err)
+    }
+    defer rows.Close()
+
+    units := []Unit{}
+    for rows.Next() {
+        var u Unit
+        err := rows.Scan(&u.ID, &u.Name, &u.Description)
+        if err != nil {
+            panic(err)
+        }
+        units = append(units, u)
+    }
+
+    return units
+}
+
+
+func CreateDependency(id int, depends_on_id int) {
+    db, err := sql.Open("postgres", connStr)
+    if err != nil {
+        panic(err)
+    }
+    defer db.Close()
+
+    _, err = db.Exec("INSERT INTO dependencies (unit_id, depends_on_id) VALUES ($1, $2)", id, depends_on_id)
     if err != nil {
         panic(err)
     }

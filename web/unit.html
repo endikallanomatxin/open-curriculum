@@ -5,6 +5,26 @@
 <h1>{{ .Unit.Name }} </h1>
 <p>{{ .Unit.Description }}</p>
 
-<a href="/units/{{ .Unit.ID }}/delete" hx-delete="/units/{{ .Unit.ID }}/delete" hx-target="body" hx-swap="outerHTML">Delete</a>
+<h2>Dependencies</h2>
+{{ if .Dependencies }}
+<ul>
+{{ range .Dependencies }}
+    <li><a href="/units/{{ .ID }}">{{ .Name }}</a></li>
+{{ end }}
+</ul>
+{{ end }}
+
+
+<form hx-put="/units/{{ .Unit.ID }}/add_dependency"
+hx-target="body" hx-swap="outerHTML">
+    <select name="depends_on_id">
+        {{ range .Units }}
+            <option value="{{ .ID }}">{{ .Name }}</option>
+        {{ end }}
+    </select>
+    <button type="submit">Add</button>
+</form>
+
+<a hx-delete="/units/{{ .Unit.ID }}" hx-target="body" hx-swap="outerHTML">Delete</a>
 
 {{ end }}
