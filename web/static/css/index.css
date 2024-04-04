@@ -1,0 +1,156 @@
+/* HEADER */
+
+header{
+    padding: 15vh 2rem;
+    background-color: var(--ll-green);
+    margin:0;
+}
+
+header h1{
+    font-size: 15vw;
+    width:fit-content;
+    margin:auto;
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(#307a5f, #154836);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* MAIN*/
+
+main{
+    font-size: 1.8rem;
+}
+
+main>section{
+    padding: 15rem 3vw;
+}
+
+main>section p{
+        max-width: 120rem;
+        margin:auto;
+}
+
+/* MAIN>ABSTRACT */
+
+section#abstract{
+    font-size: 1.2em;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+section#abstract p,li{
+    max-width: 65rem;
+    text-align: left;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+/* MAIN>MANIFEST-IDEA */
+
+section#manifest-foundation{
+    background-color: var(--ll-brown);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+}
+
+@media screen and (min-width: 1200px){
+    section#manifest-foundation{
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "paragraph cards";
+        grid-gap: 5vw;
+    }
+
+    section#manifest-foundation>div.cards{
+        grid-area: cards;
+        max-width: 50rem;
+    }
+
+    section#manifest-foundation>div:first-of-type{
+        grid-area: paragraph;
+    }
+    section#manifest-foundation>div:first-of-type *{
+        position: sticky;
+        top: 20vw;
+        max-width: 50rem;
+        margin: 5rem 0;
+        margin-left:auto;
+    }
+    section#manifest-foundation>div:first-of-type>p{
+        margin-top:4rem;
+    }
+}
+
+div.card{
+    padding: 4rem;
+    margin: 4rem 0;
+    border-radius: 1rem;
+    background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 4px solid var(--brown);
+}
+
+
+div.card h2{
+    font-size: 2em;
+    font-weight: 800;
+    margin:0;
+}
+
+div.card a{
+    font-weight: 700;
+    display: block;
+    margin-top: 2rem;
+}
+
+
+/* MAIN>FAQ */
+
+section#faq{
+    background-color: var(--l-brown);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+}
+
+@media screen and (min-width: 1200px){
+    section#faq{
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "title qas";
+        grid-gap: 5vw;
+    }
+
+    section#faq>div.qas{
+        grid-area: qas;
+        max-width: 50rem;
+    }
+
+    section#faq>div:first-of-type{
+        grid-area: title;
+    }
+    section#faq>div:first-of-type *{
+        position: sticky;
+        top: 20vw;
+        max-width: 50rem;
+        margin: 5rem 0;
+        margin-left:auto;
+    }
+    section#faq>div:first-of-type>p{
+        margin-top:4rem;
+    }
+}
+
+section#faq>div.qas>div.qa{
+    padding: 1rem 0;
+    margin: 4rem 0;
+    border-top: 2px solid var(--brown);
+}
+
+section#faq>div.qas>div.qa>p.q{
+    font-weight: 700;
+    margin: 1rem 0;
+}

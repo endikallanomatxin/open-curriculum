@@ -1,0 +1,43 @@
+{{ define "body" }}
+<nav>
+    <a href="/">&lt; Back to the homepage</a>
+</nav>
+<div id="contenido">
+    <h1>Unidades</h1>
+
+    <h2>Create a unit</h2>
+    <!-- Formulario para crear una nueva unidad -->
+    <form id="create-unit-form" method="POST" action="/units" hx-post="/units" hx-target="body" hx-swap="outerHTML">
+        <input type="text" name="name" placeholder="Nombre de la Unidad" required>
+        <textarea name="description" placeholder="Descripción de la Unidad" required></textarea>
+        <button type="submit">Crear Unidad</button>
+    </form>
+
+    <h2>Units by level</h2>
+    <div id="units">
+        {{ range $level, $units := .UnitsByLevel }}
+            <div class="level">
+                <p>Level: {{ $level }}</p>
+                {{ range $units }}
+                    <div class="unit">
+                        <h3>{{ .Name }}</h3>
+                        <p>{{ .Description }}</p>
+                        <a href="/units/{{ .ID }}">Open unit</a>
+                    </div>
+                {{ end }}
+            </div>
+        {{ end }}
+    </div>
+</div>
+
+<style>
+    .unit {
+        margin: 1rem 0.4rem;
+        display: inline-block;
+    }
+    .unit * {
+        display: inline-block;
+    }
+</style>
+
+{{ end }}

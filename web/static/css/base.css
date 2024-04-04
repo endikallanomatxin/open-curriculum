@@ -1,0 +1,67 @@
+@import "general_text.css";
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    font-family: "Montserrat", sans-serif;
+
+    --red: #8c313a;
+    --green: #366353;
+    --blue: #3e6b8a;
+    --yellow: #e6b450;
+    --brown: #292724;
+
+    --l-red: #e2d2d4;
+    --l-green: #d9eae4;
+    --l-blue: #c9cedd;
+    --l-yellow: #dad5c4;
+    --l-brown: #d7d3cb;
+
+    --ll-red: #ede5e6;
+    --ll-green: #ecf2f0;
+    --ll-blue: #dbdde3;
+    --ll-yellow: #e9e6dc;
+    --ll-brown: #eeece9;
+    
+    --text-color: var(--brown);
+    --emphasis-text-color: #665c4b;
+
+    color: var(--brown);
+    margin:0;
+}
+
+
+
+a:hover {
+    color: var(--emphasis-text-color);
+}
+
+@keyframes entrance {
+    from {
+        opacity: 0;
+        transform: translateY(-2rem);
+    }
+}
+
+/*Animaciones*/
+
+.animated
+{
+    opacity:1;
+    transform: translateY(0);
+    transition-duration: 0.6s;
+    transition-timing-function: ease-in-out;
+    animation: entrance 0.6s ease-in-out;
+}
+
+.animated.over-viewport{
+    opacity:0;
+    transform: translateY(-2rem);
+}
+
+.animated.under-viewport{
+    opacity:0;
+    transform: translateY(2rem);
+}

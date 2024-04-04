@@ -1,0 +1,635 @@
+{{ define "head" }}
+<title>Manifesto for the future of education</title>
+<link rel="stylesheet" href="/static/css/manifest.css">
+{{ end }}
+
+{{ define "body" }}
+<nav>
+    <a href="/">&lt; Back to the homepage</a>
+</nav>
+<main>
+    <section id="intro">
+        <p>The manifest is divided into two main sections:</p>
+        <div>
+            <a href="#current-situation">An analysis of the <b>current situation</b></a>
+        </div>
+        <div>
+            <a href="#proposed-solution">The description of the <b>proposed solution</b></a>
+        </div>
+    </section>
+    <section id="current-situation">
+        <h2>Current situation</h2>
+        <p>Throughout history universities have been the primary sources of knowledge, playing a pivotal role in the
+            technological and intellectual development of society.</p>
+        <p>With the rise of the internet though, dynamics of knowledge acquisition have undergone a significant
+            transformation. The internet revolutionized access to information, offering unparalled convenience and
+            accessibility to learners. It has become a powerful platform that often outperforms traditional educational
+            institutions in delivering high-quality educational content. Universities have ceased to be the ultimate hub
+            of knowledge.</p>
+        <p>Moreover, we are on the verge of an education revolution driven by AI, which has the potential to provide
+            personalized tutoring and guidance to every individual worldwide, at a fraction of the cost of traditional
+            education. This paradigm shift holds immense promise for democratizing education and ensuring equitable
+            access to high-quality learning experiences for all.</p>
+        <p>If we have struggled to fully embrace the possibilities offered by the internet, how can we expect to
+            successfully adapt to the profound changes that AI will introduce? This shift demands a comprehensive
+            reevaluation of our educational systems to ensure that the vast potential of the transformative advancements
+            can be harnessed to its fullest extent.</p>
+        <p>If we aspire to build a better education system for the future, it is essential that we learn from the
+            shortcomings of both traditional and internet-based education. In the following lines, I will discuss what I
+            consider to be some of their major limitations to identify the areas that require improvement.</p>
+        <h3>Problems of traditional education</h3>
+        <h4>Excessive focus on certification</h4>
+        <p>One of the main issues with traditional education is its obsession with certification. This often leads to an
+            exam-oriented teaching, while the actual learning is neglected. Often, complex or abstract ideas are
+            ignored, while, subjects that are inherently simple may be artificially complicated to make exams more
+            challenging and ensure it requires some effort from students. Although certification might be important, it
+            cannot be the sole objective of education. Teaching should come first, unconstrained by certification, and
+            only then should certification come; if neccessary, because even if it is sometimes essential, most of the
+            times it is not. </p>
+        <p>People may ask: <i>"But, what will it mean to own a degree if every step done is not certified?" </i> What
+            does it mean now? Sadly, close to nothing. In the current system, where exams become the sole focus, many
+            students simply memorize information to pass the tests, only to forget it shortly after. As a result, the
+            certification itself loses its true meaning and fails to reflect genuine knowledge and understanding.</p>
+        <p>The prevalence of access tests among major companies further underscores this point. What is the purpose of
+            certification at university if you are subjected to assessments during the job application process anyway?
+        </p>
+        <h4>Unnatural synchronicity in the learning-rate of students</h4>
+        <p>There is a brilliant TED talk by Sal Khan in which he explains what he calls "teaching for mastery",
+            perfectly illustrating this issue. </p>
+        <center><iframe width="560" height="315" src="https://www.youtube.com/embed/-MTRxRO5SRA"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe></center>
+        <p><br></p>
+        <p>(I've taken the most relevant ideas so that it is not neccessary to watch it to continue reading. I strongly
+            recommend watching it afterwards though)</p>
+        <p>In his words:</p>
+        <blockquote>
+            <p>In the traditional academic model students are grouped together by age, and we sheppard them all together
+                at the same pace.</p>
+            <p>[...]</p>
+            <p>After a fixed time going through lecture-homework cycle you get a test, where each one gets a result with
+                the aim of identifying gaps in their knwoledge, and even though the test identified those gaps in their
+                knwoledge, the whole class will then move on to the next subject, probably a more advanced subject
+                that's going to build on those gaps.</p>
+            <p>[...]</p>
+            <p>This will continue up until at some point, the student hits a wall. Not because the subject is
+                particularly difficult or because the student isn't bright; but because those things he didn't know are
+                showing up, he doesn't understand and starts to disengage.</p>
+            <p>[...]</p>
+            <p>We took the trouble of inspecting and identifying those gaps, but then we built right on top of it.</p>
+        </blockquote>
+        <p>He explains how education artifially constrains how long students have to learn something, while the extent
+            to which the student understood is the variable outcome.</p>
+        <blockquote>
+            <p>The idea of mastery learning is to do the exact opposite. <strong>What's variable is how long a student
+                    actually has to work on something and what's fixed is that they actually master the
+                    material.</strong></p>
+            <p>[...]</p>
+            <p>Not only will this make the student learn better, but it'll reinforce the right mindset muscles. It makes
+                them realize that if you got something wrong, it doesn't mean that you are a C branded in your DNA
+                somehow, it means that you should just keep working on it. </p>
+        </blockquote>
+        <p>Addressing the skeptics who question the feasibility of scaling personalized mastery-based learning, Khan
+            argues that advances in technology have made it no longer impractical: </p>
+        <blockquote>
+            <p><i>Want students to see an explanation at their own time and pace? Well, there's an on demand video for
+                    that. They need practice? They need feedback? There's adaptive exercises readily available for
+                    students.</i></p>
+        </blockquote>
+        <p><br>Khan continues by presenting a wonderful thought experiment to highlight the untapped potential in
+            education.</p>
+        <blockquote>
+            <p>To appreciate what we are talking about and the tragedy of lost potential here. I'd like to give a little
+                bit of a thought experiment: <br><br>
+                If we were to go 400 years into the past to Western Europe, which even then, was one of the more
+                literate parts of the planet, you would see that about 15 percent of the population knew how to
+                read.<br><br>
+                And I suspect that if you asked someone who did know how to read, say a member of the clergy, "What
+                percentage of the population do you think is even capable of reading?" They might say, "Well, with a
+                great education system, maybe 20 or 30 percent." If you fast forward to today, we know that that
+                prediction would have been wildly pessimistic, that pretty close to 100 percent of the population is
+                capable of reading.<br><br>
+                If I were to ask you a similar question: "What percentage of the population do you think is capable of
+                truly mastering calculus, or understanding organic chemistry, or being able to contribute to cancer
+                research?" A lot of you might say, "Well, with a great education system, maybe 20, 30 percent."</p>
+        </blockquote>
+        <p>In his view, disengagement is mainly caused by the lacking, non-mastery-oriented education; and with a proper
+            education system, that estimation will be proven as pessimistic as the former:</p>
+        <blockquote>
+            <p>That number, the percent that could really master calculus or understand organic chemistry, is actually a
+                lot closer to 100 percent.</p>
+        </blockquote>
+        <p>Looking ahead, Khan sees mastery-based learning as not just a desirable option but a social imperative in the
+            information revolution era; where advances in technology, such as on-demand videos and adaptive exercises,
+            have made personalized mastery-based learning more feasible than ever before.</p>
+        <h4>Critique to the traditional lecture based in note-taking in class</h4>
+        <p>The traditional lecture format, which involves copying notes from the lecturer, has become outdated in the
+            digital age. There is a great video on Sixty Symbols' youtube channel on this very topic, from which I'd
+            like to bring</p>
+        <ul>
+            <li>a quote by Virginia Wolf:</li>
+        </ul>
+        <blockquote>
+            <p>University lectures are an obsolete practice inherited from the Middle Ages when books were scarce.</p>
+        </blockquote>
+        <ul>
+            <li>and other one of unclear authority:</li>
+        </ul>
+        <blockquote>
+            <p>The traditional lecture involves transferring the notes from the notebook of the lecturer to the
+                notebooks of the students without going through the brains of either.</p>
+        </blockquote>
+        <p>I couldn't agree more with both.</p>
+        <p>Sadly, a great fraction of lectures heavily rely on copying notes in class as the basis of the lecture; but,
+            with the available technologies, there is no reason for that. Even if note-taking can slightly help with
+            memorization, it is not an efficient use of students' time and effort. Listening with full attention greatly
+            surpasses the benefits of copying. We have the tools to fix this. Content should be given to the students in
+            the most confortable format, allowing them to focus on understanding rather than copying</p>
+        <h4>Bad management of teachers' effort and talent</h4>
+        <h5>The unnecessary repetition</h5>
+        <p>Every year and for every subject, thousands of teachers simultaneously deliver lectures on the exact same
+            topic. That is such a waste of time and effort of some of the most brilliant people on earth. With the tools
+            we have today, the potential for improvement is inmense.</p>
+        <h5>The lack of improvement</h5>
+        <p>Students' engagement and understanding greatly depends on the quality of the explanations. While some
+            professors excel in delivering clear and helpful explanations, making complex topics easily understandable;
+            the distribution of this proficiency is fairly heterogeneous.</p>
+        <p>Education as we know it doesn't improve when someone comes up with the best explanation to date on a given
+            topic. Great explanations don't accumulate, they are not included into mainstream curricula and don't
+            benefit education as much as they could. (The worst hardly ever get filtered out neither, as in most
+            educational institutions there is no effective control system, but let's focus on the positive :) ¿How is it
+            possible that perspective-shifting, eye-opening videos like 3Blue1Brown's are not included, or recommended
+            at least, in all Algebra or Calculus courses worldwide?</p>
+        <p>As a society, we should prioritize the development of tools that allow coordination and cooperation of
+            professors, in order to combine all the effort that is currently being wasted in redundancy.</p>
+        <p>Once an excelent lecture is recorded, like Walter Lewins' incredible physics classes for example, it makes no
+            sense to have people imparting inferior versions of the same explanations. Not only does it not add value,
+            but it degrades the learning process of the students. The highest-quality content available should become
+            the standart, until something better replaces it.</p>
+        <h4>The inertia</h4>
+        <p>Another weak point of universities is how slowly they react to the changing environment. This specially
+            affects latest technological advancements, which are often ignored for as long as possible by professors,
+            and creates a delay between what society needs people working on and what students are learning.</p>
+        <p>Here, I have to speak up in defense of the professors, as it is impossible to keep up with the
+            state-of-the-art of every topic that can be related to a subject and continuously modify the curriculum.
+            This lag is inherent in the system rather than a reflection of the professors' capabilities.</p>
+        <h4>Universities are not always available</h4>
+        <p>In spite of all of this complaints, suboptimal education is still preferable to none at all.</p>
+        <p>The following graph from <i>Our World in Data</i> shows the share of population that has completed tertiary
+            education.</p>
+        <center><iframe
+            src="https://ourworldindata.org/grapher/share-of-the-population-with-completed-tertiary-education?time=2010"
+            loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+        </center>
+        <p>It is concerning how much of the globe is in the 0 to 4% group. As it is stated in the source, in many of the
+            world’s poorest countries less than 1% have completed tertiary education. It might be easy to overlook, but
+            that also means not having doctors or engineers across the entire country.</p>
+        <p>For a country to achieve long-term technological independence and successful development, a robust foundation
+            in higher education is indispensable. This empowers local communities to create innovative solutions to
+            their problems, instead of relying on more developed countries.</p>
+        <h3>Problems of education based on freely available unstructured information on the internet</h3>
+        <p>As previously discussed, the internet is arguably a superior source of knowledge for an agile "self-taught"
+            learner. Nevertheless, it is not a perfect solution and has several mayor drawbakcs.</p>
+        <h4>The mess</h4>
+        <p>The abundance of information on the internet is a double edge sword. The path to self-education on the
+            internet is not always straightforward, especially when it comes to advanced topics. Without some level of
+            initial education on the topic, it can be challenging to know what is important to learn and what is not.
+        </p>
+        <p>Unlike in traditional education, there is no set curriculum or clear progression of topics. It's up to the
+            individual to discover the dependencies themselves. </p>
+        <p>The inefficiencies derived from this lack of direction can outweigh the benefits of accessing the
+            high-quality information.</p>
+        <h4>Incompatibility with certification</h4>
+        <p>Education based on freely available and structure-less information on the internet is inherently incompatible
+            with certification, which is often a requirement for employment.</p>
+        <h4>The lack of reliability</h4>
+        <p>Another major drawback is that reliability of the content is not ensured in any way. Misinformation, biased
+            perspectives, and outdated material can easily find their way into online resources, making it essential for
+            learners to critically evaluate the sources they encounter.</p>
+        <h3>Critique to online courses</h3>
+        <p>We are currently witnessing a boom in online paid courses that operate outside the mainstream educational
+            system.</p>
+        <p>Some people might say that having online course marketplaces will open up and decentralize education; but in
+            my view, this is far from ideal. This online course marketplaces don't follow the highly praised market
+            forces. Individuals cannot really compare the courses, as people do not typically enroll in multiple courses
+            on the same topic to make informed comparisons. Instead, the decision-making process often relies on the
+            fallacy of authority and marketing tactics. This way, instead of allowing small creators to earn a living,
+            what is happening is that universities are being replaced by a trend of celebrity-led online master-classes.
+        </p>
+        <p>When it comes to certification, it is nearly impossible to know how a course will be taken into
+            consideration, as they are far from standarized.</p>
+        <p>What does the future hold for education? Will universities disappear, leaving education to be based solely on
+            a multitude of courses offered on platforms like Udemy or Masterclass? Frankly, no matter how excellent the
+            content may be, I do not believe these platforms can match universities in guiding individuals' educational
+            development.</p>
+        <p>Don't get me wrong. I will never say they are not useful or that they don't bring value, nor that creators
+            shouldn't be economically rewarded for their effort. They just aren't how I think education should operate.
+            Leaning on them to compensate for universities' inefficiencies might be more dangerous than it seems at
+            first.</p>
+        <h3>The potential of AI</h3>
+        <p>It would not be wise to plan an educational solution without considering the imminent revolution ahead.</p>
+        <p>I'd like to bring another TED talk from Sal Khan (he is not just an awesome teacher but also a great
+            thinker).</p>
+        <iframe width="560" height="315" style="display: block; margin:auto; "
+            src="https://www.youtube.com/embed/hJP5GqnTrNo" title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+
+        <p>While many people are worried about students cheating with AI, he thinks we are going to live a very positive
+            transformation, giving every student in the planet an amazing personal tutor.</p>
+        <p>He presents studies demonstrating that providing one-on-one tutoring to students can lead to significant
+            improvements in their performance, turning average students into exceptional ones.</p>
+        <p>Khan showcases Khan Academy's AI tutor, Khanmigo, as an example of how AI can understand student's
+            misconceptions and explain concepts clearly. He shows it can be an excellent tutor, providing much better
+            help and much faster than any human teacher could. It can also engage in socratic dialogue with students and
+            provide them guidance and support, effectively acting as academic, career, and life coaches. This technology
+            not only benefits students but also assists teachers, reducing the burden of lesson planning and freeing up
+            their time for more student interaction.</p>
+        <p><br></p>
+        <p>This a unique opportunity to rethink and transform education by harnessing the power of AI. The potential
+            benefits are vast and hold the key to shaping a future of enhanced education for all.</p>
+    </section>
+    <section id="proposed-solution">
+        <h2>Proposed solution</h2>
+        <h3>Overview</h3>
+        <p>The main point of the proposal is to create a <b>separation of powers</b> in education. It refers to the
+            design of the curriculum (both the programme and the content) and certification being carried out by
+            independent entities. This is done to avoid the learning process being certification-oriented. </p>
+        <p>Universities will remain as the primary certification organ, but the curriculum will be developed and made
+            available at the online platform.</p>
+        <p>University professors will be able to use the platform's content as a reference for their lectures, and also
+            contribute to the development if they have any proposal.</p>
+        <p>The platform would provide an environment that enables the <b>open-source development</b> and evolution of
+            the highest-quality possible curriculum. It would be a tool for professors to unite efforts and cooperate,
+            instead of all doing the same work independently. There would be a single open-source curriculum optimized
+            for the best learning process.</p>
+        <p>As it is designed and agreed upon by professors of univeristies adhering to it, it would be "peer reviewed"
+            by the design. This would serve as a quality control mechanism, improve transparency and eliminate biases
+            and adoctrination, offering a trustworthy and rigorous curriculum.</p>
+        <p>The resulting curriculum could also act as a <b>framework for certification</b>. Universities adhering to it
+            could design certification tasks, like exams or projects, to verify that the student has the required
+            knowledge. After a satisfactory result, they could record it on the platform.</p>
+        <p>The system would be an education standard and a certification database that can be perfectly compatible with
+            the status quo of education.</p>
+        <p>This compilation of the best possible courses is going to be freely accessible on the internet, meaning every
+            person in the world will have access to an education as good as the one in the top universities. This will
+            have a huge possitive impact in developing countries where tertiary education is not available or
+            affordable. It will reduce inequality and promote global progress and development.</p>
+        <p>The system would allow university-grade education without the hussle of going through certification, while
+            maintining the option to get certified by a university when and if the student finds it necessary. This is a
+            great advantage over independent online courses.</p>
+        <p>Other benefits of the system would be:</p>
+        <ul>
+            <li><b>Allowing asynchronous education</b>. For university independent students, the planning would not be
+                laid out by age and there would be no dealines. They could learn at their pace, enabling the mentioned
+                "teaching for mastery".</li>
+        </ul>
+        <ul>
+            <li><b>Providing an standard for convalidations</b>. With a standardized curriculum in place, students could
+                easily study at multiple universities without worrying about the complexities of convalidating their
+                credits or academic programs. This would simplify the process and promote greater academic mobility.
+            </li>
+        </ul>
+        <ul>
+            <li><b>Improving the flexibility of the educational system and its permeability to technological
+                    breakthroughs</b>. Experts on an emmergent topic can create a course for it or integrate it with
+                existent courses. There is no need to wait until all professors are educated on it to be able to spread
+                that knowledge. It is a much more agile solution. </li>
+        </ul>
+        <p>Broadly, this system aims to bring the benefits of the internet and open-source development to traditional
+            education.</p>
+        <h3>How is it different to other existing solutions?</h3>
+        <p>This is not the first free and open online teaching platform. Several successful platforms, such as MIT
+            OpenCourseWare, Khan Academy, OpenLearn, and edX, already offer a vast catalog of great courses.</p>
+        <p>However,</p>
+        <ul>
+            <li>
+                <p>They lack collaborative course creation tools.</p>
+            </li>
+            <li>
+                <p>Courses on many of these platforms often function as independent entities, lacking clear dependencies
+                    and a coherent learning path. They resemble a course catalog rather than a comprehensive university
+                    curriculum.</p>
+            </li>
+            <li>
+                <p>On some of them, course repetition and overlap is allowed. From the students' perspective, it becomes
+                    challenging to determine which course is a more worthwhile investment of time. In the end, the
+                    decission will be driven by marketing or authority fallacy, and not by course quality, leading to a
+                    suboptimal use of the available resources. Having a single evolving course would be more beneficial.
+                </p>
+            </li>
+            <li>
+                <p>They are not thought out to integrate with universities. While professors can incorporate content
+                    from these platforms into their classes as supplementary meterials, they are not meant to be
+                    comprehensive curricula.</p>
+            </li>
+        </ul>
+        <p>Wikiversity may be the example that most closely resembles this porposal. It is like Wikipedia, but for
+            courses. However, as not enough people seem to have an incentive to use it, the content has not been
+            developed up to a quality level comparable to that of universities. Designing a platform for this purpose is
+            not an easy task and requires further rethinking.</p>
+        
+        <h3>Architecture of the system</h3>
+        <p class="comment">All examples shown are just for architechture demonstration purposes and are not a proposal of curriculum in any way.</p>
+        <h4>Structure of the curriculum – The graph/tree of knowdledge</h4>
+        <p>The curriculum is laid out in a directed graph containing all education:</p>
+        <ul>
+            <li>
+                <p>nodes are the <b>units</b></p>
+            </li>
+            <li>
+                <p>links between them represent their <b>dependencies</b></p>
+            </li>
+        </ul>
+        <figure><img src="/static/media/graph_example.png" /></figure>
+        <br>
+        <p><b>Groups</b> are collections of units.</p>
+        <figure style="max-width:130rem;"><img src="/static/media/graph_example_groups.png" /></figure>
+        <p>They provide context to the graph and allow for easier dependency definitions.</p>
+        <br><br>
+
+        <h5>Guiding system</h5>
+        <p>To prevent the huge amount of possible next-steps from overwhelming students, a guiding system is of vital
+            importance.</p>
+        <p>The input for this course recommendation engine can be very diverse and allow for a myriad of possibilities.
+        </p>
+        <p>The most straighforward input would be having the student select target skills, so that the system checks for
+            its dependencies and the path leading to them can be highlighted for the student to follow.</p>
+        <p>Anoher approach could be basing on job offers. The recommendations would greatly benefit from incorporating a
+            job market. Employers would have the ability to post job offers, specifying their requirements and desired
+            qualifications. This information can then be utilized to generate personalized recommendations for students
+            in two ways:</p>
+        <ul>
+            <li>
+                <p>Students actively select a job offer and all dependencies get higlighted.</p>
+            </li>
+            <li>
+                <p>Students just follow their interests with no specific targeted job offer, but units that lead to more
+                    job oportunities are given preference. This ensures that students acquire skills that are sought
+                    after in the job market, increasing their employability prospects.</p>
+            </li>
+        </ul>
+        <p>Traditionally, society has allocated individuals to jobs based on limited university spots; and priority is
+            determined by exam scores or the ability to pay for education. However, this approach inherently requires
+            predicting the future needs of the job market, which is not ideal. By incorporating job offers into the
+            course recommendation engine, a more natural solution to this problem can be achieved, as it allows for a
+            dynamic and flexible alignment of skills with job market needs.</p>
+        <p>Companies would greatly benefit from creating courses that focus on the specific know-how sought by the
+            industry, enabling employees to come prepared with the required skills. This would facilitate the transfer
+            of know-how from companies to the educational system, reducing the dependence of education on companies.</p>
+
+        <h4>Content of the units</h4>
+        <p>Units will consist on:</p>
+        <ul>
+            <li>
+                <p>Notes resembling the traditional textbook</p>
+            </li>
+            <li>
+                <p>An explainer video based on the notes</p>
+            </li>
+            <li>
+                <p>A collection of tasks for the students to check if they properly understood the unit</p>
+            </li>
+        </ul>
+        <p class="comment">A dedicated format for the notes is being worked on, but until it is mature enough, notes will likely be writen in markdown, which covers most of the functionallity needed and is easy to implement with the later explained proposal system.</p>
+        <h5>Language management</h5>
+        <p>Development of the curriculum will be carried out in English and translation will be done automatically by a
+            machine learning model.</p>
+        <p>For situations in which the translation is not appropiate, it will be possible to override the automatic
+            translation by the use of some specialized tags in the note's file.</p>
+        <p>Once in a while, the model will be trained with the discrepancies in order to prevent future ones. This would
+            also make older overrides unnecessary, allowing their removal.</p>
+        <h5>Recommended bibliography</h5>
+        <p>There would be a section of recommended bibliography for every unit and group so that people can share useful
+            resources and help development. It would allow for comments and up/down-voting (like in reddit) to ease
+            communication and collaboration. This will be specially helpful in the early stages of development.</p>
+        <h4>Proposal system for open-source curriculum development</h4>
+        <p>The collaboration system is based on proposals and polls. Everybody can make proposals and vote on the polls.
+        </p>
+        <p>All the development will be hidden to students, who only see the last approved version while in learning
+            mode.</p>
+        <h5>Proposals</h5>
+        <p>A proposal is a collection of changes.</p>
+        <p>Proposals can contain both changes to units' content or to their dependencies, to allow modification of
+            graph's topology.</p>
+        <p>When a proposal is ready, it is submited for a poll.</p>
+        <h5>Polls</h5>
+        <p>A single-proposal poll is just a yes or no question.</p>
+        <p>Polls are open for everyone to vote.</p>
+        <p>Apart from the proposal and the poll itself, it also contains a commentary section, with a reddit-like
+            up-vote/down-vote functionallity.</p>
+        <figure style="max-width:80rem; margin-top:4rem; margin-bottom:4rem;"><img src="static/media/single_proposal_poll.png" style=" border-radius: 2rem; border: 12px black solid; opacity:0.9;"/></figure>
+        
+        <h6>Stopping criteria</h6>
+        <p>The polls will stop when there is a certain minimum chance that "society's true opinion" is over a certain
+            value; for example, if there is a 99% chance that more than 50% of society agrees with the proposal. This
+            will be determined by a T-student test. </p>
+        <p>Those two values can be adjusted to moderate the decision-making speed, and could also depend on the
+            magnitude of the change being made.</p>
+        <p>With this approach, small obvious improvements (like typo fixes) will happen fast because most of the votes
+            will agree and statistical significance will be reached fast. On the contrary, extensive and relevant
+            changes will take longer due to controversy in the polls.</p>
+        <p>To prevent the system from being manipulated by small groups of coordinated people, apart from reaching
+            statistical significance, a minimum time period and a minimum number of votes should be required for polls
+            to conclude.</p>
+        <h6>Multiple-proposal polls</h6>
+        <p>When multiple ongoing proposals aim to modify the same part, it is considered a proposal collision, and a
+            multiple-proposal poll is started.</p>
+        <figure style="max-width:80rem; margin-top:4rem; margin-bottom:4rem;"><img src="static/media/multiple_proposal_poll.png" style=" border-radius: 2rem; border: 12px black solid; opacity:0.9;"/></figure>
+
+        <p>People get to vote for their preferred option among all combinations of pairs. This allows polling all the
+            proposals against the original and also between conflicting proposals. All polls here follow the same rules
+            as single-proposal polls.</p>
+        <p>If a small change is made to a proposal that clearly enhances it, the revised version can easily and
+            relatively quickly replace the original proposal while retaining its accumulated votes. This approach
+            enables collaborative improvement of a proposal without the need to restart the poll.</p>
+        <h6>Vote-weighing</h6>
+        <p>If necessary, votes could be weighed according to individuals' knowledge on the discussed topic. This could
+            help amplify the most experienced and wise opinions.</p>
+        <p>Weighing could consider:</p>
+        <ul>
+            <li>
+                <p>The number of units that depend on the proposal the individual read or certified.</p>
+            </li>
+            <li>
+                <p>The number of total units the individual read or certified.</p>
+            </li>
+            <li>
+                <p>Other reputation metrics that could be derived by the contributions to the system (like the number of
+                    proposals accepted, or the proportion of votes given that aligned with the resolution, for example).
+                </p>
+            </li>
+        </ul>
+        <h4>Activities</h4>
+        <p>The purpose of activities in the platform is to allow students to check if they properly understood the
+            content. They are not binding and they are not meant for certification.</p>
+        <p>There are no deadlines, everything is time-independent.</p>
+        <p>Depending of the neccessity of a professor's supervision, tasks can be <b>supervised</b> or
+            <b>unsupervised.</b></p>
+        <h5>Unsupervised Tasks</h5>
+        <p>Unsupervised tasks are those that can be corrected unabiguously comparing the solution to the correct one.
+            Examples of such tasks include tests, straightforward calculi in which the process is not too relevant…</p>
+        <p>Everything that can be automated should be automated in the form of an unsupervised task, as they have much
+            less cost for the platform and allow for a more effective resource allocation.</p>
+        <p>With more complex activities in which the process is important, in order to avoid the supervision of a
+            professor, there could be a collection of solved examples. You could read some, then try to do a couple and
+            check them against the solution by yourself. This is okay for tasks which are only meant to be resolved in a
+            single way and freedom is somewhat limited.</p>
+        <h5>Supervised tasks</h5>
+        <p>Tasks that require creativity or do not follow a straightforward method, such as writing assignments,
+            supervision of a professor is needed.</p>
+        <p>However, it is important to note that these types of tasks are the most resource-intensive for the platform.
+            Therefore, they should only be utilized when necessary. In the early stages of the platform, it may even be
+            impractical to offer such tasks unless there is enough voluntary professor engagement or funding to support
+            in-house professors.</p>
+        <p>Organizing and coordinating professors to evaluate and provide feedback on these activities can be a
+            challenging endeavor. It requires a well-designed system to make the process as efective as possible while
+            keeping the cost low.</p>
+        <h6>Correction control system</h6>
+        <p>As anyone can log in as a professor, a control system has to be implemented in order to have the desired
+            robustness and ensure accurate corretions.</p>
+        <p>The control system will be a correction evaluator, in which professors have the opportunity to review and
+            rate the corrections made by other professors. When a professor assigns a grade to another professor's
+            correction, they also have the option to submit their own correction, which will be added to the pool of
+            corrections to be evaluated by their peers.</p>
+        <p>Once multiple corrections that have a good enough grading are ready, the correction process will be halted
+            and the student will be shown a combination of the best.</p>
+        <p>Professor's history of providing corrections that align with the consensus of their peers could be used to
+            calculate some performance metrics. They could serve as a motivation for professors to actively engange in
+            the correction process, and if incentivising professor participation is necessary, it could be used to
+            determine appropriate remuneration for their work. This would encourage professors to maintain a high
+            standard of accuracy and reliability in their corrections.</p>
+        <p>With a robust control system in place, it would be possible for students to participate in the correction
+            system without sacrificing the quality of the corrections. Once students feel confident in their
+            understanding of the assignments, they have the opportunity to prepare for exams by reviewing and correcting
+            exercises submitted by their peers, thereby contributing to the system. This can be a quite interesting
+            idea.</p>
+        <p>While it is not ideal, if a professor wants to, the platform can offer the option for closed correction
+            groups. This means tasks done by students in that group will only be corrected by that professor, and that
+            the profesor won't participate in the correction of the general pool of tasks.</p>
+        <p>This approach deviates from the collaborative values of the platform; however, it acknowledges the importance
+            of strong professor-student relationships, providing personalized support; and gives the platform enough
+            flexibility to accomodate more traditional teaching methods.</p>
+        <h6>AI corrector</h6>
+        <p>If this system were implemented, it would generate a vast dataset of corrections along with evaluations of
+            their quality. This presents an excellent opportunity to train a language model using reinforcement learning
+            from human feedback.</p>
+        <p>Further exploration of the details is necessary, but it could be possible to train an model to predict scores
+            for corrections and then use it as a loss function to train another model that is capable of generating its
+            own corrections. </p>
+        <p>The platform's design allows for a gradual implementation of this AI, starting with automated correction
+            evaluations and later slowly incorporating corrections generated by the AI itself. This would make it
+            possible to safely experiment with its implementation.</p>
+        <p>If this system proves successful, it could lead to a significant reduction in the cost of high-quality
+            exercise correction.</p>
+        <p>The introduction of this platform may indeed reduce the need for traditional professors, which could
+            potentially lead to job displacement. However, it is crucial to highlight that as an open-source platform,
+            the benefits derived from it are shared for the betterment of all of humanity. The aim is not to render
+            professors obsolete, but rather to leverage technology to enhance and democratize education, making it more
+            accessible and inclusive. </p>
+        <h4>Certification</h4>
+        <p>As previously stated, the platform is not aimed to substitute universities at being the official means of
+            knowledge certification.</p>
+        <p>An interesting way to integrate the platform with certification institutions would be to show a list of
+            available certification options for each unit.</p>
+        <p>They could be ordered by language, proximity to the student, popularity… If the platform is in need of
+            funding, it could also be given priority to universities that donated more or contributed more to the
+            platform, as an incentive.</p>
+        <h3>Implementation and integration into the current education system</h3>
+        <p>As previously stated, the proposed system is meant to work together with current tertiary educational
+            institutions.</p>
+        <p>A desirable future scenario is one in which universities adhere to the open-source curriculum, contribute to
+            it and use the open-source content in their clases, and they record students' certifications on the
+            platform.</p>
+        <p>In order for the system to have a successful adoption, both universities and individual teachers have to have
+            incentives to follow the curriculum and use the tools provided by the platform. In the following lines,
+            several usecases are considered.</p>
+        <h4>Teachers using the tools in ther class</h4>
+        <p>Teachers can individually choose to integrate the platform into their classes without requiring approval from
+            their university or coordination with the platform.</p>
+        <p>The main incentive for them is the quality and reliability the open-source curriculum brings.</p>
+        <p>Without further implications, teachers could use the curriculum to prepare their lectures, or recommend it to
+            students as the main or additional material of the subject.</p>
+        <p>Also, students could use the exercises of the platform, both in class with the guidance of the professor, or
+            out of class to study.</p>
+        <p>If teachers want to correct exercises or access their students' results to monitor their progress, they can
+            create a closed student group and use the tools provided by the platform.</p>
+        <h4>Universities adhering to the curriculum and coordinating with the platform</h4>
+        <p>The implementation of the platform could go to a further extent by the university officially adhering to the
+            open-soruce curriculum in one, many or all of the subjects offered.</p>
+        <p>The university could also coordinate with the platform so that when a student successfully completes a
+            subject the certification can be recorded in the student's profile.</p>
+        <h5>Project-oriented learning</h5>
+        <p>An unexpected result of having such an atomized curriculum is that it allows a project-centered approach to
+            education. </p>
+        <p>Universities could dedicate a specific subject to projects, offering students the opportunity to choose
+            projects aligned with their interests.</p>
+        <p>Students could access content from the platform that is relevant for the project. After the professors
+            assesment, successful application of acquired knowledge and skills would result in corresponding
+            certifications.</p>
+        <p>This project-centered approach promotes active learning, critical thinking, and the development of real-world
+            problem-solving abilities, while being compatible with a proper certification system.</p>
+        <h4>Extension of the university-oriented model for secondary education</h4>
+        <p>The platform is pitched towards tertiary education because that's what it is most suitable for due to its
+            content-oriented nature and the level of autonomy that can be expected from students. However, even if
+            teaching at younger ages involves much more than content, it can also be benefitial in secondary education.
+            The open-source curriculum will naturally extend to secondary education as more teachers find it useful and
+            integrate the platform into their classrooms.</p>
+        <h3>On money</h3>
+        <h4>Money in: Financing the development</h4>
+        <p>Let's first make this clear: Access to the platform will always be free and there will be no paid version
+            with additional features. Everyone will be a first-class student.</p>
+        <p>Ideally, the platform's sustainability will be supported through donations and government grants. In case
+            additional funding was needed, other alternatives could be explored.</p>
+        <p>Development and operational cost of the platform will depend on the extent of the participation of the
+            open-source community, but it will very likely be tiny compared to the global cost of education.</p>
+        <h4>Money out: Monetization of the platform</h4>
+        <p>This is one the toughest considerations on the platform's design.</p>
+        <p>Due to the open-source nature of the initiative, if possible, it is preferable to avoid content monetization.
+            Nevertheless, prudence suggests the need for a contingency plan, in case the incentives for participation
+            mentioned earlier prove insufficient to propel the platform's development forward.</p>
+        <p>It is worth exploring methods to fairly remunerate individuals for their contributions. There are two main
+            aspects for which monetization could be considered:</p>
+        <ul>
+            <li>
+                <p>The creation of the curriculum</p>
+            </li>
+            <li>
+                <p>The correction service</p>
+            </li>
+        </ul>
+        <h5>Paying content creators</h5>
+        <p>The number of successful examples of open-source development indicates that the participation of contributors
+            can be an effective means of curriculum development. Given the project's relevance and the strong incentives
+            from various stakeholder for the curriculum's success, it is anticipated that the participation of
+            contributors will be sufficient to drive curriculum development at an appropriate pace.</p>
+        <p>If this proves to be the case, it would be advisable to avoid paying content creators, as the monetization of
+            this aspect is difficult and could introduce complexities and dynamics that may not be beneficial, having
+            unintended consequences (like creating the incentive to exploit the poll system).</p>
+        <h5>Paying correctors</h5>
+        <p>On the other hand, the platform aims to provide a task correction service, which may require compensating
+            contributors to incentivize their investment of time and effort. </p>
+        <p>Fortunately, monetizing the correction service appears to be more straightforward: Corrections can be easily
+            quantified, and their quality is inherently measured by the system.</p>
+        <p>In this case, introducing a payment system for correctors would likely create beneficial dynamics that align
+            with the platform's goals, and result in the overall benefit, ensuring the availabilty of high-quality
+            corrections.</p>
+        <p><br><br><br> By carefully considering the monetization approaches for each aspect, the platform can maintain
+            a balance between healthy growth and development, and preserving the collaborative and open nature of the
+            project.</p>
+
+    </section>
+    <script>
+        // Apply the animation to the questions and answers
+        const elements = document.querySelectorAll('section>*');
+        elements.forEach((element) => {
+            // add the class animated to the element
+            element.classList.add('animated');
+        });
+    </script>
+
+</main>
+
+
+{{ end }}

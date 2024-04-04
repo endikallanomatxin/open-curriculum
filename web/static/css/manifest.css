@@ -1,0 +1,203 @@
+main{
+    font-size: 1.4rem;
+}
+
+main>section{
+    padding: 30vh 2rem;
+}
+
+main>section>*{
+    max-width: 55rem;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+/* Nav */
+
+nav{
+    padding: 0.5rem 2rem;
+    position: fixed;
+    font-size: 1.5em;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--brown);
+    z-index: 100;
+}
+
+nav a{
+    color: var(--ll-brown);
+    z-index: 100;
+}
+
+nav a:hover{
+    color: var(--yellow);
+}
+
+
+/* Text sizing*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Montserrat';
+    margin-bottom: 1rem;
+    line-height: 1.1em;
+}
+
+
+h2 {
+    font-size: 5rem;
+    font-weight: 800;
+    margin-bottom: 5rem;
+}
+
+h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 10rem;
+    margin-bottom: 2.5rem;
+}
+
+h4 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+}
+
+h5 {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+h6 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-top: 2rem;
+    margin-bottom: 1.2rem;
+}
+
+
+figure {
+    margin: 1rem auto;
+}
+
+img {
+    width: 100%
+}
+
+iframe {
+    margin: 2rem 0;
+}
+
+.comment {
+    font-style: italic;
+    opacity: 0.5;
+    font-size: 0.8em;
+}
+
+
+/* For blocquotes */
+
+blockquote {
+    font-style: italic;
+    opacity: 0.9;
+    padding: 1em 2em;
+    margin: 2.5rem 0;
+    border-left: 8px solid rgba(139, 103, 103, 0.8);
+    position: relative;
+    background-color: rgba(139, 103, 103, 0.1)
+}
+
+blockquote::before {
+    font-family: Arial;
+    content: "\201C";
+    color: rgba(139, 103, 103, 0.5);
+    font-size: 4em;
+    position: absolute;
+    left: 5px;
+    top: 0px;
+}
+
+blockquote::after {
+    font-family: Arial;
+    content: "\201D";
+    color: rgba(139, 103, 103,0.5);
+    font-size: 4em;
+    position: absolute;
+    right: 20px;
+    bottom: calc(10px - 0.7em);
+}
+
+blockquote span {
+    display: block;
+    color: #333333;
+    font-style: normal;
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+
+
+/* Intro */
+
+section#intro{
+    font-size: 1.6em;
+    background-color: var(--ll-brown);
+}
+
+section#intro div p{
+    margin:0;
+}
+
+section#intro div{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+section#intro div:nth-child(2){
+    color: var(--red);
+    border: 3px solid var(--red);
+}
+
+section#intro div:nth-child(3){
+    color: var(--green);
+    border: 3px solid var(--green);
+}
+
+
+/* Current situation */
+
+section#current-situation{
+    background-color: var(--ll-red);
+}
+
+section#current-situation h2,
+section#current-situation h3,
+section#current-situation h4,
+section#current-situation h5,
+section#current-situation h6{
+    color: var(--red);
+}
+
+/* Proposed solution */
+
+section#proposed-solution{
+    background-color: var(--ll-green);
+}
+
+section#proposed-solution h2,
+section#proposed-solution h3,
+section#proposed-solution h4,
+section#proposed-solution h5,
+section#proposed-solution h6{
+    color: var(--green);
+}

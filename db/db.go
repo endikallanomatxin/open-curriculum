@@ -135,8 +135,31 @@ func DeleteUnit(id int) {
     }
 }
 
+type Dependency struct {
+    ID       int
+    DependsOnID  int
+}
 
-func GetDependencies(id int) []Unit {
+func CheckDependency(id int, depends_on_id int) bool {
+
+    // Check for self-dependency
+    if id == depends_on_id {
+        return false
+    }
+
+
+    // Check for circular dependency
+
+    // Follow the dependencies until the end, if it finds the original unit, it's a circular dependency
+    // TODO
+
+    return true
+    
+}
+
+
+
+func GetUnitDependencies(id int) []Unit {
     db, err := sql.Open("postgres", connStr)
     if err != nil {
         panic(err)
@@ -163,12 +186,43 @@ func GetDependencies(id int) []Unit {
 }
 
 
+func GetAllDependencies() []Dependency {
+    db, err := sql.Open("postgres", connStr)
+    if err != nil {
+        panic(err)
+    }
+    defer db.Close()
+
+    rows, err := db.Query("SELECT unit_id, depends_on_id FROM dependencies")
+    if err != nil {
+        panic(err)
+    }
+    defer rows.Close()
+
+    dependencies := []Dependency{}
+    for rows.Next() {
+        var d Dependency
+        err := rows.Scan(&d.ID, &d.DependsOnID)
+        if err != nil {
+            panic(err)
+        }
+        dependencies = append(dependencies, d)
+    }
+
+    return dependencies
+}
+
+
 func CreateDependency(id int, depends_on_id int) {
     db, err := sql.Open("postgres", connStr)
     if err != nil {
         panic(err)
     }
     defer db.Close()
+
+    if !CheckDependency(id, depends_on_id) {
+        panic("Circular dependency")
+    }
 
     _, err = db.Exec("INSERT INTO dependencies (unit_id, depends_on_id) VALUES ($1, $2)", id, depends_on_id)
     if err != nil {
