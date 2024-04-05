@@ -12,6 +12,9 @@ services:
       DB_PASSWORD: mypassword
       DB_NAME: mydatabase
       DB_PORT: 5432
+    # DEV. Remove volumes: -./:/app for PROD
+    volumes:
+      - .:/app
 
   db:
     image: postgres:alpine
