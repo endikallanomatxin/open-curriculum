@@ -12,27 +12,6 @@ main>section>*{
     margin-right:auto;
 }
 
-/* Nav */
-
-nav{
-    padding: 0.5rem 2rem;
-    position: fixed;
-    font-size: 1.5em;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: var(--brown);
-    z-index: 100;
-}
-
-nav a{
-    color: var(--ll-brown);
-    z-index: 100;
-}
-
-nav a:hover{
-    color: var(--yellow);
-}
 
 
 /* Text sizing*/
@@ -43,7 +22,6 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Montserrat';
     margin-bottom: 1rem;
     line-height: 1.1em;
 }
@@ -102,7 +80,6 @@ iframe {
     font-size: 0.8em;
 }
 
-
 /* For blocquotes */
 
 blockquote {
@@ -110,7 +87,7 @@ blockquote {
     opacity: 0.9;
     padding: 1em 2em;
     margin: 2.5rem 0;
-    border-left: 8px solid rgba(139, 103, 103, 0.8);
+    border-left: 8px solid var(--secondary-dark);
     position: relative;
     background-color: rgba(139, 103, 103, 0.1)
 }
@@ -118,7 +95,7 @@ blockquote {
 blockquote::before {
     font-family: Arial;
     content: "\201C";
-    color: rgba(139, 103, 103, 0.5);
+    color: var(--secondary-light);
     font-size: 4em;
     position: absolute;
     left: 5px;
@@ -128,7 +105,7 @@ blockquote::before {
 blockquote::after {
     font-family: Arial;
     content: "\201D";
-    color: rgba(139, 103, 103,0.5);
+    color: var(--secondary-light);
     font-size: 4em;
     position: absolute;
     right: 20px;
@@ -137,7 +114,7 @@ blockquote::after {
 
 blockquote span {
     display: block;
-    color: #333333;
+    color: var(--secondary-dark);
     font-style: normal;
     font-weight: bold;
     margin-top: 1em;
@@ -149,7 +126,6 @@ blockquote span {
 
 section#intro{
     font-size: 1.6em;
-    background-color: var(--ll-brown);
 }
 
 section#intro div p{
@@ -163,41 +139,43 @@ section#intro div{
     border-radius: 1rem;
 }
 
+
 section#intro div:nth-child(2){
-    color: var(--red);
-    border: 3px solid var(--red);
+    color: var(--secondary-dark);
+    border: 3px solid var(--secondary-dark);
 }
 
 section#intro div:nth-child(3){
-    color: var(--green);
-    border: 3px solid var(--green);
+    color: var(--primary-dark);
+    border: 3px solid var(--primary-dark);
 }
+
+section#intro div:nth-child(3) a{
+    color: var(--primary-dark);
+}
+
+section#intro div:nth-child(3) a:hover{
+    color: var(--primary-light);
+}
+
 
 
 /* Current situation */
-
-section#current-situation{
-    background-color: var(--ll-red);
-}
 
 section#current-situation h2,
 section#current-situation h3,
 section#current-situation h4,
 section#current-situation h5,
 section#current-situation h6{
-    color: var(--red);
+    color: var(--secondary-dark);
 }
 
 /* Proposed solution */
-
-section#proposed-solution{
-    background-color: var(--ll-green);
-}
 
 section#proposed-solution h2,
 section#proposed-solution h3,
 section#proposed-solution h4,
 section#proposed-solution h5,
 section#proposed-solution h6{
-    color: var(--green);
+    color: var(--primary-dark);
 }

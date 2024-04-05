@@ -1,9 +1,15 @@
+@import "base.css";
+
 /* GENERAL */
 
 a {
-    color: var(--text-color);
+    color: var(--secondary-dark);
     text-decoration: none;
     transition-duration: 0.2s;
+}
+
+a:hover {
+    color: var(--secondary-light);
 }
 
 p,ol,ul {

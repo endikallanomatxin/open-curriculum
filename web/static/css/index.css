@@ -7,12 +7,12 @@ header{
 }
 
 header h1{
-    font-size: 15vw;
+    font-size: 12vw;
     width:fit-content;
     margin:auto;
     font-weight: 800;
     line-height: 1;
-    background: linear-gradient(#307a5f, #154836);
+    background: linear-gradient(var(--primary-light), var(--primary-dark));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -20,7 +20,7 @@ header h1{
 /* MAIN*/
 
 main{
-    font-size: 1.8rem;
+    font-size: 1.6rem;
 }
 
 main>section{
@@ -35,7 +35,8 @@ main>section p{
 /* MAIN>ABSTRACT */
 
 section#abstract{
-    font-size: 1.2em;
+    background-color: var(--background-dark);
+    font-size: 1.5em;
     margin-left: auto;
     margin-right: auto;
     text-align: left;
@@ -48,10 +49,10 @@ section#abstract p,li{
     margin-right:auto;
 }
 
-/* MAIN>MANIFEST-IDEA */
+/* MAIN>MANIFEST-FOUNDATION */
 
 section#manifest-foundation{
-    background-color: var(--ll-brown);
+    background-color: var(--background);
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 2rem;
@@ -88,17 +89,14 @@ div.card{
     padding: 4rem;
     margin: 4rem 0;
     border-radius: 1rem;
-    background-color: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    border: 4px solid var(--brown);
+    background-color: var(--background-dark);
 }
 
-
 div.card h2{
-    font-size: 2em;
+    font-size: 1.4em;
     font-weight: 800;
     margin:0;
+    margin-bottom: 1rem;
 }
 
 div.card a{
@@ -111,7 +109,7 @@ div.card a{
 /* MAIN>FAQ */
 
 section#faq{
-    background-color: var(--l-brown);
+    background-color: var(--background-dark);
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 2rem;
@@ -147,7 +145,7 @@ section#faq{
 section#faq>div.qas>div.qa{
     padding: 1rem 0;
     margin: 4rem 0;
-    border-top: 2px solid var(--brown);
+    border-top: 2px solid var(--dark);
 }
 
 section#faq>div.qas>div.qa>p.q{

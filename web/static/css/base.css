@@ -4,39 +4,31 @@
     box-sizing:border-box;
 }
 
+:root {
+    --primary-dark: hsl(160, 40%, 20%);
+    --primary-light: hsl(160, 40%, 35%);
+
+    --secondary-dark: hsl(20, 60%, 35%);
+    --secondary-light: hsl(20, 60%, 50%);
+
+    --background: hsl(35, 45%, 97%);
+    --background-dark: hsl(35, 38%, 93%);
+    --background-darker: hsl(35, 30%, 85%);
+
+    --dark: hsl(340,5%,13%);
+    
+    --text-color: var(--dark);
+}
+
 body{
     font-family: "Montserrat", sans-serif;
-
-    --red: #8c313a;
-    --green: #366353;
-    --blue: #3e6b8a;
-    --yellow: #e6b450;
-    --brown: #292724;
-
-    --l-red: #e2d2d4;
-    --l-green: #d9eae4;
-    --l-blue: #c9cedd;
-    --l-yellow: #dad5c4;
-    --l-brown: #d7d3cb;
-
-    --ll-red: #ede5e6;
-    --ll-green: #ecf2f0;
-    --ll-blue: #dbdde3;
-    --ll-yellow: #e9e6dc;
-    --ll-brown: #eeece9;
-    
-    --text-color: var(--brown);
-    --emphasis-text-color: #665c4b;
-
-    color: var(--brown);
-    margin:0;
+    color: var(--text-color);
+    background-color: var(--background);
+    margin: 0;
 }
 
 
-
-a:hover {
-    color: var(--emphasis-text-color);
-}
+/* Animations */
 
 @keyframes entrance {
     from {
@@ -44,8 +36,6 @@ a:hover {
         transform: translateY(-2rem);
     }
 }
-
-/*Animaciones*/
 
 .animated
 {
@@ -64,4 +54,16 @@ a:hover {
 .animated.under-viewport{
     opacity:0;
     transform: translateY(2rem);
+}
+
+/* Nav */
+
+nav{
+    padding: 1rem 2rem;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    background-color: var(--background-dark);
+    z-index: 100;
+    border-radius: 2rem;
 }
