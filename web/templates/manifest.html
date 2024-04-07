@@ -26,7 +26,8 @@
 
         <h3>Problems of traditional education</h3>
         <h4>Lectures based on in-class note-taking</h4>
-        <p>The traditional lecture format, which involves copying notes from the lecturer, has become outdated in the digital age. There is a great video on Sixty Symbols' youtube channel on this very topic,</p>
+        <p>The traditional lecture format, which involves copying notes from the lecturer, has become outdated in the digital age. There is a great video on Sixty Symbols' youtube channel on this very topic <span id="expand-video-sixty" onclick="toggleExpand('video-sixty')">click to watch</span> from which I'd like to bring</p>
+        <div id="expand-video-sixty">
         <center>
             <iframe width="560" height="315"
                 src="https://www.youtube.com/embed/vv1134PLylU?si=T-EABmDQfY1pIEZo"
@@ -35,7 +36,7 @@
                 referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen></iframe>
         </center>
-        <p>from which I'd like to bring</p>
+        </div>
         <ul>
             <li>a quote by Virginia Wolf:</li>
         </ul>
@@ -53,16 +54,18 @@
         </p>
 
         <h4>Unnatural synchronicity in the learning-rate of students</h4>
-        <p>There is a brilliant TED talk by Sal Khan in which he explains what he calls "teaching for mastery", perfectly illustrating this issue.
+        <p>There is a brilliant TED talk by Sal Khan in which he explains what he calls "teaching for mastery", perfectly illustrating this issue <span id="expand-khan" onclick="toggleExpand('khan')">click to watch</span>.
         </p>
         <!--
             <p class="comment">(I've taken the most relevant ideas so that it is not neccessary to watch it to continue reading. I strongly recommend watching it afterwards though)</p> 
         -->
+        <div id="expand-khan">
         <center><iframe width="560" height="315"
                 src="https://www.youtube.com/embed/-MTRxRO5SRA"
                 title="YouTube video player" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe></center>
+        </div>
         <p>In his words:</p>
         <blockquote>
             <p>In the traditional academic model students are grouped together by age, and we sheppard them all together at the same pace.</p>
@@ -99,11 +102,11 @@
 
         <h4>Excessive focus on certification</h4>
         <p>People who teach are often the same people who prepare and correct the exams. In an ideal world, this would be fine, but in practice, it creates a conflict of interests, often leading to an exam-oriented teaching, while the actual learning is neglected.</p>
-        <p>Although certification might be important, it cannot be the objective. Teaching should come first, unconstrained by certification, and only then should certification come; if neccessary <span id="note-cert" onclick="toggleNote('cert')">see note</span>.</p>
-        <div id="note-cert">
-            <p>This is more of a personal opinion, but most of the times it is far from neccessary and it is even counterproductive.</p>
-            <p>People may ask: <i>"But, what will it mean to own a degree if every step done is not certified?" </i> What does it mean now? Sadly, close to nothing. In the current system, where exams become the sole focus, many students simply memorize information to pass the tests, only to forget it shortly after. As a result, the certification itself loses its true meaning and fails to reflect genuine knowledge and understanding.</p>
-            <p>The prevalence of access tests among major companies further underscores this point. What is the purpose of certification at university if you are subjected to assessments during the job application process anyway?</p>
+        <p>Although certification might be important, it cannot be the objective. Teaching should come first, unconstrained by certification, and only then should certification come; if neccessary <span id="expand-cert" onclick="toggleExpand('cert')">see note</span>.</p>
+        <div id="expand-cert">
+            <p class="comment">This is more of a personal opinion, but most of the times it is far from neccessary and it is even counterproductive.</p>
+            <p class="comment">People may ask: <i>"But, what will it mean to own a degree if every step done is not certified?" </i> What does it mean now? Sadly, close to nothing. In the current system, where exams become the sole focus, many students simply memorize information to pass the tests, only to forget it shortly after. As a result, the certification itself loses its true meaning and fails to reflect genuine knowledge and understanding.</p>
+            <p class="comment">The prevalence of access tests among major companies further underscores this point. What is the purpose of certification at university if you are subjected to assessments during the job application process anyway?</p>
         </div>
 
         <h4>Bad management of teachers' effort and talent</h4>
@@ -252,9 +255,10 @@
                 </li>
                 <li>
                     <p>An explainer video based on the notes <span
-                            id="note-video"
-                            onclick="toggleNote('video')">see note</span></p>
-                    <div id="note-video">Video is a hard format for collaboration, and the priority are the notes. Thus, specially in the begining, an automatically generated narration of the notes will be used instead. In the future, if this is not good enough, collaborative video creation tools will be added.
+                            id="expand-video"
+                            onclick="toggleExpand('video')">see note</span></p>
+                    <div id="expand-video">
+                        <p class="comment">Video is a hard format for collaboration, and the priority are the notes. Thus, specially in the begining, an automatically generated narration of the notes will be used instead. In the future, if this is not good enough, collaborative video creation tools will be added.</p>
                     </div>
                 </div>
             </li>
@@ -350,9 +354,9 @@
         <p>If this system were implemented, it would generate a vast dataset of corrections along with evaluations of their quality. This presents an excellent opportunity to train a language model using reinforcement learning from human feedback.</p>
         <p>Further exploration of the details is necessary, but it could be possible to train an model to predict scores for corrections and then use it as a loss function to train another model that is capable of generating its own corrections. </p>
         <p>The platform's design allows for a gradual implementation of this AI, starting with automated correction evaluations and later slowly incorporating corrections generated by the AI itself. This would make it possible to safely experiment with its implementation.</p>
-        <p>If this system proves successful, it could lead to a significant reduction in the cost of high-quality exercise correction <span id="note-jobs" onclick="toggleNote('jobs')">see note</span>.</p>
-        <div id="note-jobs">
-            <p>The introduction of this platform may indeed reduce the need for traditional professors, which could potentially lead to job displacement. However, due to the openess of the platform, the benefits derived from it are shared for the betterment of all of humanity. The aim is not to render professors obsolete, but rather to leverage technology to enhance education and make it more accessible.</p></div>
+        <p>If this system proves successful, it could lead to a significant reduction in the cost of high-quality exercise correction <span id="expand-jobs" onclick="toggleExpand('jobs')">see note</span>.</p>
+        <div id="expand-jobs">
+            <p class="comment">The introduction of this platform may indeed reduce the need for traditional professors, which could potentially lead to job displacement. However, due to the openess of the platform, the benefits derived from it are shared for the betterment of all of humanity. The aim is not to render professors obsolete, but rather to leverage technology to enhance education and make it more accessible.</p></div>
         <h4>Certification</h4>
         <p>As previously stated, the platform is not aimed to substitute universities at being the official means of knowledge certification.</p>
         <p>An interesting way to integrate the platform with certification institutions would be to show a list of available certification options for each unit.</p>

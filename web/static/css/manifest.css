@@ -69,6 +69,8 @@ iframe {
     font-style: italic;
     opacity: 0.5;
     font-size: 0.8em;
+    max-width: 35em;
+    margin:auto;
 }
 
 /* For blocquotes */
@@ -114,7 +116,7 @@ blockquote span {
 
 /* Notes */
 
-span[id^="note"] {
+span[id^="expand"] {
     font-style: italic;
     font-size: 0.6em;
     vertical-align:middle;
@@ -124,29 +126,22 @@ span[id^="note"] {
     opacity: 0.6;
 }
 
-span[id^="note"]:hover{
+span[id^="expand"]:hover{
     opacity: 1;
 }
 
-div[id^="note"] {
+div[id^="expand"] {
     overflow:hidden;
     transition: max-height 2s ease;
+    width: 100%;
 }
 
-div[id^="note"] {
-    font-size: 0.8em;
-    font-style: italic;
-    opacity: 0.6;
-    width: 80%;
-    max-width: 35em;
-    margin:auto;
-}
 
-div[id^="note"]:not(.expanded) {
+div[id^="expand"]:not(.expanded) {
     max-height:0;
 }
 
-div[id^="note"].expanded{
+div[id^="expand"].expanded{
     max-height: 100vh;
 }
 
