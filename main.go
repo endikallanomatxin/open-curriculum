@@ -42,7 +42,7 @@ func main() {
 
     http.HandleFunc("/units", unitsHandler)
     http.HandleFunc("/units/{id}", unitHandler)
-    http.HandleFunc("/units/{id}/add_dependency", addDependencyHandler)
+    http.HandleFunc("/dependencies", dependenciesHandler)
     
     http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 
@@ -179,16 +179,19 @@ func unitHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 
-func addDependencyHandler(w http.ResponseWriter, r *http.Request) {
+func dependenciesHandler(w http.ResponseWriter, r *http.Request) {
     if r.Method == "PUT" {
-        id := 0
-        fmt.Sscanf(r.URL.Path, "/units/%d/add_dependency", &id)
-
         r.ParseForm()
+        unit_id, _ := strconv.Atoi(r.Form.Get("unit_id"))
         depends_on_id, _ := strconv.Atoi(r.Form.Get("depends_on_id"))
 
-        db.CreateDependency(id, depends_on_id)
+        db.CreateDependency(unit_id, depends_on_id)
+        http.Redirect(w, r, "/units/" + strconv.Itoa(unit_id), http.StatusSeeOther)
 
-        http.Redirect(w, r, fmt.Sprintf("/units/%d", id), http.StatusSeeOther)
+    } else if r.Method == "DELETE" {
+        unit_id = r.URL.Query().Get("unit_id")
+        depends_on_id = r.URL.Query().Get("depends_on_id")
+        db.DeleteDependency(unit_id, depends_on_id)
+        http.Redirect(w, r, "/units/"+ strconv.Itoa(unit_id), http.StatusSeeOther)
     }
 }

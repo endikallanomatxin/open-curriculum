@@ -213,18 +213,31 @@ func GetAllDependencies() []Dependency {
 }
 
 
-func CreateDependency(id int, depends_on_id int) {
+func CreateDependency(unit_id int, depends_on_id int) {
     db, err := sql.Open("postgres", connStr)
     if err != nil {
         panic(err)
     }
     defer db.Close()
 
-    if !CheckDependency(id, depends_on_id) {
+    if !CheckDependency(unit_id, depends_on_id) {
         panic("Circular dependency")
     }
 
-    _, err = db.Exec("INSERT INTO dependencies (unit_id, depends_on_id) VALUES ($1, $2)", id, depends_on_id)
+    _, err = db.Exec("INSERT INTO dependencies (unit_id, depends_on_id) VALUES ($1, $2)", unit_id, depends_on_id)
+    if err != nil {
+        panic(err)
+    }
+}
+
+func DeleteDependency(unit_id int, depends_on_id int) {
+    db, err := sql.Open("postgres", connStr)
+    if err != nil {
+        panic(err)
+    }
+    defer db.Close()
+
+    _, err = db.Exec("DELETE FROM dependencies WHERE unit_id = $1 AND depends_on_id = $2", unit_id, depends_on_id)
     if err != nil {
         panic(err)
     }

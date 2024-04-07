@@ -1,30 +1,41 @@
+{{ define "head" }}
+<title>{{ .Unit.Name }}</title>
+<link rel="stylesheet" href="/static/css/unit.css">
+{{ end }}
+
+
 {{ define "body" }}
+<nav>
+    <a href="/units">&lt; Back to the units</a>
+</nav>
 
-<a href="/units">Back</a>
+<main>
+    <h1>{{ .Unit.Name }} </h1>
+    <p>{{ .Unit.Description }}</p>
 
-<h1>{{ .Unit.Name }} </h1>
-<p>{{ .Unit.Description }}</p>
-
-<h2>Dependencies</h2>
-{{ if .Dependencies }}
-<ul>
-{{ range .Dependencies }}
-    <li><a href="/units/{{ .ID }}">{{ .Name }}</a></li>
-{{ end }}
-</ul>
-{{ end }}
-
-
-<form hx-put="/units/{{ .Unit.ID }}/add_dependency"
-hx-target="body" hx-swap="outerHTML">
-    <select name="depends_on_id">
-        {{ range .Units }}
-            <option value="{{ .ID }}">{{ .Name }}</option>
+    <h2>Dependencies</h2>
+    {{ if .Dependencies }}
+        <ul>
+        {{ range .Dependencies }}
+            <li><a href="/units/{{ .ID }}">{{ .Name }}</a>
+                <button hx-delete="/dependencies?unit_id={{$.Unit.ID}}&depends_on_id={{.ID}}" hx-target="body">x</button>
+            </li>
         {{ end }}
-    </select>
-    <button type="submit">Add</button>
-</form>
+        </ul>
+    {{ end }}
 
-<a hx-delete="/units/{{ .Unit.ID }}" hx-target="body" hx-swap="outerHTML">Delete</a>
+    <form hx-put="/dependencies"
+    hx-target="body" hx-swap="outerHTML">
+        <input type="hidden" name="unit_id" value="{{ .Unit.ID }}">
+        <label for="depends_on_id">Add a dependency:</label>
+        <select name="depends_on_id">
+            {{ range .Units }}
+                <option value="{{ .ID }}">{{ .Name }}</option>
+            {{ end }}
+        </select>
+        <button type="submit">Add</button>
+    </form>
 
+    <a hx-delete="/units/{{ .Unit.ID }}" hx-target="body" hx-swap="outerHTML">Delete</a>
+</main>
 {{ end }}
