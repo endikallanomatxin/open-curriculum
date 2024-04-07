@@ -13,6 +13,7 @@ header h1{
     font-weight: 800;
     line-height: 1;
     background: linear-gradient(var(--primary-light), var(--primary-dark));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
