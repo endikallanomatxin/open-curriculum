@@ -1,2 +1,3 @@
 - Create opening animation of logo
-
+- Redo graph images
+- Redo proposal and poll images
