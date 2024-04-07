@@ -1,5 +1,5 @@
 main{
-    font-size: 1.3rem;
+    font-size: 1.15rem;
 }
 
 main>section{
@@ -70,7 +70,8 @@ iframe {
     opacity: 0.5;
     font-size: 0.8em;
     max-width: 35em;
-    margin:auto;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 /* For blocquotes */
@@ -135,7 +136,6 @@ div[id^="expand"] {
     transition: max-height 2s ease;
     width: 100%;
 }
-
 
 div[id^="expand"]:not(.expanded) {
     max-height:0;
