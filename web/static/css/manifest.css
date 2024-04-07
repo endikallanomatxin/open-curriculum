@@ -1,17 +1,16 @@
 main{
-    font-size: 1.4rem;
+    font-size: 1.3rem;
 }
 
 main>section{
-    padding: 30vh 2rem;
+    padding: 15vh 2rem;
 }
 
 main>section>*{
-    max-width: 55rem;
+    max-width: 46rem;
     margin-left:auto;
     margin-right:auto;
 }
-
 
 
 /* Text sizing*/
@@ -22,43 +21,35 @@ h3,
 h4,
 h5,
 h6 {
-    margin-bottom: 1rem;
+    margin-bottom: 1em;
     line-height: 1.1em;
+    margin-top: 2em;
+    margin-bottom: 1em;
 }
 
-
 h2 {
-    font-size: 5rem;
+    font-size: 3.6em;
     font-weight: 800;
-    margin-bottom: 5rem;
 }
 
 h3 {
-    font-size: 2rem;
+    font-size: 2em;
     font-weight: 700;
-    margin-top: 10rem;
-    margin-bottom: 2.5rem;
 }
 
 h4 {
-    font-size: 1.6rem;
+    font-size: 1.6em;
     font-weight: 600;
-    margin-top: 5rem;
-    margin-bottom: 2rem;
 }
 
 h5 {
-    font-size: 1.4rem;
+    font-size: 1.4em;
     font-weight: 500;
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
 }
 
 h6 {
-    font-size: 1.2rem;
+    font-size: 1.2em;
     font-weight: 400;
-    margin-top: 2rem;
-    margin-bottom: 1.2rem;
 }
 
 
@@ -121,11 +112,62 @@ blockquote span {
 }
 
 
+/* Notes */
+
+span[id^="note"] {
+    font-style: italic;
+    font-size: 0.6em;
+    vertical-align:middle;
+    padding:0.2em 0.5em;
+    background-color: var(--background-darker);
+    border-radius: 0.5em;
+    opacity: 0.6;
+}
+
+span[id^="note"]:hover{
+    opacity: 1;
+}
+
+div[id^="note"] {
+    overflow:hidden;
+    transition: max-height 2s ease;
+}
+
+div[id^="note"] {
+    font-size: 0.8em;
+    font-style: italic;
+    opacity: 0.6;
+    width: 80%;
+    max-width: 35em;
+    margin:auto;
+}
+
+div[id^="note"]:not(.expanded) {
+    max-height:0;
+}
+
+div[id^="note"].expanded{
+    max-height: 100vh;
+}
+
 
 /* Intro */
 
 section#intro{
-    font-size: 1.6em;
+    font-size: 1.4em;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+}
+
+section#intro *{
+    width: 100%;
+}
+
+section#intro p{
+    margin: 0 auto;
 }
 
 section#intro div p{
@@ -133,10 +175,8 @@ section#intro div p{
 }
 
 section#intro div{
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    padding: 2rem;
-    border-radius: 1rem;
+    padding: 1em;
+    border-radius: 0.5em;
 }
 
 
