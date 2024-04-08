@@ -2,12 +2,15 @@
 <title>Manifesto for the future of education</title>
 <link rel="stylesheet" href="/static/css/manifest.css">
 <script src="/static/js/notes.js" defer></script>
+<script src="/static/js/menu.js" defer></script>
+<link rel="stylesheet" href="/static/css/menu.css">
 {{ end }}
 
 {{ define "body" }}
-<nav>
+<nav id="back">
     <a href="/">&lt; Back to the homepage</a>
 </nav>
+
 <main>
     <section id="intro">
         <p>The manifest is divided into two main sections:</p>
@@ -18,6 +21,7 @@
             <a href="#proposed-solution">The description of the <b>proposed solution</b></a>
         </div>
     </section>
+
     <section id="current-situation">
         <h2>Current situation</h2>
         <p>Historically, universities were the main centers for learning and played a key role in society's technological and intellectual progress. However, the internet has changed how we access information, making it more convenient and accessible, and often surpassing universities in providing quality educational content. With AI on the rise, we're approaching a new era in education that promises personalized learning at a lower cost, aiming to make high-quality education available to everyone.</p>
@@ -25,6 +29,7 @@
         <p>Before any proposal, let's discuss the shortcomings of both traditional education and self-taught internet education.</p>
 
         <h3>Problems of traditional education</h3>
+
         <h4>Lectures based on in-class note-taking</h4>
         <p>The traditional lecture format, which involves copying notes from the lecturer, has become outdated in the digital age. There is a great video on Sixty Symbols' youtube channel on this very topic <span id="expand-video-sixty" onclick="toggleExpand('video-sixty')">click to watch</span> from which I'd like to bring</p>
         <div id="expand-video-sixty">
@@ -110,6 +115,7 @@
         </div>
 
         <h4>Bad management of teachers' effort and talent</h4>
+
         <h5>The unnecessary repetition</h5>
         <p>Every year and for every subject, thousands of teachers simultaneously deliver lectures on the exact same topic. That is such a waste of time and effort of some of the most brilliant people on earth. With the tools we have today, the potential for cost reduction is inmense.</p>
         <h5>The lack of improvement</h5>
@@ -118,6 +124,7 @@
         </p>
         <p>As a society, we should prioritize the development of tools that allow coordination and cooperation of professors, in order to combine all the effort that is currently being wasted in redundancy.</p>
         <p>Once an excelent lecture is recorded, like Walter Lewins' incredible physics classes for example, it makes no sense to have people imparting inferior versions of the same explanations. Not only does it not add value, but it degrades the learning process of the students. The highest-quality content available should become the standart, until something better replaces it.</p>
+
         <h4>The inertia</h4>
         <p>Another weak point of universities is how slowly they react to the changing environment. This specially affects latest technological advancements (3D printing, AI...), which are often ignored for as long as possible, and creates a delay between what society needs people working on and what students are learning.</p>
         <p>Rather than a sign of professor's incompetence or apathy, this lag is inherent to the system, which has so much inertia that steering requires a titanical effort.</p>
@@ -133,15 +140,19 @@
         </center>
         <p>It is concerning how much of the globe is in the 0 to 4% group. As it is stated in the source, in many of the world's poorest countries less than 1% have completed tertiary education. It might be easy to overlook, but that also means not having doctors or engineers across the entire country.</p>
         <p>For a country to achieve long-term technological independence and successful development, a robust foundation in higher education is indispensable. This empowers local communities to create innovative solutions to their problems, instead of relying on more developed countries.</p>
+
         <h3>Problems of education based on freely available unstructured information on the internet</h3>
         <p>As previously discussed, the internet is arguably a superior source of knowledge for an agile "self-taught" learner. Nevertheless, it is not a perfect solution and has several mayor drawbacks.</p>
+
         <h4>The mess</h4>
         <p>The abundance of information on the internet is a double edge sword. The path to self-education on the internet is not always straightforward, especially when it comes to advanced topics. Without some level of initial education on the topic, it can be challenging to know what is important to learn and what is not.
         </p>
         <p>Unlike in traditional education, there is no set curriculum or clear progression of topics. It's up to the individual to discover the dependencies themselves. </p>
         <p>The inefficiencies derived from this lack of direction can outweigh the benefits of accessing the high-quality information.</p>
+
         <h4>The lack of reliability</h4>
         <p>Another major drawback is that reliability of the content is not ensured in any way. Misinformation, biased perspectives, and outdated material can easily find their way into online resources, making it essential for learners to critically evaluate the sources they encounter.</p>
+
         <h4>Incompatibility with certification</h4>
         <p>Education based on freely available and structure-less information on the internet is inherently incompatible with certification, which is often a requirement for employment.</p>
         <p>Also, there is no easy way to communicate what or how much you have learned. In universities this information is compressed into a single diploma. This makes it easy for others to immediatly have a rough idea of what you are capable of.</p>
@@ -152,24 +163,11 @@
         <p>When it comes to certification, it is nearly impossible to know how a course will be taken into consideration, as they are the oposite of standarization.</p>
         <p>What does the future hold for education? Will universities disappear, leaving education to be based solely on a multitude of courses offered on platforms like Udemy or Masterclass? Frankly, no matter how excellent the content may be, I do not believe these platforms can match universities in guiding individuals' educational development.</p>
         <p>Don't get me wrong. I will never say they are not useful or that they don't bring value, nor that creators shouldn't be economically rewarded for their effort. They just aren't how I think education should operate. Leaning on them to compensate for universities' inefficiencies might be more dangerous than it seems at first.</p>
-
-        <!--
-        <h3>The potential of AI</h3>
-        <p>It would not be wise to plan an educational solution without considering the imminent revolution ahead.</p>
-        <p>I'd like to bring another TED talk from Sal Khan (he is not just an awesome teacher but also a great thinker).</p>
-        <iframe width="560" height="315" style="display: block; margin:auto; "
-            src="https://www.youtube.com/embed/hJP5GqnTrNo" title="YouTube video player" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen></iframe>
-        <p>While many people are worried about students cheating with AI, he thinks we are going to live a very positive transformation, giving every student in the planet an amazing personal tutor.</p>
-        <p>He presents studies demonstrating that providing one-on-one tutoring to students can lead to significant improvements in their performance, turning average students into exceptional ones.</p>
-        <p>Khan showcases Khan Academy's AI tutor, Khanmigo, as an example of how AI can understand student's misconceptions and explain concepts clearly. He shows it can be an excellent tutor, providing much better help and much faster than any human teacher could. It can also engage in socratic dialogue with students andprovide them guidance and support, effectively acting as academic, career, and life coaches. This technology not only benefits students but also assists teachers, reducing the burden of lesson planning and freeing up their time for more student interaction.</p>
-        <p><br></p>
-        <p>This a unique opportunity to rethink and transform education by harnessing the power of AI. The potential benefits are vast and hold the key to shaping a future of enhanced education for all.</p>
-        -->
     </section>
+
     <section id="proposed-solution">
         <h2>Proposed solution</h2>
+
         <h3>Overview</h3>
         <p>The proposal consists of a platform in which <b>the open-source development of a high-quality curriculum</b> can be carried out (both the programme and the content).</p>
         <p>This platform would also serve as a <b>platform for certification</b>, that universities and other entities can use as a standard.</p>
@@ -193,6 +191,7 @@
             </ul>
             <br>
             <p>Broadly, this system aims to bring the benefits of the internet and open-source development to traditional education.</p>
+
             <h3>How is it different to other existing solutions?</h3>
             <p>This is not the first free and open online teaching platform. Several successful platforms, such as <i>MIT OpenCourseWare</i>, <i>Khan Academy</i>, <i>OpenLearn</i>, and <i>edX</i>, already offer a vast catalog of great courses.</p>
             <p>However,</p>
@@ -266,23 +265,28 @@
                 <p>A collection of tasks for the students to check if they properly understood the unit</p>
             </li>
         </ul>
+
         <h5>Language management</h5>
         <p>Development of the curriculum will be carried out in English and translation will be done automatically by a machine learning model.
         </p>
         <p>For situations in which the translation is not appropiate, it will be possible to override the automatic translation by the use of some specialized tags in the note's file.</p>
         <p>Once in a while, the model will be trained with the discrepancies in order to prevent future ones. This would also make older overrides unnecessary, allowing their removal.</p>
+
         <!--
         <h5>Recommended bibliography</h5>
         <p>There would be a section of recommended bibliography for every unit and group so that people can share useful resources and help development. It would allow for comments and up/down-voting (like in reddit) to ease ommunication and collaboration. This will be specially helpful in the early stages of development.</p>
         -->
+
         <h4>Proposal system for open-source curriculum development</h4>
         <p>The collaboration system is based on proposals and polls. Everybody can make proposals and vote on the polls.
         </p>
         <p>All the development will be hidden to students, who only see the last approved version while in learning mode.</p>
+
         <h5>Proposals</h5>
         <p>A proposal is a collection of changes.</p>
         <p>Proposals can contain both changes to units' content or to their dependencies, to allow modification of graph's topology.</p>
         <p>When a proposal is ready, it is submited for a poll.</p>
+
         <h5>Polls</h5>
         <p>A single-proposal poll is just a yes or no question.</p>
         <p>Polls are open for everyone to vote.</p>
@@ -297,6 +301,7 @@
         <p>Those two values can be adjusted to moderate the decision-making speed, and could also depend on the magnitude of the change being made.</p>
         <p>With this approach, small obvious improvements (like typo fixes) will happen fast because most of the votes will agree and statistical significance will be reached fast. On the contrary, extensive and relevant changes will take longer due to controversy in the polls.</p>
         <p>To prevent the system from being manipulated by small groups of coordinated people, apart from reaching statistical significance, a minimum time period and a minimum number of votes should be required for polls to conclude.</p>
+
         <h6>Multiple-proposal polls</h6>
         <p>When multiple ongoing proposals aim to modify the same part, it is considered a proposal collision, and a multiple-proposal poll is started.</p>
         <figure style="max-width:80rem; margin-top:4rem; margin-bottom:4rem;">
@@ -306,33 +311,31 @@
 
         <p>People get to vote for their preferred option among all combinations of pairs. This allows polling all the proposals against the original and also between conflicting proposals. All polls here follow the same rules as single-proposal polls.</p>
         <p>If a small change is made to a proposal that clearly enhances it, the revised version can easily and relatively quickly replace the original proposal while retaining its accumulated votes. This approach enables collaborative improvement of a proposal without the need to restart the poll.</p>
-        TODO vvv
-        <h6>Safety</h6>
-        <p>Que hay que identificarse para evitar que la gente haga bots.</p>
-        <h6>Bias compensation</h6>
-        <p>Igual que solo se aplique si el poll está sesgado</p>
-        <p>Geographical</p>
-        <p>Gender</p>
-        <p></p>
+
         <h6>Vote-weighing</h6>
         <p>If necessary, votes could be weighed according to individuals' knowledge on the discussed topic. This could help amplify the most experienced and wise opinions.</p>
         <p>Weighing could consider:</p>
         <ul>
             <li>
-                <p>The number of units that depend on the proposal the individual read or certified.</p>
+                <p>The number of units that depend on the proposal the individual read or got certified.</p>
             </li>
             <li>
-                <p>The number of total units the individual read or certified.</p>
+                <p>The number of total units the individual read or got certified.</p>
             </li>
             <li>
                 <p>Other reputation metrics that could be derived by the contributions to the system (like the number of proposals accepted, or the proportion of votes given that aligned with the resolution, for example).</p>
             </li>
         </ul>
-        TODO ^^^
+
+        <h6>Poll safety – Avoiding bots</h6>
+        <p>The curriculum developed in this platform will have a significant global impact, potentially motivating the creation of bots designed to manipulate poll outcomes.</p>
+        <p>This risk obligates the implementation of a robust verification method such as requiring users to authenticate their identity using their official national identification documents.</p>
+
         <h4>Activities</h4>
         <p>The purpose of activities in the platform is to allow students to check if they properly understood the content. They are not binding and they are not meant for certification.</p>
         <p>There are no deadlines, everything is time-independent.</p>
         <p>Depending of the neccessity of a professor's supervision, tasks can be <b>supervised</b> or <b>unsupervised.</b></p>
+
         <h5>Unsupervised Tasks</h5>
         <p>Unsupervised tasks are those that can be corrected unabiguously comparing the solution to the correct one. Examples of such tasks include tests, straightforward calculi in which the process is not too relevant…</p>
         <p>Everything that can be automated should be automated in the form of an unsupervised task, as they have much less cost for the platform and allow for a more effective resource allocation.</p>
@@ -342,6 +345,7 @@
         <p>Tasks that require creativity or do not follow a straightforward method, such as writing assignments, supervision of a professor is needed.</p>
         <p>It is important to note that these types of tasks are the most resource-intensive for the platform. Therefore, they should only be utilized when necessary. In the early stages of the platform, it may even be impractical to offer such tasks unless there is enough voluntary professor engagement or funding to support in-house professors.</p>
         <p>Organizing and coordinating professors to evaluate and provide feedback on these activities can be a challenging endeavor. It requires a well-designed system to make the process as efective as possible while keeping the cost low.</p>
+
         <h6>Correction control system</h6>
         <p>As anyone can log in as a professor, a control system has to be implemented in order to have the desired robustness and ensure accurate corrections.</p>
         <p>The control system will be a correction evaluator, in which professors have the opportunity to review and rate the corrections made by other professors. When a professor assigns a grade to another professor's correction, they also have the option to submit their own correction, which will be added to the pool of corrections to be evaluated by their peers.</p>
@@ -350,6 +354,7 @@
         <p>With a robust control system in place, it would be possible for students to participate in the correction system without sacrificing the quality of the corrections. Once students feel confident in their understanding of the assignments, they have the opportunity to prepare for exams by reviewing and correcting exercises submitted by their peers, thereby contributing to the system.</p>
         <p>While it is not ideal, if a professor wants to, the platform can offer the option for closed correction groups. This means tasks done by students in that group will only be corrected by that professor, and that the profesor won't participate in the correction of the general pool of tasks.</p>
         <p>This approach deviates from the collaborative values of the platform; however, it acknowledges the importance of strong professor-student relationships, providing personalized support; and gives the platform enough flexibility to accomodate more traditional teaching methods.</p>
+
         <h6>AI corrector</h6>
         <p>If this system were implemented, it would generate a vast dataset of corrections along with evaluations of their quality. This presents an excellent opportunity to train a language model using reinforcement learning from human feedback.</p>
         <p>Further exploration of the details is necessary, but it could be possible to train an model to predict scores for corrections and then use it as a loss function to train another model that is capable of generating its own corrections. </p>
@@ -357,71 +362,44 @@
         <p>If this system proves successful, it could lead to a significant reduction in the cost of high-quality exercise correction <span id="expand-jobs" onclick="toggleExpand('jobs')">see note</span>.</p>
         <div id="expand-jobs">
             <p class="comment">The introduction of this platform may indeed reduce the need for traditional professors, which could potentially lead to job displacement. However, due to the openess of the platform, the benefits derived from it are shared for the betterment of all of humanity. The aim is not to render professors obsolete, but rather to leverage technology to enhance education and make it more accessible.</p></div>
-        <h4>Certification</h4>
-        <p>As previously stated, the platform is not aimed to substitute universities at being the official means of knowledge certification.</p>
-        <p>An interesting way to integrate the platform with certification institutions would be to show a list of available certification options for each unit.</p>
-        <p>They could be ordered by language, proximity to the student, popularity… If the platform is in need of funding, it could also be given priority to universities that donated more or contributed more to the platform, as an incentive.</p>
-        TODO: Ellaborate on this ^^^
 
         <h3>Implementation and integration into the current education system</h3>
         <p>As previously stated, the proposed system is meant to work together with current tertiary educational institutions.</p>
         <p>A desirable future scenario is one in which universities adhere to the open-source curriculum, contribute to it, use the freely-available content in their clases, and they record students' certifications on the platform.</p>
         <p>In order for the system to have a successful adoption, both universities and individual teachers have to have incentives to follow the curriculum and use the tools provided by the platform. In the following lines, several usecases are considered.</p>
+
         <h4>Teachers using the tools in ther class</h4>
         <p>Teachers can individually choose to integrate the platform into their classes without requiring approval from their university or coordination with the platform.</p>
         <p>The main incentive for them is the quality and reliability the open-source curriculum brings.</p>
         <p>Without further implications, teachers could use the curriculum to prepare their lectures, or recommend it to students as the main or additional material of the subject.</p>
         <p>Also, students could use the exercises of the platform, both in class with the guidance of the professor, or out of class to study.</p>
         <p>If teachers want to correct exercises or access their students' results to monitor their progress, they can create a closed student group and use the tools provided by the platform.</p>
+
         <h4>Universities adhering to the curriculum and coordinating with the platform</h4>
         <p>The implementation of the platform could go to a further extent by the university officially adhering to the open-soruce curriculum in one, many or all of the subjects offered.
         </p>
         <p>The university could also coordinate with the platform so that when a student successfully completes a subject the certification can be recorded in the student's profile.
         </p>
+
+        <h5>Universities offering certification service to external students</h5>
+        <p>After finishing a unit, independent students could be shown a list of available certification institutions.</p>
+        <p>This would help both students that prefer a more unconstrained education and universities, which will get a new source of income.</p>
+
         <h5>Project-oriented learning</h5>
         <p>An unexpected result of having such an atomized curriculum is that it allows a project-centered approach to education.</p>
         <p>Universities could dedicate a specific subject to projects, offering students the opportunity to choose projects aligned with their interests.</p>
         <p>Students could access content from the platform that is relevant for the project. After the professors assesment, successful application of acquired knowledge and skills would result in getting the corresponding certifications.</p>
         <p>This project-centered approach promotes active learning, critical thinking, and the development of real-world problem-solving abilities, while being compatible with a proper certification system.</p>
-        <h4>Extension of the university-oriented model for secondary education</h4>
+
+        <h4>Extension of the platform to secondary education</h4>
         <p>The platform is pitched towards tertiary education because that's what it is most suitable for, specially due to its content-oriented nature and the level of autonomy that can be expected from students. However, even if teaching at younger ages involves much more than content, it can also be benefitial in secondary education.</p>
         <p>The open curriculum will naturally extend to secondary education as more teachers find it useful and integrate the platform into their classrooms.</p>
-
-        <!--
-        <h3>On money</h3>
-        <h4>Money in: Financing the development</h4>
-        <p>Let's first make this clear: Access to the platform will always be free and there will be no paid version with additional features. Everyone will be a first-class student.
-        </p>
-        <p>Ideally, the platform's sustainability will be supported through donations and government grants. In case additional funding was needed, other alternatives could be explored.
-        </p>
-        <p>Development and operational cost of the platform will depend on the extent of the participation of the open-source community, but it will very likely be tiny compared to the global cost of education.</p>
-        <h4>Money out: Monetization of the platform</h4>
-        <p>This is one the toughest considerations on the platform's design.</p>
-        <p>Due to the open nature of the initiative, if possible, it is preferable to avoid content monetization.</p>
-        <p>Nevertheless, prudence suggests the need for a contingency plan, in case the incentives for participation mentioned earlier prove insufficient. It is worth exploring methods to fairly remunerate individuals for their contributions. There are two main aspects for which monetization could be considered:</p>
-        <ul>
-            <li>
-                <p>The creation of the curriculum</p>
-            </li>
-            <li>
-                <p>The correction service</p>
-            </li>
-        </ul>
-        <h5>Paying content creators</h5>
-        <p>The number of successful examples of open-source development indicates that the participation of contributors can be an effective means of curriculum development. Given the project's relevance and the strong incentives from various stakeholder for the curriculum's success, it is anticipated that the participation of contributors will be sufficient to drive curriculum development at an appropriate pace.</p>
-        <p>If this proves to be the case, it would be advisable to avoid paying content creators, as the monetization of this aspect is difficult and could introduce complexities and dynamics that may not be beneficial, having unintended consequences (like creating the incentive to exploit the poll system).</p>
-        <h5>Paying correctors</h5>
-        <p>On the other hand, the platform aims to provide a task correction service, which may require compensating contributors to incentivize their investment of time and effort.
-        </p>
-        <p>Fortunately, monetizing the correction service appears to be more straightforward: Corrections can be easily quantified, and their quality is inherently measured by the system.
-        </p>
-        <p>In this case, introducing a payment system for correctors would likely create beneficial dynamics that align with the platform's goals, and result in the overall benefit, ensuring the availabilty of high-quality corrections.</p>
-        <p><br><br><br> By carefully considering the monetization approaches for each aspect, the platform can maintain a balance between healthy growth and development, and preserving the collaborative and open nature of the project.</p>
-        -->
     </section>
+
     <section>
         <p>Thank you for your time :)</p>
     </section>
+
     <script>
         // Apply the animation to the questions and answers
         const elements = document.querySelectorAll('section>*');
