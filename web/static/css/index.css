@@ -43,13 +43,33 @@ section#abstract{
     text-align: left;
 }
 
-section#abstract p,li{
+section#abstract p{
     max-width: 65rem;
     text-align: left;
     margin-left:auto;
     margin-right:auto;
-    margin-top: 1em;
 }
+
+section#abstract>div{
+    background-color: var(--background);
+    display: grid;
+    grid-template-columns: 4rem auto;
+    padding: 1.8rem 2.6rem;
+    border-radius: 2rem;
+    grid-gap: 1.8rem;
+    max-width: 65rem;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+section#abstract>div>svg{
+    width: 80%;
+    margin: auto;
+    height: auto;
+}
+
+
 
 /* MAIN>MANIFEST-FOUNDATION */
 
