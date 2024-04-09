@@ -3,11 +3,16 @@ main{
 }
 
 main>section{
-    padding: 30vh 2rem;
+    padding: 10vh 2rem;
 }
 
 main>section>*{
     max-width: 55rem;
     margin-left:auto;
     margin-right:auto;
+}
+
+/* Headings in priamry-dark */
+h1,h2,h3,h4,h5,h6{
+    color: var(--primary-dark);
 }
