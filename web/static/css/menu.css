@@ -1,0 +1,70 @@
+div#menu{
+    position:fixed;
+    top:0;
+    left: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 25rem;
+    padding-left: 2rem;
+    z-index: -1;
+}
+
+@media (max-width: 1500px) {
+    div#menu{
+        display: none;
+    }
+}
+
+div#menu a{
+    padding-top: 0.5em;
+    padding-bottom: 0.1em;
+}
+
+div#menu a[href^="#H2"]{
+    font-weight: 700;
+    font-size: 1.6em;
+    padding-left: 0;
+}
+
+div#menu a[href^="#H3"]{
+    font-weight: 600;
+    font-size: 1.3em;
+    padding-left: 1rem;
+}
+
+div#menu a[href^="#H4"]{
+    font-weight: 500;
+    font-size: 1.1em;
+    padding-left: 2rem;
+}
+
+div#menu a[href^="#H5"]{
+    font-weight: 400;
+    font-size: 0.9em;
+    padding-left: 3rem;
+}
+
+div#menu a[href^="#H6"]{
+    font-weight: 300;
+    font-size: 0.8em;
+    padding-left: 4rem;
+}
+
+div#menu a{
+    opacity: 1;
+    max-height: 10rem;
+    overflow: hidden;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+
+div#menu a.collapsed{
+    opacity: 0;
+    max-height: 0;
+    margin-top:0;
+    margin-bottom:0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
