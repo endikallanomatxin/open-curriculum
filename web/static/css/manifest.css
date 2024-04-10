@@ -1,10 +1,14 @@
-main{
-    font-size: 1.15rem;
+@media screen and (min-width: 900px){
+    main{
+        font-size: 1.15em;
+    }
 }
 
+
 main>section{
-    padding: 15vh 2rem;
+    padding: 15vh 1rem;
 }
+
 
 main>section>*{
     max-width: 46rem;

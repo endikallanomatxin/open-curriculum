@@ -25,7 +25,14 @@ header h1{
 /* MAIN*/
 
 main{
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+}
+
+@media screen and (min-width: 1200px){
+    main{
+        font-size: 1.4rem;
+    }
+    
 }
 
 main>section{
@@ -37,13 +44,13 @@ main>section{
 
 section#abstract{
     background-color: var(--background-dark);
-    font-size: 1.5em;
     margin-left: auto;
     margin-right: auto;
     text-align: left;
 }
 
 section#abstract p{
+    width: 100%;
     max-width: 65rem;
     text-align: left;
     margin-left:auto;
@@ -53,20 +60,46 @@ section#abstract p{
 section#abstract>div{
     background-color: var(--background);
     display: grid;
-    grid-template-columns: 4rem auto;
-    padding: 1.8rem 2.6rem;
+    grid-template-columns: 1.6em auto;
+    padding: 0.4rem 1.2rem;
     border-radius: 2rem;
-    grid-gap: 1.8rem;
+    grid-gap: 1rem;
     max-width: 65rem;
     margin: auto;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 section#abstract>div>svg{
-    width: 80%;
+    width: 100%;
     margin: auto;
     height: auto;
+}
+
+@media screen and (min-width: 900px){
+    section#abstract{
+        font-size:1.3em;
+    }
+    section#abstract>div{
+        grid-template-columns: 1.8em auto;
+        padding: 1rem 2rem;
+        grid-gap: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media screen and (min-width: 1200px){
+    section#abstract{
+        font-size:1.5em;
+    }
+    section#abstract>div{
+        grid-template-columns: 2em auto;
+        padding: 1.8rem 2.8rem;
+        grid-gap: 1.8rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
 }
 
 
@@ -78,6 +111,10 @@ section#manifest-foundation{
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 2rem;
+}
+
+section#manifest-foundation p{
+    text-align: left;
 }
 
 @media screen and (min-width: 1200px){
@@ -108,17 +145,24 @@ section#manifest-foundation{
 }
 
 div.card{
-    padding: 3rem;
-    margin: 4rem 0;
+    padding: 2rem;
+    margin: 3rem 0;
     border-radius: 1rem;
     background-color: var(--background-dark);
+}
+
+@media screen and (min-width: 1200px){
+    div.card{
+        padding: 3rem;
+        margin: 4rem 0;
+    }
 }
 
 div.card h2{
     font-size: 1.4em;
     font-weight: 800;
     margin:0;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 
 div.card p{
@@ -128,7 +172,13 @@ div.card p{
 div.card a{
     font-weight: 700;
     display: block;
-    margin-top: 2rem;
+    margin-top: 0.8rem;
+}
+
+@media screen and (min-width: 1200px){
+    div.card a{
+        margin-top: 1.2em;
+    }
 }
 
 
