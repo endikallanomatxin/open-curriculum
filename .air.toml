@@ -1,0 +1,22 @@
+# Config file for [Air](https://github.com/cosmtrek/air) in TOML format
+
+# Working directory
+# . or absolute path, please note that the directories following must be under root
+root = "." 
+tmp_dir = "tmp"
+
+[build]
+# Watch these filename extensions.
+include_ext = ["go", "yaml","css", "html", "js", "json", "xml", "yml", "toml", "sql", "sh", "md", "mod", "sum", "lock"]
+# Ignore these filename extensions or directories.
+exclude_dir = ["tmp"]
+# It's not necessary to trigger build each time file changes if it's too frequent.
+delay = 1000 # ms
+
+[log]
+# Show log time
+time = true
+
+[misc]
+# Delete tmp directory on exit
+clean_on_exit = true
