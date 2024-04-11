@@ -27,7 +27,6 @@ h5,
 h6 {
     margin-bottom: 1em;
     line-height: 1.1em;
-    margin-top: 2em;
     margin-bottom: 1em;
 }
 
@@ -39,21 +38,26 @@ h2 {
 h3 {
     font-size: 2em;
     font-weight: 700;
+    margin-top: 3.5em;
 }
 
 h4 {
+
     font-size: 1.6em;
     font-weight: 600;
+    margin-top: 3em;
 }
 
 h5 {
     font-size: 1.4em;
     font-weight: 500;
+    margin-top: 2.5em;
 }
 
 h6 {
     font-size: 1.2em;
     font-weight: 400;
+    margin-top: 2em;
 }
 
 
@@ -139,6 +143,7 @@ div[id^="expand"] {
     overflow:hidden;
     transition: max-height 2s ease;
     width: 100%;
+    opacity: 0.9;
 }
 
 div[id^="expand"]:not(.expanded) {
@@ -146,7 +151,7 @@ div[id^="expand"]:not(.expanded) {
 }
 
 div[id^="expand"].expanded{
-    max-height: 100vh;
+    max-height: 200vh;
 }
 
 
