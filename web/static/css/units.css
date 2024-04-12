@@ -5,13 +5,37 @@ main>* {
 }
 
 div.unit{
-    background-color: var(--background-dark);
-    padding: 1rem 1.5rem;
-    border-radius: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.2rem;
 }
 
 div.unit p{
+    background-color: var(--background-dark);
+    padding: 0.6rem 1rem;
+    border-radius: 2rem;
     margin:0;
     font-weight: 600;
     font-size: 1.2em;
+}
+
+div.unit::before{
+    content: '';
+    display: inline-block;
+    width: 1.4rem;
+    height: 1.4rem;
+    -moz-border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    border-radius: 1rem;
+    border: 0.3rem solid var(--primary-dark);
+    background-color: var(--primary-white);
+    margin:0;
+}
+
+div.level{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.2rem;
 }

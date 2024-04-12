@@ -22,13 +22,14 @@
     <div id="units">
         {{ range $level, $units := .UnitsByLevel }}
             <div class="level">
-                <p>Level: {{ $level }}</p>
                 {{ range $units }}
                     <div class="unit" onclick="location.href='/units/{{ .ID }}';">
+                        <div></div>
                         <p>{{ .Name }}</p>
                     </div>
                 {{ end }}
             </div>
+            v
         {{ end }}
     </div>
 </main>

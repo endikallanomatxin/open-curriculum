@@ -7,6 +7,7 @@
 :root {
     --primary-dark: hsl(160, 40%, 20%);
     --primary-light: hsl(160, 40%, 35%);
+    --primary-white: hsl(167, 20%, 90%);
 
     --secondary-dark: hsl(20, 60%, 35%);
     --secondary-light: hsl(20, 60%, 50%);
