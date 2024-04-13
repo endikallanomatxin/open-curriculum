@@ -36,6 +36,6 @@
         <button type="submit">Add</button>
     </form>
 
-    <a hx-delete="/units/{{ .Unit.ID }}" hx-target="body" hx-swap="outerHTML">Delete</a>
+    <button hx-delete="/units/{{ .Unit.ID }}" hx-trigger="click" hx-confirm="Are you sure you want to delete this unit?">Delete</button>
 </main>
 {{ end }}

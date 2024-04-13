@@ -171,7 +171,8 @@ func unitHandler(w http.ResponseWriter, r *http.Request) {
 
 		db.DeleteUnit(id)
 
-		http.Redirect(w, r, "/units", http.StatusSeeOther)
+		w.Header().Set("HX-Redirect", "/units")
+		w.WriteHeader(http.StatusOK)
 	}
 }
 
