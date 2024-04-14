@@ -19,6 +19,11 @@
     --dark: hsl(340,5%,13%);
     
     --text-color: var(--dark);
+
+    /*FOnt sharpening*/
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smooth: never;
 }
 
 body{
