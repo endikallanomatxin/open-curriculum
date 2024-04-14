@@ -1,13 +1,9 @@
 version: '3.8'
 services:
   app:
+    dockerfile: Dockerfile.dev
     build:
       context: .
-      args:
-        ENVIRONMENT: prod
-        DINAHOSTING_USER: ${DINAHOSTING_USER}
-        DINAHOSTING_PASSWORD: ${DINAHOSTING_PASSWORD}
-        DINAHOSTING_DOMAIN: ${DINAHOSTING_DOMAIN}
     ports:
       - "8080:8080"
     depends_on:
@@ -18,6 +14,8 @@ services:
       DB_PASSWORD: mypassword
       DB_NAME: mydatabase
       DB_PORT: 5432
+    volumes:
+      - .:/app
 
   db:
     image: postgres:alpine

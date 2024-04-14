@@ -7,7 +7,7 @@ Made with go and postgresql.
 To run it:
 
 ```bash
-sudo docker compose up --build
+sudo docker compose up --build 
 ```
 
 
