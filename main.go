@@ -14,29 +14,17 @@ func main() {
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		tmpl, _ := template.ParseFiles("web/templates/base.html", "web/templates/index.html")
-		_ = tmpl.ExecuteTemplate(w, "base.html", struct {
-			Title string
-		}{
-			Title: "Página de Inicio",
-		})
+		_ = tmpl.ExecuteTemplate(w, "base.html", nil)
 	})
 
 	http.HandleFunc("/manifest", func(w http.ResponseWriter, r *http.Request) {
 		tmpl, _ := template.ParseFiles("web/templates/base.html", "web/templates/manifest.html")
-		_ = tmpl.ExecuteTemplate(w, "base.html", struct {
-			Title string
-		}{
-			Title: "Manifest",
-		})
+		_ = tmpl.ExecuteTemplate(w, "base.html", nil)
 	})
 
 	http.HandleFunc("/foundation", func(w http.ResponseWriter, r *http.Request) {
 		tmpl, _ := template.ParseFiles("web/templates/base.html", "web/templates/foundation.html")
-		_ = tmpl.ExecuteTemplate(w, "base.html", struct {
-			Title string
-		}{
-			Title: "Foundation",
-		})
+		_ = tmpl.ExecuteTemplate(w, "base.html", nil)
 	})
 
 	http.HandleFunc("/units", unitsHandler)
