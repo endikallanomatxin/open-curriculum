@@ -38,7 +38,8 @@ func main() {
 }
 
 func unitsHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "GET" {
+	switch r.Method {
+	case "GET":
 		// Parsea la plantilla base y la específica
 		tmpl, err := template.ParseFiles("web/templates/base.html", "web/templates/units.html")
 		if err != nil {
@@ -47,9 +48,6 @@ func unitsHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Units by levels based on their dependencies
-		// Level 0 means the unit has no dependencies
-		// Level 1 means the unit depends on a unit with level 0
-		// Level 2 means the unit depends on a unit with level 1, and so on
 		unassignedUnits := db.GetUnits()
 		dependencies := db.GetAllDependencies()
 
@@ -106,7 +104,7 @@ func unitsHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-	} else if r.Method == "POST" {
+	case "POST":
 		r.ParseForm()
 		name := r.Form.Get("name")
 		description := r.Form.Get("description")
@@ -123,7 +121,8 @@ func unitsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func unitHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "GET" {
+	switch r.Method {
+	case "GET":
 		// Parsea la plantilla base y la específica
 		tmpl, err := template.ParseFiles("web/templates/base.html", "web/templates/unit.html")
 		if err != nil {
@@ -153,7 +152,7 @@ func unitHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-	} else if r.Method == "DELETE" {
+	case "DELETE":
 		id := 0
 		fmt.Sscanf(r.URL.Path, "/units/%d", &id)
 
@@ -165,7 +164,8 @@ func unitHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func dependenciesHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "PUT" {
+	switch r.Method {
+	case "PUT":
 		r.ParseForm()
 		unit_id, _ := strconv.Atoi(r.Form.Get("unit_id"))
 		depends_on_id, _ := strconv.Atoi(r.Form.Get("depends_on_id"))
@@ -173,7 +173,7 @@ func dependenciesHandler(w http.ResponseWriter, r *http.Request) {
 		db.CreateDependency(unit_id, depends_on_id)
 		http.Redirect(w, r, "/units/"+strconv.Itoa(unit_id), http.StatusSeeOther)
 
-	} else if r.Method == "DELETE" {
+	case "DELETE":
 		unit_id, _ := strconv.Atoi(r.URL.Query().Get("unit_id"))
 		depends_on_id, _ := strconv.Atoi(r.URL.Query().Get("depends_on_id"))
 		db.DeleteDependency(unit_id, depends_on_id)
