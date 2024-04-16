@@ -17,7 +17,7 @@
     {{ if .Dependencies }}
         <ul>
         {{ range .Dependencies }}
-            <li><a href="/units/{{ .ID }}">{{ .Name }}</a>
+            <li><a href="/unit/{{ .ID }}">{{ .Name }}</a>
                 <button hx-delete="/dependencies?unit_id={{$.Unit.ID}}&depends_on_id={{.ID}}" hx-target="body">x</button>
             </li>
         {{ end }}
@@ -36,6 +36,6 @@
         <button type="submit">Add</button>
     </form>
 
-    <button hx-delete="/units/{{ .Unit.ID }}" hx-trigger="click" hx-confirm="Are you sure you want to delete this unit?">Delete</button>
+    <button hx-delete="/unit/{{ .Unit.ID }}" hx-trigger="click" hx-confirm="Are you sure you want to delete this unit?">Delete</button>
 </main>
 {{ end }}
