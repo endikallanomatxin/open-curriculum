@@ -9,7 +9,8 @@ import (
 )
 
 func main() {
-	db.InitializeDB()
+	db.Init()
+	defer db.Close()
 
 	mux := http.NewServeMux()
 
