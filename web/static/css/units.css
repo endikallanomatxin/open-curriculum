@@ -20,7 +20,7 @@ div.unit p{
     font-size: 1.2em;
 }
 
-div.unit::before{
+div.node{
     content: '';
     display: inline-block;
     width: 1.6rem;

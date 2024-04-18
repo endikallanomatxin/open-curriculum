@@ -24,7 +24,7 @@
             <div class="level">
                 {{ range $units }}
                     <div class="unit" id="unit-{{ .ID }}" onclick="location.href='/unit/{{ .ID }}';">
-                        <div></div>
+                        <div class="node" id="node-{{ .ID}}"></div>
                         <p>{{ .Name }}</p>
                     </div>
                 {{ end }}
@@ -81,17 +81,24 @@
             { from: {{ .DependsOnID }}, to: {{ .UnitID }} },
         {{ end }}]
 
-    // Now create a function that creates an svg arrow from the bottom part of a unit to the top part of another unit
+    // Now create a function that creates an svg arrow from one units node to another
     function createArrow(from, to) {
-        const fromUnit = document.getElementById(`unit-${from}`)
-        const toUnit = document.getElementById(`unit-${to}`)
+        // Get the two nodes
+        const nodeFrom = document.getElementById(`node-${from}`)
+        const nodeTo = document.getElementById(`node-${to}`)
+
+        // Get the center of the two nodes
+        const rectFrom = nodeFrom.getBoundingClientRect()
+        const rectTo = nodeTo.getBoundingClientRect()
+
         const pointFrom = {
-            x: fromUnit.offsetLeft + fromUnit.offsetWidth / 2,
-            y: fromUnit.offsetTop + fromUnit.offsetHeight
+            x: rectFrom.left + rectFrom.width / 2,
+            y: rectFrom.top + rectFrom.height / 2
         }
+
         const pointTo = {
-            x: toUnit.offsetLeft + toUnit.offsetWidth / 2,
-            y: toUnit.offsetTop
+            x: rectTo.left + rectTo.width / 2,
+            y: rectTo.top + rectTo.height / 2
         }
 
         // Create the svg element
