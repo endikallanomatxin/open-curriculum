@@ -26,7 +26,7 @@ func Units(w http.ResponseWriter, r *http.Request) {
 
 				for _, d := range dependencies {
 					for _, otherU := range unassignedUnits {
-						if checkingU.ID == d.ID && otherU.ID == d.DependsOnID {
+						if checkingU.ID == d.UnitID && otherU.ID == d.DependsOnID {
 							dependsOnUnassigned = true
 							break
 						}
