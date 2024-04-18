@@ -23,7 +23,7 @@
         {{ range $level, $units := .UnitsByLevel }}
             <div class="level">
                 {{ range $units }}
-                    <div class="unit" onclick="location.href='/unit/{{ .ID }}';">
+                    <div class="unit" id="unit-{{ .ID }}" onclick="location.href='/unit/{{ .ID }}';">
                         <div></div>
                         <p>{{ .Name }}</p>
                     </div>
@@ -43,5 +43,90 @@
         display: inline-block;
     }
 </style>
+
+
+<script>
+    // I want to create arrows representing dependencies between units
+    // These are the data types
+    // data is passed to the template from the server
+    //		data := struct {
+    //			Title        string
+    //			Units        []db.Unit
+    //			Dependencies []db.Dependency
+    //			UnitsByLevel map[int][]db.Unit
+    //		}{
+    //			Title:        "Página de Unidades",
+    //			Units:        db.GetUnits(),
+    //			Dependencies: db.GetAllDependencies(),
+    //			UnitsByLevel: unitsByLevel,
+    //		}
+    //
+    //        type Unit struct {
+    //            ID          int
+    //            Name        string
+    //            Description string
+    //        }
+    //
+    //        type Dependency struct {
+    //            ID          int
+    //            UnitID      int
+    //            DependsOnID int
+    //        }
+
+    // This is how you do it
+    
+    // Pass the dependencies to a js array of objects
+    const dependencies = [
+        {{ range .Dependencies }}
+            { from: {{ .DependsOnID }}, to: {{ .UnitID }} },
+        {{ end }}]
+
+    // Now create a function that creates an svg arrow from the bottom part of a unit to the top part of another unit
+    function createArrow(from, to) {
+        const fromUnit = document.getElementById(`unit-${from}`)
+        const toUnit = document.getElementById(`unit-${to}`)
+        const pointFrom = {
+            x: fromUnit.offsetLeft + fromUnit.offsetWidth / 2,
+            y: fromUnit.offsetTop + fromUnit.offsetHeight
+        }
+        const pointTo = {
+            x: toUnit.offsetLeft + toUnit.offsetWidth / 2,
+            y: toUnit.offsetTop
+        }
+
+        // Create the svg element
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+        svg.setAttribute("width", "100%")
+        svg.setAttribute("height", "100%")
+        svg.style.position = "absolute"
+        svg.style.top = 0
+        svg.style.left = 0
+        svg.style.zIndex = 10
+
+        // Create the path element
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path")
+        path.setAttribute("d", `M ${pointFrom.x} ${pointFrom.y} L ${pointTo.x} ${pointTo.y}`)
+        path.setAttribute("stroke", "black")
+        path.setAttribute("stroke-width", 2)
+        path.setAttribute("fill", "none")
+
+        // Append the path to the svg
+        svg.appendChild(path)
+
+        // Append the svg to the body
+        document.body.appendChild(svg)
+    }
+
+    // Now iterate over the dependencies array and create the arrows
+    dependencies.forEach(dep => createArrow(dep.from, dep.to))
+
+    // Redraw the arrows when the window is resized
+    window.addEventListener("resize", () => {
+        document.querySelectorAll("svg").forEach(svg => svg.remove())
+        dependencies.forEach(dep => createArrow(dep.from, dep.to))
+    })
+
+</script>
+
 
 {{ end }}
