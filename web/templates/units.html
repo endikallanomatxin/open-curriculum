@@ -29,7 +29,6 @@
                     </div>
                 {{ end }}
             </div>
-            v
         {{ end }}
     </div>
 </main>
@@ -99,29 +98,62 @@
         const pointTo = {
             x: rectTo.left + rectTo.width / 2,
             y: rectTo.top + rectTo.height / 2
-        }
+        };
+
+        // Calculate unit vector for the direction
+        const dx = pointTo.x - pointFrom.x;
+        const dy = pointTo.y - pointFrom.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const unitX = dx / distance;
+        const unitY = dy / distance;
+
+        // Shorten the path from both ends
+        const fromOffset = 10;
+        const toOffset = 16;
+        const adjustedFrom = {
+            x: pointFrom.x + unitX * fromOffset,
+            y: pointFrom.y + unitY * fromOffset
+        };
+        const adjustedTo = {
+            x: pointTo.x - unitX * toOffset,
+            y: pointTo.y - unitY * toOffset
+        };
 
         // Create the svg element
-        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
-        svg.setAttribute("width", "100%")
-        svg.setAttribute("height", "100%")
-        svg.style.position = "absolute"
-        svg.style.top = 0
-        svg.style.left = 0
-        svg.style.zIndex = 10
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("width", "100%");
+        svg.setAttribute("height", "100%");
+        svg.style.position = "absolute";
+        svg.style.top = 0;
+        svg.style.left = 0;
+        svg.style.zIndex = 10;
 
-        // Create the path element
-        const path = document.createElementNS("http://www.w3.org/2000/svg", "path")
-        path.setAttribute("d", `M ${pointFrom.x} ${pointFrom.y} L ${pointTo.x} ${pointTo.y}`)
-        path.setAttribute("stroke", "black")
-        path.setAttribute("stroke-width", 2)
-        path.setAttribute("fill", "none")
+        // Define an arrowhead marker
+        const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+        const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
+        marker.setAttribute("id", "arrowhead");
+        marker.setAttribute("markerWidth", "6");
+        marker.setAttribute("markerHeight", "4");
+        marker.setAttribute("refX", "0");
+        marker.setAttribute("refY", "2");
+        marker.setAttribute("orient", "auto");
+        const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+        polygon.setAttribute("points", "0 0, 6 2, 0 4");
+        polygon.setAttribute("fill", "black");
+        marker.appendChild(polygon);
+        defs.appendChild(marker);
+        svg.appendChild(defs);
 
-        // Append the path to the svg
-        svg.appendChild(path)
+        // Create the path element with the arrowhead
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", `M ${adjustedFrom.x} ${adjustedFrom.y} L ${adjustedTo.x} ${adjustedTo.y}`);
+        path.setAttribute("stroke", "black");
+        path.setAttribute("stroke-width", "2");
+        path.setAttribute("fill", "none");
+        path.setAttribute("marker-end", "url(#arrowhead)");
 
-        // Append the svg to the body
-        document.body.appendChild(svg)
+        svg.appendChild(path);
+        document.body.appendChild(svg);
     }
 
     // Now iterate over the dependencies array and create the arrows
