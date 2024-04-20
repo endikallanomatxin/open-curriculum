@@ -1,6 +1,7 @@
 package db
 
 import (
+	"errors"
 	"log"
 )
 
@@ -25,20 +26,44 @@ func DependenciesCreateTables() {
 	}
 }
 
-func CheckDependency(unit_id int, depends_on_id int) bool {
+func CheckCircularDependency(unitID, dependsOnID int) error {
+	visited := make(map[int]bool)
+	path := make(map[int]bool)
 
-	// Check for self-dependency
-	if unit_id == depends_on_id {
-		return false
+	// Verificar si hay un ciclo comenzando desde la unidad objetivo hacia la unidad fuente
+	if hasCycle(dependsOnID, unitID, visited, path) {
+		return errors.New("Circular dependency detected")
 	}
 
-	// Check for circular dependency
+	return nil
+}
 
-	// Follow the dependencies until the end, if it finds the original unit, it's a circular dependency
-	// TODO
+func hasCycle(unitID, targetID int, visited, path map[int]bool) bool {
+	// Marcar la unidad actual como visitada y agregarla al camino actual
+	visited[unitID] = true
+	path[unitID] = true
 
-	return true
+	// Obtener las dependencias de la unidad actual
+	dependencies := GetUnitDependencies(unitID)
 
+	// Iterar sobre las dependencias
+	for _, dep := range dependencies {
+		// Si la dependencia es la unidad objetivo, se detecta un ciclo
+		if dep.ID == targetID {
+			return true
+		}
+		// Si la dependencia no ha sido visitada aún, recursivamente verificar si hay ciclo
+		if !visited[dep.ID] && hasCycle(dep.ID, targetID, visited, path) {
+			return true
+		} else if path[dep.ID] {
+			// Si la dependencia está en el camino actual, se detecta un ciclo
+			return true
+		}
+	}
+
+	// Eliminar la unidad actual del camino actual
+	path[unitID] = false
+	return false
 }
 
 func GetUnitDependencies(unit_id int) []Unit {
@@ -57,7 +82,6 @@ func GetUnitDependencies(unit_id int) []Unit {
 		}
 		units = append(units, u)
 	}
-
 	return units
 }
 
@@ -81,15 +105,19 @@ func GetAllDependencies() []Dependency {
 	return dependencies
 }
 
-func CreateDependency(unit_id int, depends_on_id int) {
-	if !CheckDependency(unit_id, depends_on_id) {
-		log.Fatalf("Error creating dependency: Circular dependency")
-		return
+func CreateDependency(unit_id int, depends_on_id int) error {
+	// Check if the new dependency will create a circular dependency
+	if err := CheckCircularDependency(unit_id, depends_on_id); err != nil {
+		return err
 	}
+
+	// If no circular dependency is detected, proceed with creating the dependency
 	_, err := db.Exec("INSERT INTO dependencies (unit_id, depends_on_id) VALUES ($1, $2)", unit_id, depends_on_id)
 	if err != nil {
-		log.Fatalf("Error creating dependency: %q", err)
+		return err
 	}
+
+	return nil
 }
 
 func DeleteDependency(unit_id int, depends_on_id int) {

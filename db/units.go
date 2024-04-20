@@ -88,3 +88,48 @@ func DeleteUnit(id int) {
 		log.Fatalf("Error deleting unit: %q", err)
 	}
 }
+
+
+func GetUnitsByLevel() map[int][]Unit {
+
+	// Units by levels based on their dependencies
+	unassignedUnits := GetUnits()
+	dependencies := GetAllDependencies()
+
+	unitsByLevel := make(map[int][]Unit)
+
+	// Iterate over the units and assign them to a level
+	// Units array will be empty when all units are assigned to a level
+	for level := 0; len(unassignedUnits) > 0; level++ {
+		unitsByLevel[level] = []Unit{}
+
+		for _, checkingU := range unassignedUnits {
+			dependsOnUnassigned := false
+
+			for _, d := range dependencies {
+				for _, otherU := range unassignedUnits {
+					if checkingU.ID == d.UnitID && otherU.ID == d.DependsOnID {
+						dependsOnUnassigned = true
+						break
+					}
+				}
+			}
+
+			if !dependsOnUnassigned {
+				unitsByLevel[level] = append(unitsByLevel[level], checkingU)
+			}
+		}
+
+		// Remove assigned units from the unassigned units array
+		for _, u := range unitsByLevel[level] {
+			for i, unassignedU := range unassignedUnits {
+				if u.ID == unassignedU.ID {
+					unassignedUnits = append(unassignedUnits[:i], unassignedUnits[i+1:]...)
+					break
+				}
+			}
+		}
+	}
+
+	return unitsByLevel
+}
