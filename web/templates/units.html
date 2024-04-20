@@ -82,34 +82,30 @@
 
     // Now create a function that creates an svg arrow from one units node to another
     function createArrow(from, to) {
-        // Get the two nodes
-        const nodeFrom = document.getElementById(`node-${from}`)
-        const nodeTo = document.getElementById(`node-${to}`)
+        const nodeFrom = document.getElementById(`node-${from}`);
+        const nodeTo = document.getElementById(`node-${to}`);
 
-        // Get the center of the two nodes
-        const rectFrom = nodeFrom.getBoundingClientRect()
-        const rectTo = nodeTo.getBoundingClientRect()
+        const rectFrom = nodeFrom.getBoundingClientRect();
+        const rectTo = nodeTo.getBoundingClientRect();
 
         const pointFrom = {
             x: rectFrom.left + rectFrom.width / 2,
             y: rectFrom.top + rectFrom.height / 2
-        }
+        };
 
         const pointTo = {
             x: rectTo.left + rectTo.width / 2,
             y: rectTo.top + rectTo.height / 2
         };
 
-        // Calculate unit vector for the direction
         const dx = pointTo.x - pointFrom.x;
         const dy = pointTo.y - pointFrom.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         const unitX = dx / distance;
         const unitY = dy / distance;
 
-        // Shorten the path from both ends
-        const fromOffset = 10;
-        const toOffset = 16;
+        const fromOffset = 10;  // Starting point offset
+        const toOffset = 16;    // Ending point offset to avoid overlap with arrowhead
         const adjustedFrom = {
             x: pointFrom.x + unitX * fromOffset,
             y: pointFrom.y + unitY * fromOffset
@@ -119,22 +115,31 @@
             y: pointTo.y - unitY * toOffset
         };
 
-        // Create the svg element
-        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute("width", "100%");
-        svg.setAttribute("height", "100%");
-        svg.style.position = "absolute";
-        svg.style.top = 0;
-        svg.style.left = 0;
-        svg.style.zIndex = 10;
+        // Calculate SVG position and size, adding a padding for the marker
+        const padding = 10;  // Padding to ensure markers are within the SVG
+        const minX = Math.min(adjustedFrom.x, adjustedTo.x) - padding;
+        const maxX = Math.max(adjustedFrom.x, adjustedTo.x) + padding;
+        const minY = Math.min(adjustedFrom.y, adjustedTo.y) - padding;
+        const maxY = Math.max(adjustedFrom.y, adjustedTo.y) + padding;
 
-        // Define an arrowhead marker
+        const svgWidth = maxX - minX;
+        const svgHeight = maxY - minY;
+
+        // Create the svg element with adjusted size and position
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("width", svgWidth + "px");
+        svg.setAttribute("height", svgHeight + "px");
+        svg.style.position = "absolute";
+        svg.style.top = minY + "px";
+        svg.style.left = minX + "px";
+        svg.style.zIndex = -1;
+
         const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
         const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
         marker.setAttribute("id", "arrowhead");
         marker.setAttribute("markerWidth", "6");
         marker.setAttribute("markerHeight", "4");
-        marker.setAttribute("refX", "0");
+        marker.setAttribute("refX", "3");  // Small offset inside the marker for proper alignment
         marker.setAttribute("refY", "2");
         marker.setAttribute("orient", "auto");
         const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
@@ -144,9 +149,9 @@
         defs.appendChild(marker);
         svg.appendChild(defs);
 
-        // Create the path element with the arrowhead
+        // Adjust path coordinates relative to the new SVG position
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        path.setAttribute("d", `M ${adjustedFrom.x} ${adjustedFrom.y} L ${adjustedTo.x} ${adjustedTo.y}`);
+        path.setAttribute("d", `M ${adjustedFrom.x - minX} ${adjustedFrom.y - minY} L ${adjustedTo.x - minX} ${adjustedTo.y - minY}`);
         path.setAttribute("stroke", "black");
         path.setAttribute("stroke-width", "2");
         path.setAttribute("fill", "none");
@@ -155,6 +160,7 @@
         svg.appendChild(path);
         document.body.appendChild(svg);
     }
+
 
     // Now iterate over the dependencies array and create the arrows
     dependencies.forEach(dep => createArrow(dep.from, dep.to))
