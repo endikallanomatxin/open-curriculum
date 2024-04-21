@@ -2,6 +2,7 @@ package db
 
 import (
 	"errors"
+	"errors"
 	"log"
 )
 
@@ -32,7 +33,7 @@ func CheckCircularDependency(unitID, dependsOnID int) error {
 
 	// Verificar si hay un ciclo comenzando desde la unidad objetivo hacia la unidad fuente
 	if hasCycle(dependsOnID, unitID, visited, path) {
-		return errors.New("Circular dependency detected")
+		return errors.New("circular dependency detected")
 	}
 
 	return nil
@@ -61,6 +62,9 @@ func hasCycle(unitID, targetID int, visited, path map[int]bool) bool {
 		}
 	}
 
+	// Eliminar la unidad actual del camino actual
+	path[unitID] = false
+	return false
 	// Eliminar la unidad actual del camino actual
 	path[unitID] = false
 	return false
@@ -112,10 +116,20 @@ func CreateDependency(unit_id int, depends_on_id int) error {
 	}
 
 	// If no circular dependency is detected, proceed with creating the dependency
+func CreateDependency(unit_id int, depends_on_id int) error {
+	// Check if the new dependency will create a circular dependency
+	if err := CheckCircularDependency(unit_id, depends_on_id); err != nil {
+		return err
+	}
+
+	// If no circular dependency is detected, proceed with creating the dependency
 	_, err := db.Exec("INSERT INTO dependencies (unit_id, depends_on_id) VALUES ($1, $2)", unit_id, depends_on_id)
 	if err != nil {
 		return err
+		return err
 	}
+
+	return nil
 
 	return nil
 }
