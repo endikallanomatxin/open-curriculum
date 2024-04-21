@@ -26,6 +26,10 @@ func Manifest(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, "manifest.html", nil)
 }
 
+func ManifestES(w http.ResponseWriter, r *http.Request) {
+	RenderTemplate(w, "manifest-es.html", nil)
+}
+
 func Foundation(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, "foundation.html", nil)
 }

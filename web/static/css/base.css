@@ -65,10 +65,20 @@ body{
 /* Nav */
 
 nav#back{
-    padding: 1rem 2rem;
+    padding: 1rem 1.5rem;
     position: fixed;
     top: 1rem;
     left: 1rem;
+    background-color: var(--background-dark);
+    z-index: 100;
+    border-radius: 2rem;
+}
+
+nav#language{
+    padding: 1rem 1.5rem;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
     background-color: var(--background-dark);
     z-index: 100;
     border-radius: 2rem;

@@ -2,7 +2,6 @@ package db
 
 import (
 	"errors"
-	"errors"
 	"log"
 )
 
@@ -116,20 +115,10 @@ func CreateDependency(unit_id int, depends_on_id int) error {
 	}
 
 	// If no circular dependency is detected, proceed with creating the dependency
-func CreateDependency(unit_id int, depends_on_id int) error {
-	// Check if the new dependency will create a circular dependency
-	if err := CheckCircularDependency(unit_id, depends_on_id); err != nil {
-		return err
-	}
-
-	// If no circular dependency is detected, proceed with creating the dependency
 	_, err := db.Exec("INSERT INTO dependencies (unit_id, depends_on_id) VALUES ($1, $2)", unit_id, depends_on_id)
 	if err != nil {
 		return err
-		return err
 	}
-
-	return nil
 
 	return nil
 }
