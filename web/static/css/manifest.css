@@ -133,6 +133,7 @@ span[id^="expand"] {
     background-color: var(--background-darker);
     border-radius: 0.5em;
     opacity: 0.6;
+    white-space:nowrap;
 }
 
 span[id^="expand"]:hover{

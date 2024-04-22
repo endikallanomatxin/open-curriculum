@@ -3,7 +3,6 @@
 <script src="/static/js/notes.js" defer></script>
 <script src="/static/js/menu.js" defer></script>
 <link rel="stylesheet" href="/static/css/menu.css">
-
 <link rel="stylesheet" href="/static/css/manifest.css">
 {{ end }}
 
@@ -68,8 +67,8 @@
             <p>Not only will this make the student learn better, but it'll reinforce the right mindset muscles. It makes them realize that if you got something wrong, it doesn't mean that you are a C branded in your DNA somehow, it means that you should just keep working on it. </p>
         </blockquote>
 
-        <p style="text-align: center;"><span id="expand-khan-aditional" onclick="toggleExpand('khan-aditional')">See some aditional quotes from the talk</span></p>
-        <div id="expand-khan-aditional">
+        <p style="text-align: center;"><span id="expand-khan-additional" onclick="toggleExpand('khan-additional')">See some aditional quotes from the talk</span></p>
+        <div id="expand-khan-additional">
             <p>Addressing the skeptics who question the feasibility of scaling personalized mastery-based learning, Khan argues that advances in technology have made it no longer impractical: </p>
             <blockquote>
                 <p><i>Want students to see an explanation at their own time and pace? Well, there's an on demand video for that. They need practice? They need feedback? There's adaptive exercises readily available for students.</i></p>
@@ -131,12 +130,12 @@
 
         <h5>The unnecessary repetition</h5>
         <p>Every year and for every subject, thousands of teachers simultaneously deliver lectures on the exact same topic. That is such a waste of time and effort of some of the most brilliant people on earth. With the tools we have today see note</span>, the potential for cost reduction is inmense.</p>
-        <h5>The lack of improvement</h5>
+        <h5>The failure to leverage improvements</h5>
         <p>Students' engagement and understanding greatly depends on the quality of the explanations. While some professors excel in delivering clear and helpful explanations, making complex topics easily understandable; the distribution of this proficiency is fairly heterogeneous.</p>
         <p>Education as we know it doesn't improve when someone comes up with the best explanation to date on a given topic. Great explanations don't accumulate, they are not included into mainstream curricula and don't benefit education as much as they could. (The worst hardly ever get filtered out neither, as in most educational institutions there is no effective control system, but let's focus on the positive :) How is it possible that perspective-shifting, eye-opening videos like 3Blue1Brown's are not included, or recommended at least, in all Algebra or Calculus courses worldwide?
         </p>
         <p>As a society, we should prioritize the development of tools that allow coordination and cooperation of professors, in order to combine all the effort that is currently being wasted in redundancy.</p>
-        <p>Once an excelent lecture is recorded, like Walter Lewins' incredible physics classes for example, it makes no sense to have people imparting inferior versions of the same explanations. Not only does it not add value, but it degrades the learning process of the students. The highest-quality content available should become the standart, until something better replaces it.</p>
+        <p>Once an excelent lecture is recorded, like Walter Lewin's incredible physics classes for example, it makes no sense to have people imparting inferior versions of the same explanations. Not only does it not add value, but it degrades the learning process of the students. The highest-quality content available should become the standart, until something better replaces it.</p>
 
         <h4>Inertia</h4>
         <p>Another weak point of universities is how slowly they react to the changing environment. This specially affects latest technological advancements, which are often ignored for as long as possible, and creates a delay between what society needs people working on and what students are learning.</p>
@@ -211,10 +210,13 @@
         <p>However,</p>
         <ul>
             <li>
-                <p><b>They lack collaborative course creation tools.</b> Courses on many of these platforms often function as independent entities, <b>lacking clear dependencies and a coherent learning path</b>. They are more of a course catalog rather than a comprehensive university curriculum. </p>
+                <p><b>They lack collaborative course creation tools.</b></p>
             </li>
             <li>
-                <p>On some of them, <b>course repetition and overlap is allowed</b>. From the students' perspective, it becomes challenging to determine which course is a more worthwhile investment of time. In the end, the decission will be driven by marketing or authority fallacy, and not by course quality, leading to a suboptimal use of the available resources. Having a single evolving course would be more beneficial.
+                <p>Courses on many of these platforms often function as independent entities, <b>lacking clear dependencies and a coherent learning path</b>. They are more of a course catalog rather than a comprehensive university curriculum. </p>
+            </li>
+            <li>
+                <p>On some of them, <b>course repetition and overlap is allowed</b>. From the students' perspective, it becomes challenging to determine which course is a more worthwhile investment of time. Having a single evolving course would be more beneficial.
                 </p>
             </li>
             <li>
@@ -271,7 +273,7 @@
                         id="expand-video"
                         onclick="toggleExpand('video')">see note</span></p>
                 <div id="expand-video">
-                    <p class="comment">Video is a hard format for collaboration, and the priority are the notes. Thus, specially in the begining, an automatically generated narration of the notes will be used instead. In the future, if this is not good enough, collaborative video creation tools will be added.</p>
+                    <p class="comment">Video is a hard format for collaboration, and the priority are the notes. Thus, specially in the begining, an automatically generated narration of the notes will be used instead. In the future, collaborative video creation tools will be added.</p>
                     </div>
                 </div>
             </li>
@@ -324,7 +326,7 @@
         </figure>
 
         <p>People get to vote for their preferred option among all combinations of pairs. This allows polling all the proposals against the original and also between conflicting proposals. All polls here follow the same rules as single-proposal polls.</p>
-        <p>If a small change is made to a proposal that clearly enhances it, the revised version can easily and relatively quickly replace the original proposal while retaining its accumulated votes. This approach enables collaborative improvement of a proposal without the need to restart the poll.</p>
+        <p>If a small change is made to a proposal that clearly enhances it, the revised version can easily and relatively quickly replace the original proposal while retaining its accumulated votes. This approach enables collaborative improvement of a proposal without the need to restart the poll. The more people use the platform, the safer it will be against these kind of attacks.</p>
 
         <h6>Vote-weighing</h6>
         <p>If necessary, votes could be weighed according to individuals' knowledge on the discussed topic. This could help amplify the most experienced and wise opinions.</p>
@@ -370,8 +372,10 @@
         <p>This approach deviates from the collaborative values of the platform; however, it acknowledges the importance of strong professor-student relationships, providing personalized support; and gives the platform enough flexibility to accomodate more traditional teaching methods.</p>
 
         <h6>AI corrector</h6>
-        <p>If this system were implemented, it would generate a vast dataset of corrections along with evaluations of their quality. This presents an excellent opportunity to train a language model using reinforcement learning from human feedback.</p>
-        <p>Further exploration of the details is necessary, but it could be possible to train a model to predict scores for corrections and then use it as a loss function to train another model that is capable of generating its own corrections. </p>
+        <p>If this system were implemented, it would generate a vast dataset of corrections along with evaluations of their quality. This presents an excellent opportunity to train a language model using reinforcement learning from human feedback <span id="expand-RLHF" onclick="toggleExpand('RLHF')">see note</span>.</p>
+        <div id="expand-RLHF">
+            <p class="comment">Further exploration of the details is necessary, but it could be possible to train a model to predict scores for corrections and then use it as a loss function to train another model that is capable of generating its own corrections. It is a similar strategy to that used to fine-tune chatgpt.</p>
+        </div>
         <p>The platform's design allows for a gradual implementation of this AI, starting with automated correction evaluations and later slowly incorporating corrections generated by the AI itself. This would make it possible to safely experiment with its implementation.</p>
         <p>If this system proves successful, it could lead to a significant reduction in the cost of high-quality exercise correction <span id="expand-jobs" onclick="toggleExpand('jobs')">see note</span>.</p>
         <div id="expand-jobs">
