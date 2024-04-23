@@ -42,5 +42,5 @@ EXPOSE 80
 # Expose port 443 to the outside world
 EXPOSE 443
 
-# Command to run the executabl
+# Command to run the executable
 CMD dinaip -u $DINAHOSTING_USER -p $DINAHOSTING_PASSWORD -a $DINAHOSTING_DOMAIN && ./main
