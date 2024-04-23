@@ -1,9 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
-
+	"fmt"
 	"app/db"
 	"app/handlers"
 )
@@ -24,6 +23,12 @@ func main() {
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 
-	fmt.Println("Server running at http://localhost:8080")
-	http.ListenAndServe(":8080", mux)
+
+	err := http.ListenAndServeTLS(":443",
+		"data/certbot/live/opencurriculum.eus/cert.pem",
+		"data/certbot/live/opencurriculum.eus/privkey.pem", mux)
+	if err != nil {
+		fmt.Println("Error starting server")
+		panic(err)
+	}
 }

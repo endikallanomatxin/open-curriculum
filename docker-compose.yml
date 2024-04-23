@@ -9,7 +9,7 @@ services:
         DINAHOSTING_PASSWORD: ${DINAHOSTING_PASSWORD}
         DINAHOSTING_DOMAIN: ${DINAHOSTING_DOMAIN}
     ports:
-      - "8080:8080"
+      - "443:443"
     depends_on:
       - db
     environment:
@@ -27,6 +27,17 @@ services:
       POSTGRES_DB: mydatabase
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  certbot:
+    image: nbraun1/certbot
+    environment:
+      EMAIL: endikallano@gmail.com
+      DOMAINS: opencurriculum.eus,www.opencurriculum.eus
+      CRON: 0 3 1 * * # Run every first day of the month at 3:00
+    ports:
+      - "80:80"
+    volumes:
+      - ./data/certbot:/etc/letsencrypt
 
 volumes:
   postgres_data:

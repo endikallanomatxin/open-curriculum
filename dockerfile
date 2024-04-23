@@ -36,8 +36,11 @@ ENV DINAHOSTING_PASSWORD=$DINAHOSTING_PASSWORD
 # Build the Go app
 RUN go build -o main .
 
-# Expose port 8080 to the outside world
-EXPOSE 8080
+# Expose port 80 to the outside world
+EXPOSE 80
+
+# Expose port 443 to the outside world
+EXPOSE 443
 
 # Command to run the executabl
 CMD dinaip -u $DINAHOSTING_USER -p $DINAHOSTING_PASSWORD -a $DINAHOSTING_DOMAIN && ./main
