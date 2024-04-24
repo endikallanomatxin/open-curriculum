@@ -8,7 +8,6 @@ div#menu{
     justify-content: center;
     max-width: 22rem;
     padding-left: 2rem;
-    z-index: -1;
 }
 
 @media (max-width: 1500px) {
