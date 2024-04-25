@@ -40,9 +40,11 @@ function checkHeadings() {
         // Take the last
         var heading = headingsOverViewport[headingsOverViewport.length-1];
         // Append to the list
-        headingsInViewPort.push(heading);
-    }
+        headingsInViewPort = [heading];
 
+        // Don't continue
+        return;
+    }
 
     // Add the class collapsed to the menu items that correspond to
     // the headings that are out of the viewport
@@ -63,13 +65,12 @@ function checkHeadings() {
 
         // Now search through the previous menu items and remove the class collapsed
         // that have lower level than highest previous one found
-
         var previousHighestLevel = heading.tagName[1];
         var previousMenuItem = menuItem.previousElementSibling;
-        
+        console.log(previousMenuItem);
         while (previousMenuItem) {
             if (previousMenuItem.tagName == "A") {
-                var currentLevel = previousMenuItem.href.split('-')[0].slice(-1);
+                var currentLevel = previousMenuItem.href.split('#').slice(-1)[0].split('-')[0].slice(-1);
                 if (currentLevel <= previousHighestLevel) {
                     previousMenuItem.classList.remove('collapsed');
                     previousHighestLevel = currentLevel;
@@ -94,7 +95,7 @@ function checkHeadings() {
         
         while (nextMenuItem) {
             if (nextMenuItem.tagName == "A") {
-                var currentLevel = nextMenuItem.href.split('-')[0].slice(-1);
+                var currentLevel = nextMenuItem.href.split('#').slice(-1)[0].split('-')[0].slice(-1);
                 if (currentLevel <= nextHighestLevel) {
                     nextMenuItem.classList.remove('collapsed');
                     nextHighestLevel = currentLevel;
