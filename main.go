@@ -1,10 +1,10 @@
 package main
 
 import (
-	"net/http"
-	"fmt"
 	"app/db"
 	"app/handlers"
+	"fmt"
+	"net/http"
 )
 
 func main() {
@@ -22,7 +22,6 @@ func main() {
 	mux.HandleFunc("/dependencies", handlers.Dependencies)
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
-
 
 	err := http.ListenAndServeTLS(":443",
 		"data/certbot/live/opencurriculum.eus/cert.pem",
