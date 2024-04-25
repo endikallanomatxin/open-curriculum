@@ -18,6 +18,9 @@ services:
       DB_PASSWORD: mypassword
       DB_NAME: mydatabase
       DB_PORT: 5432
+      ENV: "prod"
+    volumes:
+      - certbot_data:/etc/letsencrypt
 
   db:
     image: postgres:alpine
@@ -37,7 +40,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./data/certbot:/etc/letsencrypt
+      - certbot_data:/etc/letsencrypt
 
 volumes:
   postgres_data:
+  certbot_data:

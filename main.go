@@ -5,6 +5,7 @@ import (
 	"app/handlers"
 	"fmt"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -23,11 +24,16 @@ func main() {
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 
-	err := http.ListenAndServeTLS(":443",
-		"data/certbot/live/opencurriculum.eus/cert.pem",
-		"data/certbot/live/opencurriculum.eus/privkey.pem", mux)
-	if err != nil {
-		fmt.Println("Error starting server")
-		panic(err)
+	if os.Getenv("ENV") == "dev" {
+		http.ListenAndServe(":8080", mux)
+	} else if os.Getenv("ENV") == "prod" {
+		
+		err := http.ListenAndServeTLS(":443",
+			"/etc/letsencrypt/live/opencurriculum.eus/cert.pem",
+			"/etc/letsencrypt/live/opencurriculum.eus/privkey.pem", mux)
+		if err != nil {
+			fmt.Println("Error starting server")
+			panic(err)
+		}
 	}
 }

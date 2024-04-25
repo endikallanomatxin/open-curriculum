@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - "443"
+      - "8080"
     depends_on:
       - db
     environment:
@@ -14,6 +14,7 @@ services:
       DB_PASSWORD: mypassword
       DB_NAME: mydatabase
       DB_PORT: 5432
+      ENV: "dev"
     volumes:
       - .:/app
 
