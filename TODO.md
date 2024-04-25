@@ -1,10 +1,6 @@
-- arreglar dev
-
 - un volume para data
 
 - HTTP to HTTPS redirection
-
-- fix the menu in spanish
 
 - Manifest:
     - Explicar que ocurre cuando se modifican unidades sobre las que ibas a hacer una propuesta.
