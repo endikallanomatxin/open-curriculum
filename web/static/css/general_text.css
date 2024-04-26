@@ -9,7 +9,7 @@ a {
 }
 
 a:hover {
-    color: var(--secondary-light);
+    color: var(--secondary-accent);
 }
 
 p,ol,ul {

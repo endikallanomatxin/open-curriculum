@@ -15,7 +15,7 @@ header h1{
     margin:auto;
     font-weight: 800;
     line-height: 1;
-    background: linear-gradient(var(--primary-dark), var(--primary-light));
+    background: linear-gradient(var(--primary-dark), var(--primary-accent));
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -35,7 +35,13 @@ header h1{
 /* MAIN*/
 
 main{
-    font-size: 1.2rem;
+    font-size: 1.15rem;
+}
+
+@media screen and (min-width: 900px){
+    main{
+        font-size: 1.25rem;
+    }
 }
 
 @media screen and (min-width: 1200px){
@@ -207,6 +213,10 @@ section#faq{
     grid-gap: 2rem;
 }
 
+section#faq p{
+    text-align: left;
+}
+
 @media screen and (min-width: 1200px){
     section#faq{
         grid-template-columns: 1fr 1fr;
@@ -241,6 +251,8 @@ section#faq>div.qas>div.qa{
 }
 
 section#faq>div.qas>div.qa>p.q{
+    font-size: 1.2em;
     font-weight: 700;
     margin: 1rem 0;
+    line-height: 1.35em;
 }
