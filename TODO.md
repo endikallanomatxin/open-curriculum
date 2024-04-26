@@ -1,5 +1,3 @@
-- un volume para data
-
 - HTTP to HTTPS redirection
 
 - Manifest:
@@ -15,19 +13,6 @@
 
         - Subrayar más cosas. El bold ayuda mucho.
     
-    - El menu:
-
-        - No funciona en castellano
-
-        - No funcionan los enlaces
-
-- Repasar el tamaño de letra en versión móvil
-
-- En FAQ, el justificado queda mal por ser la letra demasiado pequeña. En móvil fatal. Igual aumentar el tamaño de las preguntas también
-
-- Repasar el contraste
-
-
 
 - Create opening animation of logo
 - Redo graph images
