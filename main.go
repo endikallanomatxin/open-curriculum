@@ -3,9 +3,10 @@ package main
 import (
 	"app/db"
 	"app/handlers"
-	"fmt"
+	"crypto/tls"
 	"net/http"
-	"os"
+
+	"golang.org/x/crypto/acme/autocert"
 )
 
 func main() {
@@ -24,16 +25,19 @@ func main() {
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 
-	if os.Getenv("ENV") == "dev" {
-		http.ListenAndServe(":8080", mux)
-	} else if os.Getenv("ENV") == "prod" {
-		
-		err := http.ListenAndServeTLS(":443",
-			"/etc/letsencrypt/live/opencurriculum.eus/cert.pem",
-			"/etc/letsencrypt/live/opencurriculum.eus/privkey.pem", mux)
-		if err != nil {
-			fmt.Println("Error starting server")
-			panic(err)
-		}
+	certManager := autocert.Manager{
+		Prompt: autocert.AcceptTOS,
+		Cache:  autocert.DirCache("/certs"),
 	}
+
+	server := &http.Server{
+		Addr:    ":443",
+		Handler: mux,
+		TLSConfig: &tls.Config{
+			GetCertificate: certManager.GetCertificate,
+		},
+	}
+
+	go http.ListenAndServe(":80", certManager.HTTPHandler(nil))
+	server.ListenAndServeTLS("", "")
 }
