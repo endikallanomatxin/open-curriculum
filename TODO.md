@@ -1,5 +1,3 @@
-- HTTP to HTTPS redirection
-
 - Manifest:
     - Explicar que ocurre cuando se modifican unidades sobre las que ibas a hacer una propuesta.
 
@@ -13,7 +11,6 @@
 
         - Subrayar más cosas. El bold ayuda mucho.
     
-
 - Create opening animation of logo
 - Redo graph images
 - Redo proposal and poll images
