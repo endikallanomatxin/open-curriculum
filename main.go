@@ -5,6 +5,7 @@ import (
 	"app/handlers"
 	"crypto/tls"
 	"net/http"
+	"os"
 
 	"golang.org/x/crypto/acme/autocert"
 )
@@ -25,19 +26,23 @@ func main() {
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 
-	certManager := autocert.Manager{
-		Prompt: autocert.AcceptTOS,
-		Cache:  autocert.DirCache("/certs"),
-	}
+	if os.Getenv("ENV") == "dev" {
+		http.ListenAndServe(":8080", mux)
+	} else {
+		certManager := autocert.Manager{
+			Prompt: autocert.AcceptTOS,
+			Cache:  autocert.DirCache("/certs"),
+		}
 
-	server := &http.Server{
-		Addr:    ":443",
-		Handler: mux,
-		TLSConfig: &tls.Config{
-			GetCertificate: certManager.GetCertificate,
-		},
-	}
+		server := &http.Server{
+			Addr:    ":443",
+			Handler: mux,
+			TLSConfig: &tls.Config{
+				GetCertificate: certManager.GetCertificate,
+			},
+		}
 
-	go http.ListenAndServe(":80", certManager.HTTPHandler(nil))
-	server.ListenAndServeTLS("", "")
+		go http.ListenAndServe(":80", certManager.HTTPHandler(nil))
+		server.ListenAndServeTLS("", "")
+	}
 }
