@@ -255,3 +255,18 @@ section#faq>div.qas>div.qa>p.q{
     margin: 1rem 0;
     line-height: 1.35em;
 }
+
+
+/* Footer */
+
+footer{
+    background-color: var(--primary-dark);
+    color: var(--primary-white);
+    margin: 0;
+    padding: 1rem;
+    font-style: italic;
+}
+
+footer p{
+    margin: 0.5rem 0;
+}
