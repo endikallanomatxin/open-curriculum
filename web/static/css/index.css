@@ -210,7 +210,6 @@ section#faq{
     background-color: var(--background-dark);
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: 2rem;
 }
 
 section#faq p{
