@@ -1,13 +1,4 @@
 - Manifest:
-    - Tras Mala gestión del esfuerzo, aclarar el contraargumento de que cada uno aprende a su manera. Sí pero ahora te cae una explicación al tuntun.
-
-    - En la propuesta elegir entre futuro o condicional.
-
-    - En la nota de video. Decir que al principio puede ser todo o nada.
-
-    - Mal traducida la sección de traducciones con machine learning.
-
-    - Intensivas en recursos.
 
     - Explicar que ocurre cuando se modifican unidades sobre las que ibas a hacer una propuesta.
 
