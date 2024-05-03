@@ -26,6 +26,8 @@ func main() {
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 
+	mux.HandleFunc("/set-language", handlers.SetLanguageCookie)
+
 	if os.Getenv("ENV") == "dev" {
 		http.ListenAndServe(":8080", mux)
 	} else {

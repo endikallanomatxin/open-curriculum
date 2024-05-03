@@ -6,7 +6,6 @@ import (
 	"net/http"
 )
 
-
 func Units(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
@@ -24,7 +23,7 @@ func Units(w http.ResponseWriter, r *http.Request) {
 			UnitsByLevel: db.GetUnitsByLevel(),
 		}
 
-		RenderTemplate(w, "units.html", data)
+		RenderTemplate(w, r, "units.html", data)
 
 	case "POST":
 		r.ParseForm()
@@ -63,7 +62,7 @@ func Unit(w http.ResponseWriter, r *http.Request) {
 			Units:        db.GetUnits(),
 		}
 
-		RenderTemplate(w, "unit.html", data)
+		RenderTemplate(w, r, "unit.html", data)
 
 	case "DELETE":
 		id := 0

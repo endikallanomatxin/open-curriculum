@@ -23,7 +23,16 @@
 </head>
 
 <body>
+    <nav id="language">
+        <a href="/set-language?lang=en&redirect={{.URL | urlquery}}">EN</a>
+        &nbsp;|&nbsp;
+        <a href="/set-language?lang=es&redirect={{.URL | urlquery}}">ES</a>
+        &nbsp;|&nbsp;
+        <a href="/set-language?lang=eu&redirect={{.URL | urlquery}}">EU</a>
+    </nav>
+    
     {{ block "body" . }}{{ end }}
+
 </body>
 
 </html>
