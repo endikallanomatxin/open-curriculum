@@ -1,4 +1,8 @@
+- Presentar la plataforma a concursos
+
 - Manifest:
+
+    - Repasar traducción a euskera
 
     - Explicar que ocurre cuando se modifican unidades sobre las que ibas a hacer una propuesta.
 
@@ -8,11 +12,9 @@
 
     - Redo proposal and poll images
 
-- Website translation
-
 - Create opening animation of logo
 
-- Functionality:
+- Platform demo:
     - Student/professor mode
     - Activate a proposal for the changes to be saved to
     - Submit a proposal
