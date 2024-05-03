@@ -18,8 +18,8 @@ func main() {
 
 	mux.HandleFunc("/", handlers.Index)
 	mux.HandleFunc("/manifest", handlers.Manifest)
-	mux.HandleFunc("/manifest-es", handlers.ManifestES)
 	mux.HandleFunc("/foundation", handlers.Foundation)
+
 	mux.HandleFunc("/units", handlers.Units)
 	mux.HandleFunc("/unit/{id}", handlers.Unit)
 	mux.HandleFunc("/dependencies", handlers.Dependencies)
