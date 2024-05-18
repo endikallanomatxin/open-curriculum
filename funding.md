@@ -22,6 +22,22 @@ https://www.fundaciones.org/es/inicio
 
     Parece que ofrecen consultoría, así que igual son de ayuda aunque no sea necesariamente a través del concurso.
 
+- B-venture.
+
+    https://www.b-venture.com
+
+    Junio 30
+
+    Igual demasiado enfocado en la rentabilidad.
+
+- Spri. Ekintzaile.
+
+    https://www.spri.eus/es/ayudas/ekintzaile/
+
+    Diciembre
+
+- Innobasque
+
 
 ## Otros sitios donde acudir
 
