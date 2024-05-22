@@ -20,6 +20,13 @@ func main() {
 	mux.HandleFunc("/manifest", handlers.Manifest)
 	mux.HandleFunc("/foundation", handlers.Foundation)
 
+	mux.HandleFunc("/learn", handlers.Learn)
+	mux.HandleFunc("/teach", handlers.Teach)
+	mux.HandleFunc("GET /unit/{id}/details", handlers.GetUnitDetails)
+
+	mux.HandleFunc("POST /teach/proposal", handlers.NewProposal)
+	mux.HandleFunc("/teach/proposal/{id}", handlers.Proposal)
+
 	mux.HandleFunc("/units", handlers.Units)
 	mux.HandleFunc("/unit/{id}", handlers.Unit)
 	mux.HandleFunc("/dependencies", handlers.Dependencies)

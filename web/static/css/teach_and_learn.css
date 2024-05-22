@@ -1,0 +1,34 @@
+#top_bar{
+    position: fixed;    
+    width: 100%;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    padding: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+#top_bar img#logo{
+    height: 2rem;
+}
+
+#top_bar a:not(:first-child){
+    background-color: var(--background-dark);
+    padding: 0.5rem 1rem;
+    border-radius:100px;
+}
+
+main {
+    margin-top: 8rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+@media (min-width: 1000px) {
+    main {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+}

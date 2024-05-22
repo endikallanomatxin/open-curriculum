@@ -1,15 +1,23 @@
 package db
 
+// CHANGES
+// This table links proposals with operations
+
 type Change struct {
-	ID          int
-	OperationID int
+	ID            int
+	ProposalID    int
+	OperationType string // To avoid using needing to query each table
+	OperationID   int
 }
+
+// OPERATIONS
 
 // Units
 
 type UnitCreation struct {
 	ID     int
 	UnitID int
+	Name   string
 }
 
 type UnitDeletion struct {
@@ -18,10 +26,9 @@ type UnitDeletion struct {
 }
 
 type UnitUpdate struct {
-	ID          int
-	UnitID      int
-	Name        string
-	Description string
+	ID     int
+	UnitID int
+	Name   string
 }
 
 // Dependencies
@@ -39,45 +46,38 @@ type DependencyDeletion struct {
 }
 
 // Documents
+// (One per unit)
 
-type DocumentCreation struct {
-	ID         int
-	DocumentID int
+// Document Part Operations
+// Analogous to a diff
+// They are run from the end of the document to the beginning (so that line numbers don't change)
+
+// Everything could be a change
+// If it is a deletion, the content is an empty string
+// If it is an addition, ToLine is same as FromLine (or maybe better: FromLine-1, pensarlo bien)
+
+type DocumentModification struct {
+	ID       int
+	UnitID   int
+	FromLine int
+	ToLine   int
+	Content  string // Can have multiple lines
 }
 
-type DocumentDeletion struct {
-	ID         int
-	DocumentID int
+type DocumentFileUpload struct {
+	ID     int
+	UnitID int
 }
 
-// Document Lines
+// Video
+// (One per unit)
 
-type DocumentLineAddition struct {
-	ID          int
-	DocumentID  int
-	Line        int
-	LineContent string // Can have multiple lines
-}
-
-type DocumentLineDeletion struct {
-	ID         int
-	DocumentID int
-	Line       int
-}
-
-type DocumentLineUpdate struct {
-	ID          int
-	DocumentID  int
-	Line        int
-	LineContent string
-}
-
-type DocumentLineMove struct {
-	ID               int
-	DocumentID       int
-	Line             int
-	TargetDocumentID int
-	TargetLine       int
+type VideoModification struct {
+	ID       int
+	UnitID   int
+	FromTime int // In miliseconds
+	ToTime   int // In miliseconds
+	Content  string // Not a string
 }
 
 func ChangesCreateTables() {

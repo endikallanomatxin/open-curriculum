@@ -10,6 +10,10 @@ To run it:
 sudo docker compose up --build 
 ```
 
+```bash
+sudo docker compose -f docker-compose.dev.yml up --build
+```
+
 
 ## Resources
 

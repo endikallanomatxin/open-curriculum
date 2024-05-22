@@ -1,0 +1,61 @@
+{{ define "head" }}
+<title>Units</title>
+<link rel="stylesheet" href="/static/css/graph.css">
+<link rel="stylesheet" href="/static/css/teach_and_learn.css">
+<link rel="stylesheet" href="/static/css/teach.css">
+<script src="/static/js/graph.js" defer></script>
+{{ end }}
+
+{{ define "body" }}
+<nav id="top_bar">
+    <a href="/"><img id="logo" src="/static/media/logo.svg"></a>
+    <a href="/teach/curriculum">Curriculum design</a>
+    <a href="/teach/tasks">Tasks</a>
+    <a href="/teach/certifications">certifications</a>
+</nav>
+
+<main>
+
+</main>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<div>
+    <h1>Unidades</h1>
+
+    <h2>Create a unit</h2>
+    <!-- Formulario para crear una nueva unidad -->
+    <form id="create-unit-form" method="POST" action="/units" hx-post="/units" hx-target="body" hx-swap="outerHTML">
+        <input type="text" name="name" placeholder="Nombre de la Unidad" required>
+        <textarea name="description" placeholder="Descripción de la Unidad" required></textarea>
+        <button type="submit">Create unit</button>
+    </form>
+
+    <h2>Units</h2>
+    <div id="graph">
+        {{ range $level, $units := .UnitsByLevel }}
+            <div class="level">
+                {{ range $units }}
+                    <div class="unit" id="unit-{{ .ID }}" onclick="location.href='/unit/{{ .ID }}';">
+                        <div class="node" id="node-{{ .ID}}"></div>
+                        <p>{{ .Name }}</p>
+                    </div>
+                {{ end }}
+            </div>
+        {{ end }}
+    </div>
+</div>
+
+<main>
+
+<script>
+    // Pass the dependencies to a js array of objects
+    const dependencies = [
+        {{ range .Dependencies }}
+            { from: {{ .DependsOnID }}, to: {{ .UnitID }} },
+        {{ end }}]
+</script>
+
+
+{{ end }}

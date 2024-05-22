@@ -1,0 +1,59 @@
+{{ define "head" }}
+<title>Units</title>
+<link rel="stylesheet" href="/static/css/graph.css">
+<link rel="stylesheet" href="/static/css/teach_and_learn.css">
+<link rel="stylesheet" href="/static/css/teach.css">
+{{ end }}
+
+{{ define "body" }}
+<nav id="top_bar">
+    <a href="/"><img id="logo" src="/static/media/logo.svg"></a>
+    <a href="/teach/curriculum">Curriculum design</a>
+    <a href="/teach/tasks">Tasks</a>
+    <a href="/teach/certifications">certifications</a>
+</nav>
+
+<main>
+    <div id="user-related">
+        <div id="user-proposals">
+            <h2>Your proposals</h2>
+            {{ if .UserProposals }}
+                {{ range .UserProposals }}
+                    <div class="user-proposal">
+                        <h3>{{ .Title }}</h3>
+                        <a href="/teach/proposal/{{ .ID }}">View proposal</a>
+                    </div>
+                {{ end }}
+            {{ else }}
+                <p>You don't have any proposals yet</p>
+            {{ end }}
+            <a id="create-proposal" hx-post="/teach/proposal">Create a new proposal</a>
+        </div>
+        <div id="user-proposals">
+            <h2>Polls of your proposals</h2>
+            <div class="user-proposal">
+                <h3>Proposal 1</h3>
+                <a href="/teach/curriculum/1">View proposal</a>
+            </div>
+            <div class="user-proposal">
+                <h3>Proposal 2</h3>
+                <a href="/teach/curriculum/2">View proposal</a>
+            </div>
+        </div>
+    </div>
+    <div id="suggested-polls">
+    <h2>Polls you might be interested in</h2>
+    <div id="user-proposals">
+            <div class="user-proposal">
+                <h3>Proposal 1</h3>
+                <a href="/teach/curriculum/1">View proposal</a>
+            </div>
+            <div class="user-proposal">
+                <h3>Proposal 2</h3>
+                <a href="/teach/curriculum/2">View proposal</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+{{ end }}

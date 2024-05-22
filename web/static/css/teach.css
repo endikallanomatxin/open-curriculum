@@ -1,0 +1,45 @@
+main {
+    display: grid;
+}
+
+@media (min-width: 900px) {
+    main {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (min-width: 1400px) {
+    main {
+        padding-top: 10vh;
+        max-width: 1200px;
+        gap: 4rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.user-proposal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1.2rem;
+    margin: 1rem 0;
+    background-color: var(--background-dark);
+    border-radius: 1.2rem;
+}
+
+#user-related{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+a#create-proposal {
+    background-color: var(--background-dark);
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    text-align: center;
+    transition-duration: 0.2s;
+    float: right;
+}

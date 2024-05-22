@@ -1,0 +1,17 @@
+main{
+    margin-top: 5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+}
+
+main>div{
+    /*background-color: #f4f4f4;*/
+    padding: 2rem;
+}
+
+main>div>h2{
+    margin-top:0;
+}

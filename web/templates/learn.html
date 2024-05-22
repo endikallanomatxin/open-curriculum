@@ -1,0 +1,51 @@
+{{ define "head" }}
+<title>Units</title>
+<link rel="stylesheet" href="/static/css/graph.css">
+<link rel="stylesheet" href="/static/css/teach_and_learn.css">
+<link rel="stylesheet" href="/static/css/learn.css">
+<script src="/static/js/graph.js" defer></script>
+{{ end }}
+
+{{ define "body" }}
+{{ end }}
+
+{{ define "body" }}
+<nav id="top_bar">
+    <a href="/"><img id="logo" src="/static/media/logo.svg"></a>
+</nav>
+<main>
+    <div id="graph">
+        {{ range $level, $units := .UnitsByLevel }}
+            <div class="level">
+                {{ range $units }}
+                    <a hx-get="/unit/{{.ID}}/details" hx-target="#details">
+                        <div class="unit" id="unit-{{ .ID }}">
+                            <div class="node" id="node-{{ .ID}}"></div>
+                            <p>{{ .Name }}</p>
+                        </div>
+                    </a>
+                {{ end }}
+            </div>
+        {{ end }}
+    </div>
+    <div id="details">
+    {{ block "unit_details" .}}
+        {{ if .Unit }}
+        {{ with .Unit}}
+            <h2>{{.Name}}</h2>
+            <p>{{.Description}}</p>
+        {{ end }}
+        {{ else }}
+            <p>Select a unit to view its details</p>
+        {{ end }}
+    {{ end }}
+    </div>
+</main>
+<script>
+    // Pass the dependencies to a js array of objects
+    const dependencies = [
+    {{ range .Dependencies }}
+        { from: {{ .DependsOnID }}, to: {{ .UnitID }} },
+    {{ end }}];
+</script>
+{{ end }}

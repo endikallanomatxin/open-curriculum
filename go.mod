@@ -4,6 +4,7 @@ go 1.22.1
 
 require (
 	dario.cat/mergo v1.0.0 // indirect
+	github.com/Klathmon/StructToMap v0.0.0-20140724123129-3d0229e2dce7 // indirect
 	github.com/bep/godartsass v1.2.0 // indirect
 	github.com/bep/godartsass/v2 v2.0.0 // indirect
 	github.com/bep/golibsass v1.1.1 // indirect

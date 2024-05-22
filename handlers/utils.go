@@ -3,8 +3,11 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"reflect"
 	"strings"
 	"text/template"
+
+	structtomap "github.com/Klathmon/StructToMap"
 )
 
 // parseAcceptLanguage returns the best match for the languages supported by your application.
@@ -106,15 +109,24 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 		}
 	}
 
-	if data == nil {
-		data = map[string]interface{}{}
-	}
+	var newdata map[string]interface{}
 
+	if data == nil {
+		newdata = make(map[string]interface{})
+		// Else if data is a struct, create a new struct that contains the original data plus the URL
+	} else if reflect.TypeOf(data).Kind() == reflect.Struct {
+		newdata, _ = structtomap.Convert(data)
+	} else if _, ok := data.(map[string]interface{}); ok {
+		newdata = data.(map[string]interface{})
+	} else {
+		http.Error(w, "Data type not supported", http.StatusInternalServerError)
+		return
+	}
 	// Add a new field to the data struct
 	// URL
-	data.(map[string]interface{})["URL"] = r.URL.RequestURI()
+	newdata["URL"] = r.URL.Path
 
-	err = t.ExecuteTemplate(w, "base.html", data)
+	err = t.ExecuteTemplate(w, "base.html", newdata)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

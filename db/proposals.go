@@ -13,7 +13,6 @@ type Proposal struct {
 	Title       string
 	Description string
 	CreatedAt   string
-	Changes     []Change
 }
 
 func ProposalsCreateTables() {
@@ -27,5 +26,15 @@ func ProposalsCreateTables() {
 	`)
 	if err != nil {
 		log.Fatalf("Error creating table: %q", err)
+	}
+}
+
+func CreateProposal(p Proposal) {
+	_, err := db.Exec(`
+		INSERT INTO proposals (title, description)
+		VALUES ($1, $2);
+	`, p.Title, p.Description)
+	if err != nil {
+		log.Fatalf("Error inserting proposal: %q", err)
 	}
 }
