@@ -5,38 +5,46 @@ https://www.fundaciones.org/es/inicio
 
 ## Concursos a los que presentarlo:
 
-- Global E awards
-
-    https://globaleawards.com/es/spain/?utm_source=facebook&utm_medium=cpc&utm_campaign=advatajeplus
-
-    Maiatzak 6 23:59
-
-    Creo que hay que establecer una empresa si ganas, no sé si valdrá una fundación.   
-
-
 - ZITEK.
 
     https://zitek.eus/eu/2024/03/21/think-big-2024-enpresa-ideien-lehiaketa/
 
-    Maiatzak 24
+    05/24
 
     Parece que ofrecen consultoría, así que igual son de ayuda aunque no sea necesariamente a través del concurso.
+
+- Bizkaia creativa.
+
+    05/31
+
+    https://www.bizkaia.eus/es/tema-detalle/-/edukia/dt/9759
+
 
 - B-venture.
 
     https://www.b-venture.com
 
-    Junio 30
+    06/30
 
     Igual demasiado enfocado en la rentabilidad.
 
-- Spri. Ekintzaile.
+
+- [/] Spri. Ekintzaile.
 
     https://www.spri.eus/es/ayudas/ekintzaile/
 
-    Diciembre
+    12/31
+
+    - El 05/18 rellené el formulario en la página de ekintzaile.
+    - El 05/20 me llamaron para decirme que acudiera al Beaz, que lo gestionan allí.
+    - El 05/22 llamé al Beaz y me dijeron que les mandara un email a beaz@bizkaia.eus
+
 
 - Innobasque
+
+    https://www.innobasque.eus/te-acompanamos-a-innovar/ayudas-a-la-id-e-innovacion/
+
+    Aqui hay unos documentos con información sobre ayudas.
 
 
 ## Otros sitios donde acudir
