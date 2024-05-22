@@ -50,7 +50,7 @@ function createArrow(from, to) {
     svg.style.position = "absolute";
     svg.style.top = minY + "px";
     svg.style.left = minX + "px";
-    svg.style.zIndex = -1;
+    svg.style.zIndex = 2;
 
     const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
     const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");

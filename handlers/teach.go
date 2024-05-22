@@ -14,7 +14,6 @@ func Teach(w http.ResponseWriter, r *http.Request) {
 	}{
 		Units:        db.GetUnits(),
 		Dependencies: db.GetAllDependencies(),
-		UnitsByLevel: db.GetUnitsByLevel(),
 	}
 
 	RenderTemplate(w, r, "teach.html", data)

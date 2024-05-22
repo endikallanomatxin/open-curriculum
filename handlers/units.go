@@ -15,12 +15,10 @@ func Units(w http.ResponseWriter, r *http.Request) {
 			Title        string
 			Units        []db.Unit
 			Dependencies []db.Dependency
-			UnitsByLevel map[int][]db.Unit
 		}{
 			Title:        "Página de Unidades",
 			Units:        db.GetUnits(),
 			Dependencies: db.GetAllDependencies(),
-			UnitsByLevel: db.GetUnitsByLevel(),
 		}
 
 		RenderTemplate(w, r, "units.html", data)

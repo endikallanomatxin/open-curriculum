@@ -6,8 +6,6 @@
 <script src="/static/js/graph.js" defer></script>
 {{ end }}
 
-{{ define "body" }}
-{{ end }}
 
 {{ define "body" }}
 <nav id="top_bar">
@@ -15,17 +13,13 @@
 </nav>
 <main>
     <div id="graph">
-        {{ range $level, $units := .UnitsByLevel }}
-            <div class="level">
-                {{ range $units }}
-                    <a hx-get="/unit/{{.ID}}/details" hx-target="#details">
-                        <div class="unit" id="unit-{{ .ID }}">
-                            <div class="node" id="node-{{ .ID}}"></div>
-                            <p>{{ .Name }}</p>
-                        </div>
-                    </a>
-                {{ end }}
-            </div>
+        {{ range $graphedUnit := .GraphedUnits }}
+            <a hx-get="/unit/{{.Unit.ID}}/details" hx-target="#details">
+                <div class="unit" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
+                    <div class="node" id="node-{{ .Unit.ID}}" ></div>
+                    <p>{{ .Unit.Name }}</p>
+                </div>
+            </a>
         {{ end }}
     </div>
     <div id="details">
