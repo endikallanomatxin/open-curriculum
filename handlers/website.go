@@ -5,13 +5,13 @@ import (
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	RenderTemplate(w, r, "index.html", nil)
+	RenderTemplate(w, r, "index.html", nil, nil)
 }
 
 func Manifest(w http.ResponseWriter, r *http.Request) {
-	RenderTemplate(w, r, "manifest.html", nil)
+	RenderTemplate(w, r, "manifest.html", nil, nil)
 }
 
 func Foundation(w http.ResponseWriter, r *http.Request) {
-	RenderTemplate(w, r, "foundation.html", nil)
+	RenderTemplate(w, r, "foundation.html", nil, nil)
 }

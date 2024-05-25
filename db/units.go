@@ -3,16 +3,16 @@ package db
 import "log"
 
 type Unit struct {
-	ID          int
-	Name        string
-	Description string
+	ID      int
+	Name    string
+	Content string
+	GroupID int
 }
 
 type Group struct {
-	ID          int
-	Name        string
-	Description string
-	GroupID     int
+	ID      int
+	Name    string
+	GroupID int
 }
 
 func UnitsCreateTables() {
@@ -20,7 +20,6 @@ func UnitsCreateTables() {
 	CREATE TABLE IF NOT EXISTS groups (
 		id SERIAL PRIMARY KEY,
 		name VARCHAR(255) NOT NULL,
-		description TEXT,
 		group_id INT,
 		FOREIGN KEY (group_id) REFERENCES groups(id)
 	);
@@ -28,7 +27,7 @@ func UnitsCreateTables() {
 	CREATE TABLE IF NOT EXISTS units (
 		id SERIAL PRIMARY KEY,
 		name VARCHAR(255) NOT NULL,
-		description TEXT,
+		content TEXT,
 		group_id INT,
 		FOREIGN KEY (group_id) REFERENCES groups(id)
 	);`
@@ -42,7 +41,7 @@ func UnitsCreateTables() {
 
 func GetUnits() []Unit {
 
-	rows, err := db.Query("SELECT id, name, description FROM units")
+	rows, err := db.Query("SELECT id, name, content FROM units")
 	if err != nil {
 		log.Fatalf("Error querying units: %q", err)
 	}
@@ -51,7 +50,7 @@ func GetUnits() []Unit {
 	units := []Unit{}
 	for rows.Next() {
 		var u Unit
-		err := rows.Scan(&u.ID, &u.Name, &u.Description)
+		err := rows.Scan(&u.ID, &u.Name, &u.Content)
 		if err != nil {
 			log.Fatalf("Error scanning units: %q", err)
 		}
@@ -62,7 +61,7 @@ func GetUnits() []Unit {
 }
 
 func CreateUnit(u Unit) {
-	_, err := db.Exec("INSERT INTO units (name, description) VALUES ($1, $2)", u.Name, u.Description)
+	_, err := db.Exec("INSERT INTO units (name, content) VALUES ($1, $2)", u.Name, u.Content)
 	if err != nil {
 		log.Fatalf("Error creating unit: %q", err)
 	}
@@ -70,7 +69,7 @@ func CreateUnit(u Unit) {
 
 func GetUnit(id int) Unit {
 	var u Unit
-	err := db.QueryRow("SELECT id, name, description FROM units WHERE id = $1", id).Scan(&u.ID, &u.Name, &u.Description)
+	err := db.QueryRow("SELECT id, name, content FROM units WHERE id = $1", id).Scan(&u.ID, &u.Name, &u.Content)
 	if err != nil {
 		log.Fatalf("Error querying unit: %q", err)
 	}

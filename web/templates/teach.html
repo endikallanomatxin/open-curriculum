@@ -3,57 +3,148 @@
 <link rel="stylesheet" href="/static/css/graph.css">
 <link rel="stylesheet" href="/static/css/teach_and_learn.css">
 <link rel="stylesheet" href="/static/css/teach.css">
+<script src="/static/js/graph.js" defer></script>
 {{ end }}
 
 {{ define "body" }}
 <nav id="top_bar">
     <a href="/"><img id="logo" src="/static/media/logo.svg"></a>
-    <a href="/teach/curriculum">Curriculum design</a>
+    <a href="/teach/proposals">Curriculum design</a>
     <a href="/teach/tasks">Tasks</a>
     <a href="/teach/certifications">certifications</a>
 </nav>
 
+{{ block "main" .}}
 <main>
-    <div id="user-related">
-        <div id="user-proposals">
-            <h2>Your proposals</h2>
-            {{ if .UserProposals }}
-                {{ range .UserProposals }}
-                    <div class="user-proposal">
-                        <h3>{{ .Title }}</h3>
-                        <a href="/teach/proposal/{{ .ID }}">View proposal</a>
+    <div id="graph">
+
+        <form hx-post="/proposal/{{.ActiveProposalID}}/add_change/create_unit" hx-target="#graph">
+            <input type="text" name="name" placeholder="Unit name">
+            <button type="submit">Create unit</button>
+        </form>
+
+        {{ range $graphedUnit := .GraphedUnits }}
+            <a hx-get="/unit/{{.Unit.ID}}/details" hx-target="#details">
+                <div class="unit" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
+                    <div class="node" id="node-{{ .Unit.ID}}" ></div>
+                    <p>{{ .Unit.Name }}</p>
+                    <div class="changes">
+                        // Links to make a request to the server to make create a change with the active proposal id
+                        <a href="/change/create?unit_id={{ .Unit.ID }}&proposal_id={{ .ActiveProposalID }}"></a>
                     </div>
+                </div>
+            </a>
+        {{ end }}
+
+    </div>
+    <div id="details">
+    {{ block "unit_details" .}}
+        {{ if .Unit }}
+        {{ with .Unit}}
+            <h2>{{.Name}}</h2>
+            <p>{{.Content}}</p>
+        {{ end }}
+        {{ else }}
+            <p>Select a unit to view its details</p>
+        {{ end }}
+    {{ end }}
+    </div>
+
+    <div id="bottom-bar">
+        {{ block "proposals-bar" .}}
+            <div id="proposals-bar">
+                {{ if .Proposals }}
+                Active proposal
+                <select id="active-proposal">
+                    {{ range .Proposals }}
+                        {{ if eq .ID $.ActiveProposalID }}
+                            <option value="{{ .ID }}" selected>{{ .Title }}</option>
+                        {{ else }}
+                            <option value="{{ .ID }}" >{{ .Title }}</option>
+                        {{ end }}
+                    {{ end }}
+                </select>
+                <button id="proposal-details-button">Details</button>
+                <button id="create-proposal-button">+</button>
+                {{ else }}
+                <button id="create-proposal-button">Create new proposal</button>
                 {{ end }}
-            {{ else }}
-                <p>You don't have any proposals yet</p>
+            </div>
+        {{ end }}
+        <div id="polls">
+            See polls
+        </div>
+    </div>
+
+    <dialog id="create-proposal-dialog">
+        <button id="create-proposal-close" class="close">X</button>
+        <form hx-post="teach/proposal/create" hx-target="main" hx-swap="outerHTML">
+            <input type="text" name="title" placeholder="Proposal title">
+            <input type="text" name="description" placeholder="Proposal description">
+            <button type="submit">Create proposal</button>
+        </form>
+    </dialog>
+
+
+    <dialog id="proposal-details-dialog">
+        <button id="proposal-details-close" class="close">X</button>
+        <h2>{{ .ActiveProposal.Title }}</h2>
+        <p>{{ .ActiveProposal.Description }}</p>
+        <button hx-delete="teach/proposal/{{ .ActiveProposal.ID }}" hx-target="main" hx-swap="outerHTML" class="red">Delete</button>
+        <button hx-post="teach/proposal/{{ .ActiveProposal.ID }}/submit">Submit</button>
+    </dialog>
+
+   <script>
+            function initializeCreateProposalDialog() {
+                var createProposalDialog = document.getElementById('create-proposal-dialog');
+                var createProposalButton = document.getElementById('create-proposal-button');
+                var createProposalClose= document.getElementById('create-proposal-close');
+                var createProposalSubmit = document.querySelector('#create-proposal-dialog form button[type="submit"]');
+
+                createProposalButton.addEventListener('click', () => {
+                    createProposalDialog.showModal();
+                });
+
+                createProposalClose.addEventListener('click', () => {
+                    createProposalDialog.close();
+                });
+
+                createProposalSubmit.addEventListener('click', () => {
+                    createProposalDialog.close();
+                });
+            }
+
+            function initializeProposalDetailsDialog() {
+                var proposalDetailsDialog = document.getElementById('proposal-details-dialog');
+                var proposalDetailsButton = document.getElementById('proposal-details-button');
+                var proposalDetailsClose = document.getElementById('proposal-details-close');
+                var proposalDetailsDelete = document.querySelector('#proposal-details-dialog button[hx-delete]');
+
+                proposalDetailsButton.addEventListener('click', () => {
+                    proposalDetailsDialog.showModal();
+                });
+
+                proposalDetailsClose.addEventListener('click', () => {
+                    proposalDetailsDialog.close();
+                });
+
+                proposalDetailsDelete.addEventListener('click', () => {
+                    proposalDetailsDialog.close();
+                });
+            }
+
+                initializeCreateProposalDialog();
+                initializeProposalDetailsDialog();
+        </script> 
+    <script>
+        var dependencies = [
+            {{ range .Dependencies }}
+                { from: {{ .DependsOnID }}, to: {{ .UnitID }} },
             {{ end }}
-            <a id="create-proposal" hx-post="/teach/proposal">Create a new proposal</a>
-        </div>
-        <div id="user-proposals">
-            <h2>Polls of your proposals</h2>
-            <div class="user-proposal">
-                <h3>Proposal 1</h3>
-                <a href="/teach/curriculum/1">View proposal</a>
-            </div>
-            <div class="user-proposal">
-                <h3>Proposal 2</h3>
-                <a href="/teach/curriculum/2">View proposal</a>
-            </div>
-        </div>
-    </div>
-    <div id="suggested-polls">
-    <h2>Polls you might be interested in</h2>
-    <div id="user-proposals">
-            <div class="user-proposal">
-                <h3>Proposal 1</h3>
-                <a href="/teach/curriculum/1">View proposal</a>
-            </div>
-            <div class="user-proposal">
-                <h3>Proposal 2</h3>
-                <a href="/teach/curriculum/2">View proposal</a>
-            </div>
-        </div>
-    </div>
+        ];
+    </script>
 </main>
+
+{{ end }}
 
 {{ end }}

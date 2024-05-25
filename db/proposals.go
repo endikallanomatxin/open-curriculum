@@ -29,7 +29,7 @@ func ProposalsCreateTables() {
 	}
 }
 
-func CreateProposal(p Proposal) {
+func CreateProposal(p Proposal) int {
 	_, err := db.Exec(`
 		INSERT INTO proposals (title, description)
 		VALUES ($1, $2);
@@ -37,4 +37,45 @@ func CreateProposal(p Proposal) {
 	if err != nil {
 		log.Fatalf("Error inserting proposal: %q", err)
 	}
+
+	return p.ID
+}
+
+func DeleteProposal(id int) {
+	_, err := db.Exec(`
+		DELETE FROM proposals WHERE id = $1;
+	`, id)
+	if err != nil {
+		log.Fatalf("Error deleting proposal: %q", err)
+	}
+}
+
+func GetProposals() []Proposal {
+	rows, err := db.Query("SELECT id, title, description, created_at FROM proposals")
+	if err != nil {
+		log.Fatalf("Error querying proposals: %q", err)
+	}
+	defer rows.Close()
+
+	proposals := []Proposal{}
+	for rows.Next() {
+		var p Proposal
+		err := rows.Scan(&p.ID, &p.Title, &p.Description, &p.CreatedAt)
+		if err != nil {
+			log.Fatalf("Error scanning proposals: %q", err)
+		}
+		proposals = append(proposals, p)
+	}
+
+	return proposals
+}
+
+func GetActiveProposal() Proposal {
+	proposals := GetProposals()
+
+	if len(proposals) == 0 {
+		return Proposal{}
+	}
+
+	return proposals[0]
 }

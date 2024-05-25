@@ -77,7 +77,7 @@ func SetLanguageCookie(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, redirectURL, http.StatusSeeOther)
 }
 
-func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data interface{}) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data interface{}, block interface{}) {
 	supportedLanguages := []string{"en", "es", "eu"} // Update this list based on your available languages
 	var lang string
 
@@ -125,6 +125,15 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 	// Add a new field to the data struct
 	// URL
 	newdata["URL"] = r.URL.Path
+
+	// If there is a block to render, do so
+	if block != nil && block != "" {
+		err = t.ExecuteTemplate(w, block.(string), newdata)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+		return
+	}
 
 	err = t.ExecuteTemplate(w, "base.html", newdata)
 	if err != nil {

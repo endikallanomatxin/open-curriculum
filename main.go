@@ -20,9 +20,22 @@ func main() {
 	mux.HandleFunc("/manifest", handlers.Manifest)
 	mux.HandleFunc("/foundation", handlers.Foundation)
 
-	mux.HandleFunc("/learn", handlers.Learn)
-	mux.HandleFunc("/teach", handlers.Teach)
 	mux.HandleFunc("GET /unit/{id}/details", handlers.GetUnitDetails)
+
+	// ----------------
+
+	// LEARN
+	mux.HandleFunc("/learn", handlers.Learn)
+
+	// ----------------
+
+	// TEACH
+	mux.HandleFunc("/teach", handlers.Teach)
+
+	// Adding changes to a proposal
+	mux.HandleFunc("POST /teach/proposal/create", handlers.CreateProposal)
+	mux.HandleFunc("DELETE /teach/proposal/{id}", handlers.DeleteProposal)
+	mux.HandleFunc("POST /teach/proposal/{id}/add_change/unit_creation", handlers.AddUnitCreation)
 
 	mux.HandleFunc("POST /teach/proposal", handlers.NewProposal)
 	mux.HandleFunc("/teach/proposal/{id}", handlers.Proposal)

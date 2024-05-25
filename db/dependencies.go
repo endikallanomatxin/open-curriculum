@@ -79,7 +79,7 @@ func GetUnitDependencies(unit_id int) []Unit {
 	units := []Unit{}
 	for rows.Next() {
 		var u Unit
-		err := rows.Scan(&u.ID, &u.Name, &u.Description)
+		err := rows.Scan(&u.ID, &u.Name, &u.Content)
 		if err != nil {
 			log.Fatalf("Error scanning dependencies: %q", err)
 		}

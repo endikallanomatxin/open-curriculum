@@ -21,16 +21,16 @@ func Units(w http.ResponseWriter, r *http.Request) {
 			Dependencies: db.GetAllDependencies(),
 		}
 
-		RenderTemplate(w, r, "units.html", data)
+		RenderTemplate(w, r, "units.html", data, nil)
 
 	case "POST":
 		r.ParseForm()
 		name := r.Form.Get("name")
-		description := r.Form.Get("description")
+		content := r.Form.Get("content")
 
 		u := db.Unit{
-			Name:        name,
-			Description: description,
+			Name:    name,
+			Content: content,
 		}
 
 		db.CreateUnit(u)
@@ -60,7 +60,7 @@ func Unit(w http.ResponseWriter, r *http.Request) {
 			Units:        db.GetUnits(),
 		}
 
-		RenderTemplate(w, r, "unit.html", data)
+		RenderTemplate(w, r, "unit.html", data, nil)
 
 	case "DELETE":
 		id := 0

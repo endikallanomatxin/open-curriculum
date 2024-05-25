@@ -5,6 +5,22 @@
 }
 
 :root {
+
+    /* Colors */
+    --neutral-0: hsl(35, 45%, 97%);
+    --neutral-1: hsl(35, 38%, 92%);
+    --neutral-2: hsl(35, 32%, 88%);
+    --neutral-3: hsl(35, 25%, 70%);
+    --neutral-4: hsl(35, 20%, 60%);
+    --neutral-5: hsl(35, 18%, 50%);
+    --neutral-6: hsl(35, 16%, 40%);
+    --neutral-7: hsl(35, 12%, 30%);
+    --neutral-8: hsl(35, 10%, 20%);
+    --neutral-9: hsl(35, 7%, 14%);
+
+
+    /* Old colors */
+
     --primary-dark: hsl(160, 40%, 20%);
     --primary-accent: hsl(160, 40%, 35%);
     --primary-light: hsl(160, 40%, 70%);
@@ -84,4 +100,101 @@ nav#language{
     background-color: var(--background-dark);
     z-index: 100;
     border-radius: 2rem;
+}
+
+
+/* Buttons */
+
+button:not(.close){
+    font-size: 1em;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 2rem;
+    background-color: var(--primary-dark);
+    color: var(--background);
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button.close{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: transparent;
+    border: none;
+    color: var(--secondary-dark);
+    font-size: 1.5em;
+    font-weight: bold;
+
+    @media (min-width: 1200px) {
+        top: 2rem;
+        right: 2rem;
+    }
+}
+
+button.red{
+    background-color: var(--secondary-dark);
+}
+
+
+/* Inputs */
+
+select {
+    appearance: none; /* Para eliminar el estilo predeterminado del navegador */
+    -webkit-appearance: none; /* Para navegadores WebKit */
+    -moz-appearance: none; /* Para navegadores Mozilla */
+
+    border: none;
+    outline: none;
+    padding: 0.5rem 1rem;
+    padding-right: 2.5rem;
+    font-size: 1em;
+    border-radius: 2rem;
+    color: var(--neutral-8);
+    
+    background: var(--neutral-2);
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><polyline points='8,12,15,8,22,12' fill='none' style='stroke:grey;stroke-width:2'/><polyline points='8,18,15,22,22,18' fill='none' style='stroke:grey;stroke-width:2'/></svg>");
+    background-position: right 0.2rem top 50%;
+    background-blend-mode:luminosity;
+}
+
+select:hover {
+    background: var(--neutral-4);
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><polyline points='8,12,15,8,22,12' fill='none' style='stroke:grey;stroke-width:2'/><polyline points='8,18,15,22,22,18' fill='none' style='stroke:grey;stroke-width:2'/></svg>");
+    background-position: right 0.2rem top 50%;
+    background-blend-mode:luminosity;
+}
+
+input[type="text"], input[type="email"], input[type="password"], textarea{
+    width: 100%;
+    font-size: 1em;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 2rem;
+    background-color: var(--neutral-1);
+    color: var(--neutral-8);
+    outline: none;
+    margin: 0.5rem 0;
+}
+
+input[type="text"]:hover, input[type="email"]:hover, input[type="password"]:hover, textarea:hover{
+    background-color: var(--neutral-2);
+}
+
+
+/* Dialogs */
+
+dialog{
+    width: 80%;
+    max-width: 40em;
+    background-color: var(--neutral-0);
+    border: none;
+    border-radius: 2rem;
+    padding: 3rem;
+
+    @media (min-width: 1200px) {
+        padding: 5rem;
+    }
 }

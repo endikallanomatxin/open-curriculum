@@ -43,3 +43,22 @@ a#create-proposal {
     transition-duration: 0.2s;
     float: right;
 }
+
+/* Probably delete the above */
+
+#bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+}
+
+#bottom-bar div#proposals {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+

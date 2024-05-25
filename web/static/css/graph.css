@@ -2,11 +2,17 @@ div.unit{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 1rem 0.4rem;
-    background-color: var(--primary-white);
+    margin: 0.6rem 0;
+    background-color: var(--neutral-1);
     border-radius: 2rem;
     margin-left: calc(var(--horizontal-position)*2rem);
-    color: var(--primary-dark);
+    color: var(--neutral-7);
+    transition: 0.2s;
+}
+
+div.unit:hover{
+    background-color: var(--neutral-2);
+    color: var(--neutral-8);
 }
 
 .unit * {
@@ -30,7 +36,6 @@ div.node{
     -moz-border-radius: 1.1rem;
     -webkit-border-radius: 1.1rem;
     border-radius: 1.1rem;
-    border: 0.3rem solid var(--primary-dark);
-    background-color: var(--primary-white);
+    border: 0.3rem solid var(--neutral-4);
+    background-color: var(--neutral-2);
 }
-
