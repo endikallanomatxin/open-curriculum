@@ -13,7 +13,7 @@ func GetActiveProposal(r *http.Request) models.Proposal {
 	var active_proposal models.Proposal
 
 	// If the request contains an active proposal id, change the active proposal
-	if r.URL.Query().Get("active_proposal_id") != "" {
+	if r.URL.Query().Get("active_proposal_id") != "" && r.URL.Query().Get("active_proposal_id") != "0" {
 		active_proposa_id, err := strconv.Atoi(r.URL.Query().Get("active_proposal_id"))
 		if err != nil {
 			fmt.Println("Error converting active_proposal_id to int")
