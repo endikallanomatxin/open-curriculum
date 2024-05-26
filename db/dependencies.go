@@ -3,13 +3,9 @@ package db
 import (
 	"errors"
 	"log"
-)
 
-type Dependency struct {
-	ID          int
-	UnitID      int
-	DependsOnID int
-}
+	models "app/models"
+)
 
 func DependenciesCreateTables() {
 	_, err := db.Exec(`
@@ -64,21 +60,18 @@ func hasCycle(unitID, targetID int, visited, path map[int]bool) bool {
 	// Eliminar la unidad actual del camino actual
 	path[unitID] = false
 	return false
-	// Eliminar la unidad actual del camino actual
-	path[unitID] = false
-	return false
 }
 
-func GetUnitDependencies(unit_id int) []Unit {
+func GetUnitDependencies(unit_id int) []models.Unit {
 	rows, err := db.Query("SELECT units.id, units.name, units.description FROM dependencies JOIN units ON dependencies.depends_on_id = units.id WHERE dependencies.unit_id = $1", unit_id)
 	if err != nil {
 		log.Fatalf("Error querying dependencies: %q", err)
 	}
 	defer rows.Close()
 
-	units := []Unit{}
+	units := []models.Unit{}
 	for rows.Next() {
-		var u Unit
+		var u models.Unit
 		err := rows.Scan(&u.ID, &u.Name, &u.Content)
 		if err != nil {
 			log.Fatalf("Error scanning dependencies: %q", err)
@@ -88,16 +81,16 @@ func GetUnitDependencies(unit_id int) []Unit {
 	return units
 }
 
-func GetAllDependencies() []Dependency {
+func GetAllDependencies() []models.Dependency {
 	rows, err := db.Query("SELECT id, unit_id, depends_on_id FROM dependencies")
 	if err != nil {
 		log.Fatalf("Error querying dependencies: %q", err)
 	}
 	defer rows.Close()
 
-	dependencies := []Dependency{}
+	dependencies := []models.Dependency{}
 	for rows.Next() {
-		var d Dependency
+		var d models.Dependency
 		err := rows.Scan(&d.ID, &d.UnitID, &d.DependsOnID)
 		if err != nil {
 			log.Fatalf("Error scanning dependencies: %q", err)

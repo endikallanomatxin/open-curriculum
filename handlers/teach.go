@@ -2,13 +2,15 @@ package handlers
 
 import (
 	"app/db"
+	"app/models"
+	"app/services"
 	"fmt"
 	"net/http"
 	"strconv"
 )
 
-func GetActiveProposal(r *http.Request) db.Proposal {
-	var active_proposal db.Proposal
+func GetActiveProposal(r *http.Request) models.Proposal {
+	var active_proposal models.Proposal
 
 	// If the request contains an active proposal id, change the active proposal
 	if r.URL.Query().Get("active_proposal_id") != "" {
@@ -18,7 +20,7 @@ func GetActiveProposal(r *http.Request) db.Proposal {
 		}
 		active_proposal = db.GetProposal(active_proposa_id)
 	} else {
-		active_proposal = db.Proposal{
+		active_proposal = models.Proposal{
 			ID:          0,
 			Title:       "No active proposal",
 			Description: "There are no active proposals",
@@ -34,18 +36,23 @@ func Teach(w http.ResponseWriter, r *http.Request) {
 	units := db.GetUnits()
 	dependencies := db.GetAllDependencies()
 
-	graphedUnits := MakeGraph(units, dependencies)
+	positionedUnits := services.PositionUnits(units, dependencies)
+
+	active_proposal := GetActiveProposal(r)
+	graph := db.GetProposedGraph(active_proposal.ID)
 
 	data := struct {
-		Dependencies   []db.Dependency
-		GraphedUnits   []GraphedUnit
-		Proposals      []db.Proposal
-		ActiveProposal db.Proposal
+		Dependencies    []models.Dependency
+		PositionedUnits []models.PositionedUnit
+		Proposals       []models.Proposal
+		ActiveProposal  models.Proposal
+		Graph           models.Graph
 	}{
-		Dependencies:   dependencies,
-		GraphedUnits:   graphedUnits,
-		Proposals:      db.GetProposals(),
-		ActiveProposal: GetActiveProposal(r),
+		Dependencies:    dependencies,
+		PositionedUnits: positionedUnits,
+		Proposals:       db.GetProposals(),
+		ActiveProposal:  GetActiveProposal(r),
+		Graph:           graph,
 	}
 
 	RenderTemplate(w, r, "teach.html", data, nil)
@@ -56,7 +63,7 @@ func CreateProposal(w http.ResponseWriter, r *http.Request) {
 	title := r.Form.Get("title")
 	description := r.Form.Get("description")
 
-	p := db.Proposal{
+	p := models.Proposal{
 		Title:       title,
 		Description: description,
 	}
@@ -65,8 +72,8 @@ func CreateProposal(w http.ResponseWriter, r *http.Request) {
 
 	// Render only the block proposals from the teach.html template
 	data := struct {
-		Proposals      []db.Proposal
-		ActiveProposal db.Proposal
+		Proposals      []models.Proposal
+		ActiveProposal models.Proposal
 	}{
 		Proposals:      db.GetProposals(),
 		ActiveProposal: GetActiveProposal(r),
@@ -85,7 +92,7 @@ func UpdateProposal(w http.ResponseWriter, r *http.Request) {
 	description := r.Form.Get("description")
 
 	// Update the proposal in the database
-	p := db.Proposal{
+	p := models.Proposal{
 		ID:          id,
 		Title:       title,
 		Description: description,
@@ -94,8 +101,8 @@ func UpdateProposal(w http.ResponseWriter, r *http.Request) {
 
 	// Render the updated template
 	data := struct {
-		Proposals      []db.Proposal
-		ActiveProposal db.Proposal
+		Proposals      []models.Proposal
+		ActiveProposal models.Proposal
 	}{
 		Proposals:      db.GetProposals(),
 		ActiveProposal: db.GetProposal(id),
@@ -111,8 +118,8 @@ func DeleteProposal(w http.ResponseWriter, r *http.Request) {
 	db.DeleteProposal(id)
 
 	data := struct {
-		Proposals      []db.Proposal
-		ActiveProposal db.Proposal
+		Proposals      []models.Proposal
+		ActiveProposal models.Proposal
 	}{
 		Proposals:      db.GetProposals(),
 		ActiveProposal: GetActiveProposal(r),
@@ -128,39 +135,10 @@ func AddUnitCreation(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	name := r.Form.Get("name")
 
-	u := db.Unit{
+	u := models.Unit{
 		Name:    name,
 		Content: "",
 	}
 
 	db.CreateUnit(u)
-}
-
-func Proposal(w http.ResponseWriter, r *http.Request) {
-	id := 0
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d", &id)
-
-	data := struct {
-	}{}
-
-	RenderTemplate(w, r, "proposal.html", data, nil)
-}
-
-func NewProposal(w http.ResponseWriter, r *http.Request) {
-	// If the request contains form data, parse it
-
-	r.ParseForm()
-	title := r.Form.Get("title")
-	description := r.Form.Get("description")
-
-	fmt.Println("something")
-
-	p := db.Proposal{
-		Title:       title,
-		Description: description,
-	}
-
-	db.CreateProposal(p)
-
-	http.Redirect(w, r, "/teach", http.StatusSeeOther)
 }

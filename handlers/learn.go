@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"app/db"
+	"app/models"
+	"app/services"
 	"fmt"
 	"net/http"
 )
@@ -11,14 +13,14 @@ func Learn(w http.ResponseWriter, r *http.Request) {
 	units := db.GetUnits()
 	dependencies := db.GetAllDependencies()
 
-	graphedUnits := MakeGraph(units, dependencies)
+	positionedUnits := services.PositionUnits(units, dependencies)
 
 	data := struct {
-		Dependencies []db.Dependency
-		GraphedUnits []GraphedUnit
+		Dependencies    []models.Dependency
+		PositionedUnits []models.PositionedUnit
 	}{
-		Dependencies: dependencies,
-		GraphedUnits: graphedUnits,
+		Dependencies:    dependencies,
+		PositionedUnits: positionedUnits,
 	}
 
 	RenderTemplate(w, r, "learn.html", data, nil)
@@ -29,7 +31,7 @@ func GetUnitDetails(w http.ResponseWriter, r *http.Request) {
 	fmt.Sscanf(r.URL.Path, "/unit/%d/details", &id)
 
 	data := struct {
-		Unit db.Unit
+		Unit models.Unit
 	}{
 		Unit: db.GetUnit(id),
 	}

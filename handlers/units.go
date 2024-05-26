@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"app/db"
+	"app/models"
 	"fmt"
 	"net/http"
 )
@@ -13,8 +14,8 @@ func Units(w http.ResponseWriter, r *http.Request) {
 		// Datos que se pasarán a la plantilla
 		data := struct {
 			Title        string
-			Units        []db.Unit
-			Dependencies []db.Dependency
+			Units        []models.Unit
+			Dependencies []models.Dependency
 		}{
 			Title:        "Página de Unidades",
 			Units:        db.GetUnits(),
@@ -28,7 +29,7 @@ func Units(w http.ResponseWriter, r *http.Request) {
 		name := r.Form.Get("name")
 		content := r.Form.Get("content")
 
-		u := db.Unit{
+		u := models.Unit{
 			Name:    name,
 			Content: content,
 		}
@@ -50,9 +51,9 @@ func Unit(w http.ResponseWriter, r *http.Request) {
 		// Datos que se pasarán a la plantilla
 		data := struct {
 			Title        string
-			Unit         db.Unit
-			Dependencies []db.Unit
-			Units        []db.Unit
+			Unit         models.Unit
+			Dependencies []models.Unit
+			Units        []models.Unit
 		}{
 			Title:        "Detalle de la Unidad",
 			Unit:         db.GetUnit(id),

@@ -4,16 +4,9 @@ import (
 	"log"
 
 	_ "github.com/lib/pq"
-)
 
-// Proposal
-type Proposal struct {
-	// Collection of changes
-	ID          int
-	Title       string
-	Description string
-	CreatedAt   string
-}
+	models "app/models"
+)
 
 func ProposalsCreateTables() {
 	_, err := db.Exec(`
@@ -29,7 +22,7 @@ func ProposalsCreateTables() {
 	}
 }
 
-func CreateProposal(p Proposal) int {
+func CreateProposal(p models.Proposal) int {
 	_, err := db.Exec(`
 		INSERT INTO proposals (title, description)
 		VALUES ($1, $2);
@@ -41,7 +34,7 @@ func CreateProposal(p Proposal) int {
 	return p.ID
 }
 
-func UpdateProposal(p Proposal) {
+func UpdateProposal(p models.Proposal) {
 	_, err := db.Exec(`
 		UPDATE proposals
 		SET title = $1, description = $2
@@ -61,16 +54,16 @@ func DeleteProposal(id int) {
 	}
 }
 
-func GetProposals() []Proposal {
+func GetProposals() []models.Proposal {
 	rows, err := db.Query("SELECT id, title, description, created_at FROM proposals")
 	if err != nil {
 		log.Fatalf("Error querying proposals: %q", err)
 	}
 	defer rows.Close()
 
-	proposals := []Proposal{}
+	proposals := []models.Proposal{}
 	for rows.Next() {
-		var p Proposal
+		var p models.Proposal
 		err := rows.Scan(&p.ID, &p.Title, &p.Description, &p.CreatedAt)
 		if err != nil {
 			log.Fatalf("Error scanning proposals: %q", err)
@@ -81,8 +74,8 @@ func GetProposals() []Proposal {
 	return proposals
 }
 
-func GetProposal(id int) Proposal {
-	var p Proposal
+func GetProposal(id int) models.Proposal {
+	var p models.Proposal
 	err := db.QueryRow(`
 		SELECT id, title, description, created_at
 		FROM proposals

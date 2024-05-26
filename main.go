@@ -40,9 +40,6 @@ func main() {
 	// Adding changes to a proposal
 	mux.HandleFunc("POST /teach/proposal/{id}/add_change/unit_creation", handlers.AddUnitCreation)
 
-	mux.HandleFunc("POST /teach/proposal", handlers.NewProposal)
-	mux.HandleFunc("/teach/proposal/{id}", handlers.Proposal)
-
 	mux.HandleFunc("/units", handlers.Units)
 	mux.HandleFunc("/unit/{id}", handlers.Unit)
 	mux.HandleFunc("/dependencies", handlers.Dependencies)

@@ -23,7 +23,7 @@
             <button type="submit">Create unit</button>
         </form>
 
-        {{ range $graphedUnit := .GraphedUnits }}
+        {{ range $graphedUnit := .PositionedUnits }}
             <a hx-get="/unit/{{.Unit.ID}}/details" hx-target="#details">
                 <div class="unit" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
                     <div class="node" id="node-{{ .Unit.ID}}" ></div>

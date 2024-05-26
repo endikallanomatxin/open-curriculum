@@ -1,19 +1,10 @@
 package db
 
-import "log"
+import (
+	"log"
 
-type Unit struct {
-	ID      int
-	Name    string
-	Content string
-	GroupID int
-}
-
-type Group struct {
-	ID      int
-	Name    string
-	GroupID int
-}
+	models "app/models"
+)
 
 func UnitsCreateTables() {
 	createTables := `
@@ -39,7 +30,7 @@ func UnitsCreateTables() {
 	}
 }
 
-func GetUnits() []Unit {
+func GetUnits() []models.Unit {
 
 	rows, err := db.Query("SELECT id, name, content FROM units")
 	if err != nil {
@@ -47,9 +38,9 @@ func GetUnits() []Unit {
 	}
 	defer rows.Close()
 
-	units := []Unit{}
+	units := []models.Unit{}
 	for rows.Next() {
-		var u Unit
+		var u models.Unit
 		err := rows.Scan(&u.ID, &u.Name, &u.Content)
 		if err != nil {
 			log.Fatalf("Error scanning units: %q", err)
@@ -60,15 +51,15 @@ func GetUnits() []Unit {
 	return units
 }
 
-func CreateUnit(u Unit) {
+func CreateUnit(u models.Unit) {
 	_, err := db.Exec("INSERT INTO units (name, content) VALUES ($1, $2)", u.Name, u.Content)
 	if err != nil {
 		log.Fatalf("Error creating unit: %q", err)
 	}
 }
 
-func GetUnit(id int) Unit {
-	var u Unit
+func GetUnit(id int) models.Unit {
+	var u models.Unit
 	err := db.QueryRow("SELECT id, name, content FROM units WHERE id = $1", id).Scan(&u.ID, &u.Name, &u.Content)
 	if err != nil {
 		log.Fatalf("Error querying unit: %q", err)

@@ -1,25 +1,20 @@
-package handlers
+package services
 
 import (
-	"app/db"
+	"app/models"
 )
 
-type GraphedUnit struct {
-	Unit               db.Unit
-	HorizontalPosition float64
-}
-
-func MakeGraph(units []db.Unit, dependencies []db.Dependency) []GraphedUnit {
+func PositionUnits(units []models.Unit, dependencies []models.Dependency) []models.PositionedUnit {
 
 	// First, get units by level
 
 	unassignedUnits := units
-	unitsByLevel := make(map[int][]db.Unit)
+	unitsByLevel := make(map[int][]models.Unit)
 
 	// Iterate over the units and assign them to a level
 	// Units array will be empty when all units are assigned to a level
 	for level := 0; len(unassignedUnits) > 0; level++ {
-		unitsByLevel[level] = []db.Unit{}
+		unitsByLevel[level] = []models.Unit{}
 
 		for _, checkingU := range unassignedUnits {
 			dependsOnUnassigned := false
@@ -50,18 +45,18 @@ func MakeGraph(units []db.Unit, dependencies []db.Dependency) []GraphedUnit {
 	}
 
 	// Ahora, calcular la posición horizontal de cada unidad
-	graphedUnits := []GraphedUnit{}
+	positionedUnits := []models.PositionedUnit{}
 	for _, units := range unitsByLevel {
 		// Distribuir equitativamente las unidades en el nivel
 		unitCount := len(units)
 		for i, unit := range units {
 			horizontalPosition := float64(i) / float64(unitCount-1) // Normalizar entre 0 y 1
-			graphedUnits = append(graphedUnits, GraphedUnit{
+			positionedUnits = append(positionedUnits, models.PositionedUnit{
 				Unit:               unit,
 				HorizontalPosition: horizontalPosition,
 			})
 		}
 	}
 
-	return graphedUnits
+	return positionedUnits
 }
