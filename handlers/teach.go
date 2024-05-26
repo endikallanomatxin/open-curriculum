@@ -4,11 +4,33 @@ import (
 	"app/db"
 	"fmt"
 	"net/http"
+	"strconv"
 )
+
+func GetActiveProposal(r *http.Request) db.Proposal {
+	var active_proposal db.Proposal
+
+	// If the request contains an active proposal id, change the active proposal
+	if r.URL.Query().Get("active_proposal_id") != "" {
+		active_proposa_id, err := strconv.Atoi(r.URL.Query().Get("active_proposal_id"))
+		if err != nil {
+			fmt.Println("Error converting active_proposal_id to int")
+		}
+		active_proposal = db.GetProposal(active_proposa_id)
+	} else {
+		active_proposal = db.Proposal{
+			ID:          0,
+			Title:       "No active proposal",
+			Description: "There are no active proposals",
+		}
+	}
+
+	return active_proposal
+}
 
 func Teach(w http.ResponseWriter, r *http.Request) {
 
-	// Unitl more logic is implemented, let's just get all
+	// Until more logic is implemented, let's just get all
 	units := db.GetUnits()
 	dependencies := db.GetAllDependencies()
 
@@ -23,7 +45,7 @@ func Teach(w http.ResponseWriter, r *http.Request) {
 		Dependencies:   dependencies,
 		GraphedUnits:   graphedUnits,
 		Proposals:      db.GetProposals(),
-		ActiveProposal: db.GetActiveProposal(),
+		ActiveProposal: GetActiveProposal(r),
 	}
 
 	RenderTemplate(w, r, "teach.html", data, nil)
@@ -47,7 +69,7 @@ func CreateProposal(w http.ResponseWriter, r *http.Request) {
 		ActiveProposal db.Proposal
 	}{
 		Proposals:      db.GetProposals(),
-		ActiveProposal: db.GetActiveProposal(),
+		ActiveProposal: GetActiveProposal(r),
 	}
 
 	RenderTemplate(w, r, "teach.html", data, "main")
@@ -64,7 +86,7 @@ func DeleteProposal(w http.ResponseWriter, r *http.Request) {
 		ActiveProposal db.Proposal
 	}{
 		Proposals:      db.GetProposals(),
-		ActiveProposal: db.GetActiveProposal(),
+		ActiveProposal: GetActiveProposal(r),
 	}
 
 	RenderTemplate(w, r, "teach.html", data, "main")

@@ -70,12 +70,16 @@ func GetProposals() []Proposal {
 	return proposals
 }
 
-func GetActiveProposal() Proposal {
-	proposals := GetProposals()
-
-	if len(proposals) == 0 {
-		return Proposal{}
+func GetProposal(id int) Proposal {
+	var p Proposal
+	err := db.QueryRow(`
+		SELECT id, title, description, created_at
+		FROM proposals
+		WHERE id = $1;
+	`, id).Scan(&p.ID, &p.Title, &p.Description, &p.CreatedAt)
+	if err != nil {
+		log.Fatalf("Error querying proposal: %q", err)
 	}
 
-	return proposals[0]
+	return p
 }

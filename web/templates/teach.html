@@ -55,16 +55,23 @@
             <div id="proposals-bar">
                 {{ if .Proposals }}
                 Active proposal
-                <select id="active-proposal">
+                <select hx-get="/teach" hx-target="body" hx-trigger="change" hx-include="#active-proposal" id="active-proposal" name="active_proposal_id">
+                    {{ if eq .ActiveProposal.ID 0 }}
+                        <option value="0" selected>None</option>
+                    {{ else }}
+                        <option value="0">None</option>
+                    {{ end }}
                     {{ range .Proposals }}
-                        {{ if eq .ID $.ActiveProposalID }}
+                        {{ if eq .ID $.ActiveProposal.ID }}
                             <option value="{{ .ID }}" selected>{{ .Title }}</option>
                         {{ else }}
                             <option value="{{ .ID }}" >{{ .Title }}</option>
                         {{ end }}
                     {{ end }}
                 </select>
-                <button id="proposal-details-button">Details</button>
+                {{ if not (eq .ActiveProposal.ID 0) }}
+                    <button id="proposal-details-button">Details</button>
+                {{ end }}
                 <button id="create-proposal-button">+</button>
                 {{ else }}
                 <button id="create-proposal-button">Create new proposal</button>
@@ -77,7 +84,7 @@
     </div>
 
     <dialog id="create-proposal-dialog">
-        <button id="create-proposal-close" class="close">X</button>
+        <button id="create-proposal-close" class="close">✕</button>
         <form hx-post="teach/proposal/create" hx-target="main" hx-swap="outerHTML">
             <input type="text" name="title" placeholder="Proposal title">
             <input type="text" name="description" placeholder="Proposal description">
@@ -87,7 +94,7 @@
 
 
     <dialog id="proposal-details-dialog">
-        <button id="proposal-details-close" class="close">X</button>
+        <button id="proposal-details-close" class="close">✕</button>
         <h2>{{ .ActiveProposal.Title }}</h2>
         <p>{{ .ActiveProposal.Description }}</p>
         <button hx-delete="teach/proposal/{{ .ActiveProposal.ID }}" hx-target="main" hx-swap="outerHTML" class="red">Delete</button>
@@ -95,47 +102,47 @@
     </dialog>
 
    <script>
-            function initializeCreateProposalDialog() {
-                var createProposalDialog = document.getElementById('create-proposal-dialog');
-                var createProposalButton = document.getElementById('create-proposal-button');
-                var createProposalClose= document.getElementById('create-proposal-close');
-                var createProposalSubmit = document.querySelector('#create-proposal-dialog form button[type="submit"]');
+        function initializeCreateProposalDialog() {
+            var createProposalDialog = document.getElementById('create-proposal-dialog');
+            var createProposalButton = document.getElementById('create-proposal-button');
+            var createProposalClose= document.getElementById('create-proposal-close');
+            var createProposalSubmit = document.querySelector('#create-proposal-dialog form button[type="submit"]');
 
-                createProposalButton.addEventListener('click', () => {
-                    createProposalDialog.showModal();
-                });
+            createProposalButton.addEventListener('click', () => {
+                createProposalDialog.showModal();
+            });
 
-                createProposalClose.addEventListener('click', () => {
-                    createProposalDialog.close();
-                });
+            createProposalClose.addEventListener('click', () => {
+                createProposalDialog.close();
+            });
 
-                createProposalSubmit.addEventListener('click', () => {
-                    createProposalDialog.close();
-                });
-            }
+            createProposalSubmit.addEventListener('click', () => {
+                createProposalDialog.close();
+            });
+        }
 
-            function initializeProposalDetailsDialog() {
-                var proposalDetailsDialog = document.getElementById('proposal-details-dialog');
-                var proposalDetailsButton = document.getElementById('proposal-details-button');
-                var proposalDetailsClose = document.getElementById('proposal-details-close');
-                var proposalDetailsDelete = document.querySelector('#proposal-details-dialog button[hx-delete]');
+        function initializeProposalDetailsDialog() {
+            var proposalDetailsDialog = document.getElementById('proposal-details-dialog');
+            var proposalDetailsButton = document.getElementById('proposal-details-button');
+            var proposalDetailsClose = document.getElementById('proposal-details-close');
+            var proposalDetailsDelete = document.querySelector('#proposal-details-dialog button[hx-delete]');
 
-                proposalDetailsButton.addEventListener('click', () => {
-                    proposalDetailsDialog.showModal();
-                });
+            proposalDetailsButton.addEventListener('click', () => {
+                proposalDetailsDialog.showModal();
+            });
 
-                proposalDetailsClose.addEventListener('click', () => {
-                    proposalDetailsDialog.close();
-                });
+            proposalDetailsClose.addEventListener('click', () => {
+                proposalDetailsDialog.close();
+            });
 
-                proposalDetailsDelete.addEventListener('click', () => {
-                    proposalDetailsDialog.close();
-                });
-            }
+            proposalDetailsDelete.addEventListener('click', () => {
+                proposalDetailsDialog.close();
+            });
+        }
 
-                initializeCreateProposalDialog();
-                initializeProposalDetailsDialog();
-        </script> 
+            initializeCreateProposalDialog();
+            initializeProposalDetailsDialog();
+    </script> 
     <script>
         var dependencies = [
             {{ range .Dependencies }}
