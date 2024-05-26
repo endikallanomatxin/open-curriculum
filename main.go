@@ -32,9 +32,12 @@ func main() {
 	// TEACH
 	mux.HandleFunc("/teach", handlers.Teach)
 
-	// Adding changes to a proposal
+	// Proposal CRUD
 	mux.HandleFunc("POST /teach/proposal/create", handlers.CreateProposal)
+	mux.HandleFunc("PUT /teach/proposal/{id}/update", handlers.UpdateProposal)
 	mux.HandleFunc("DELETE /teach/proposal/{id}", handlers.DeleteProposal)
+
+	// Adding changes to a proposal
 	mux.HandleFunc("POST /teach/proposal/{id}/add_change/unit_creation", handlers.AddUnitCreation)
 
 	mux.HandleFunc("POST /teach/proposal", handlers.NewProposal)

@@ -92,11 +92,17 @@
         </form>
     </dialog>
 
-
     <dialog id="proposal-details-dialog">
         <button id="proposal-details-close" class="close">✕</button>
-        <h2>{{ .ActiveProposal.Title }}</h2>
-        <p>{{ .ActiveProposal.Description }}</p>
+        <form hx-put="/teach/proposal/{{ .ActiveProposal.ID }}/update" hx-target="main" hx-swap="outerHTML">
+            <label for="proposal-title">Title</label>
+            <input type="text" id="proposal-title" name="title" value="{{ .ActiveProposal.Title }}" required>
+            <br>
+            <label for="proposal-description">Description</label>
+            <textarea id="proposal-description" name="description" required>{{ .ActiveProposal.Description }}</textarea>
+            <br>
+            <button type="submit">Save Changes</button>
+        </form>
         <button hx-delete="teach/proposal/{{ .ActiveProposal.ID }}" hx-target="main" hx-swap="outerHTML" class="red">Delete</button>
         <button hx-post="teach/proposal/{{ .ActiveProposal.ID }}/submit">Submit</button>
     </dialog>

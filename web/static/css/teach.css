@@ -33,6 +33,22 @@ main {
 
 #bottom-bar div#proposals-bar {
     display: flex;
-    gap: 1em;
+    gap: 0.6em;
     align-items: center;
+}
+
+#proposal-details-dialog form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+#proposal-details-dialog form textarea {
+    resize: none;
+    height: 10em;
+}
+
+#proposal-details-dialog>button:not(.close) {
+    width: 100%;
+    margin: 0.4em 0;
 }

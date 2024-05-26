@@ -75,6 +75,35 @@ func CreateProposal(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, r, "teach.html", data, "main")
 }
 
+func UpdateProposal(w http.ResponseWriter, r *http.Request) {
+	id := 0
+	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/update", &id)
+
+	// Parse the form data
+	r.ParseForm()
+	title := r.Form.Get("title")
+	description := r.Form.Get("description")
+
+	// Update the proposal in the database
+	p := db.Proposal{
+		ID:          id,
+		Title:       title,
+		Description: description,
+	}
+	db.UpdateProposal(p)
+
+	// Render the updated template
+	data := struct {
+		Proposals      []db.Proposal
+		ActiveProposal db.Proposal
+	}{
+		Proposals:      db.GetProposals(),
+		ActiveProposal: db.GetProposal(id),
+	}
+
+	RenderTemplate(w, r, "teach.html", data, "main")
+}
+
 func DeleteProposal(w http.ResponseWriter, r *http.Request) {
 	id := 0
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d", &id)

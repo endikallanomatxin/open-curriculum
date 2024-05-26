@@ -41,6 +41,17 @@ func CreateProposal(p Proposal) int {
 	return p.ID
 }
 
+func UpdateProposal(p Proposal) {
+	_, err := db.Exec(`
+		UPDATE proposals
+		SET title = $1, description = $2
+		WHERE id = $3;
+	`, p.Title, p.Description, p.ID)
+	if err != nil {
+		log.Fatalf("Error updating proposal: %q", err)
+	}
+}
+
 func DeleteProposal(id int) {
 	_, err := db.Exec(`
 		DELETE FROM proposals WHERE id = $1;
