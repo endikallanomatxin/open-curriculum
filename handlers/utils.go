@@ -84,6 +84,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 	supportedLanguages := []string{"en", "es", "eu"} // Update this list based on your available languages
 	var lang string
 
+	// Get the language from the cookie or Accept-Language header
 	langCookie, err := r.Cookie("lang")
 	if err != nil {
 		acceptLang := r.Header.Get("Accept-Language")
@@ -95,16 +96,17 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 	// Normalize language code (example: convert "en-US" to "en-us")
 	lang = strings.ToLower(lang)
 
-	var tmpl_lang string
+	var tmplLang string
 	if lang == "en" {
-		tmpl_lang = tmpl
+		tmplLang = tmpl
 	} else {
-		tmpl_lang = tmpl[:len(tmpl)-5] + "-" + lang + ".html"
+		tmplLang = tmpl[:len(tmpl)-5] + "-" + lang + ".html"
 	}
 
-	t, err := template.ParseFiles("web/templates/base.html", "web/templates/"+tmpl_lang)
+	// Try to parse the template files
+	t, err := template.ParseFiles("web/templates/base.html", "web/templates/"+tmplLang)
 	if err != nil {
-		// Get the english version of the template
+		// Fallback to the default template if language-specific one fails
 		t, err = template.ParseFiles("web/templates/base.html", "web/templates/"+tmpl)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -112,24 +114,21 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 		}
 	}
 
+	// Prepare the data for the template
 	var newdata map[string]interface{}
-
 	if data == nil {
 		newdata = make(map[string]interface{})
-		// Else if data is a struct, create a new struct that contains the original data plus the URL
 	} else if reflect.TypeOf(data).Kind() == reflect.Struct {
 		newdata, _ = structtomap.Convert(data)
-	} else if _, ok := data.(map[string]interface{}); ok {
-		newdata = data.(map[string]interface{})
+	} else if m, ok := data.(map[string]interface{}); ok {
+		newdata = m
 	} else {
 		http.Error(w, "Data type not supported", http.StatusInternalServerError)
 		return
 	}
-	// Add a new field to the data struct
-	// URL
 	newdata["URL"] = r.URL.Path
 
-	// If there is a block to render, do so
+	// Render the specific block if provided
 	if block != nil && block != "" {
 		err = t.ExecuteTemplate(w, block.(string), newdata)
 		if err != nil {
@@ -139,6 +138,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 		return
 	}
 
+	// Render the base template
 	err = t.ExecuteTemplate(w, "base.html", newdata)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
