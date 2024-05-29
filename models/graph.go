@@ -7,11 +7,6 @@ type Unit struct {
 	GroupID int
 }
 
-type PositionedUnit struct {
-	Unit               Unit
-	HorizontalPosition float64
-}
-
 type Group struct {
 	ID      int
 	Name    string
@@ -27,4 +22,16 @@ type Dependency struct {
 type Graph struct {
 	Units        []Unit
 	Dependencies []Dependency
+}
+
+// PositionedUnits are used for rendering the graph
+
+type PositionedUnit struct {
+	Unit               Unit
+	HorizontalPosition float64
+}
+
+type PositionedGraph struct {
+	PositionedUnits []PositionedUnit
+	Dependencies    []Dependency
 }

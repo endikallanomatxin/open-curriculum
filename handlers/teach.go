@@ -6,53 +6,24 @@ import (
 	"app/services"
 	"fmt"
 	"net/http"
-	"strconv"
 )
-
-func GetActiveProposal(r *http.Request) models.Proposal {
-	var active_proposal models.Proposal
-
-	// If the request contains an active proposal id, change the active proposal
-	if r.URL.Query().Get("active_proposal_id") != "" && r.URL.Query().Get("active_proposal_id") != "0" {
-		active_proposa_id, err := strconv.Atoi(r.URL.Query().Get("active_proposal_id"))
-		if err != nil {
-			fmt.Println("Error converting active_proposal_id to int")
-		}
-		active_proposal = db.GetProposal(active_proposa_id)
-	} else {
-		active_proposal = models.Proposal{
-			ID:          0,
-			Title:       "No active proposal",
-			Description: "There are no active proposals",
-		}
-	}
-
-	return active_proposal
-}
 
 func Teach(w http.ResponseWriter, r *http.Request) {
 
-	// Until more logic is implemented, let's just get all
-	units := db.GetUnits()
-	dependencies := db.GetAllDependencies()
-
-	positionedUnits := services.PositionUnits(units, dependencies)
-
 	active_proposal := GetActiveProposal(r)
-	graph := db.GetProposedGraph(active_proposal.ID)
+	graph := services.GetProposedGraph(active_proposal.ID)
+	positionedGraph := services.CalculatePositions(graph)
+
+	fmt.Println("Graph", graph)
 
 	data := struct {
-		Dependencies    []models.Dependency
-		PositionedUnits []models.PositionedUnit
+		PositionedGraph models.PositionedGraph
 		Proposals       []models.Proposal
 		ActiveProposal  models.Proposal
-		Graph           models.Graph
 	}{
-		Dependencies:    dependencies,
-		PositionedUnits: positionedUnits,
+		PositionedGraph: positionedGraph,
 		Proposals:       db.GetProposals(),
 		ActiveProposal:  GetActiveProposal(r),
-		Graph:           graph,
 	}
 
 	RenderTemplate(w, r, "teach.html", data, nil)

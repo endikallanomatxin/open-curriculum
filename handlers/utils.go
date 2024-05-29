@@ -1,9 +1,12 @@
 package handlers
 
 import (
+	"app/db"
+	"app/models"
 	"fmt"
 	"net/http"
 	"reflect"
+	"strconv"
 	"strings"
 	"text/template"
 
@@ -131,6 +134,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 		err = t.ExecuteTemplate(w, block.(string), newdata)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
 		}
 		return
 	}
@@ -138,5 +142,27 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 	err = t.ExecuteTemplate(w, "base.html", newdata)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
+}
+
+func GetActiveProposal(r *http.Request) models.Proposal {
+	var active_proposal models.Proposal
+
+	// If the request contains an active proposal id, change the active proposal
+	if r.URL.Query().Get("active_proposal_id") != "" && r.URL.Query().Get("active_proposal_id") != "0" {
+		active_proposa_id, err := strconv.Atoi(r.URL.Query().Get("active_proposal_id"))
+		if err != nil {
+			fmt.Println("Error converting active_proposal_id to int")
+		}
+		active_proposal = db.GetProposal(active_proposa_id)
+	} else {
+		active_proposal = models.Proposal{
+			ID:          0,
+			Title:       "No active proposal",
+			Description: "There are no active proposals",
+		}
+	}
+
+	return active_proposal
 }

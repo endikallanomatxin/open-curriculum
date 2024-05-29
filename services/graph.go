@@ -1,14 +1,15 @@
 package services
 
 import (
+	"app/db"
 	"app/models"
 )
 
-func PositionUnits(units []models.Unit, dependencies []models.Dependency) []models.PositionedUnit {
+func CalculatePositions(graph models.Graph) models.PositionedGraph {
 
 	// First, get units by level
 
-	unassignedUnits := units
+	unassignedUnits := graph.Units
 	unitsByLevel := make(map[int][]models.Unit)
 
 	// Iterate over the units and assign them to a level
@@ -19,7 +20,7 @@ func PositionUnits(units []models.Unit, dependencies []models.Dependency) []mode
 		for _, checkingU := range unassignedUnits {
 			dependsOnUnassigned := false
 
-			for _, d := range dependencies {
+			for _, d := range graph.Dependencies {
 				for _, otherU := range unassignedUnits {
 					if checkingU.ID == d.UnitID && otherU.ID == d.DependsOnID {
 						dependsOnUnassigned = true
@@ -58,5 +59,22 @@ func PositionUnits(units []models.Unit, dependencies []models.Dependency) []mode
 		}
 	}
 
-	return positionedUnits
+	positionedGraph := models.PositionedGraph{
+		PositionedUnits: positionedUnits,
+		Dependencies:    graph.Dependencies,
+	}
+
+	return positionedGraph
+}
+
+func GetProposedGraph(proposalID int) models.Graph {
+	units := db.GetUnits()
+	dependencies := db.GetAllDependencies()
+
+	// TODO: Apply proposal changes
+
+	return models.Graph{
+		Units:        units,
+		Dependencies: dependencies,
+	}
 }

@@ -10,17 +10,18 @@ import (
 
 func Learn(w http.ResponseWriter, r *http.Request) {
 	// Unitl more logic is implemented, let's just get all
-	units := db.GetUnits()
-	dependencies := db.GetAllDependencies()
-
-	positionedUnits := services.PositionUnits(units, dependencies)
+	active_proposal := GetActiveProposal(r)
+	graph := services.GetProposedGraph(active_proposal.ID)
+	positionedGraph := services.CalculatePositions(graph)
 
 	data := struct {
-		Dependencies    []models.Dependency
-		PositionedUnits []models.PositionedUnit
+		PositionedGraph models.PositionedGraph
+		Proposals       []models.Proposal
+		ActiveProposal  models.Proposal
 	}{
-		Dependencies:    dependencies,
-		PositionedUnits: positionedUnits,
+		PositionedGraph: positionedGraph,
+		Proposals:       db.GetProposals(),
+		ActiveProposal:  GetActiveProposal(r),
 	}
 
 	RenderTemplate(w, r, "learn.html", data, nil)

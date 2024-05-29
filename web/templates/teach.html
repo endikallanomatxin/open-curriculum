@@ -17,23 +17,28 @@
 {{ block "main" .}}
 <main>
     <div id="graph">
-
-        <form hx-post="/proposal/{{.ActiveProposalID}}/add_change/create_unit" hx-target="#graph">
-            <input type="text" name="name" placeholder="Unit name">
-            <button type="submit">Create unit</button>
-        </form>
-
-        {{ range $graphedUnit := .PositionedUnits }}
-            <a hx-get="/unit/{{.Unit.ID}}/details" hx-target="#details">
-                <div class="unit" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
-                    <div class="node" id="node-{{ .Unit.ID}}" ></div>
-                    <p>{{ .Unit.Name }}</p>
-                    <div class="changes">
-                        // Links to make a request to the server to make create a change with the active proposal id
-                        <a href="/change/create?unit_id={{ .Unit.ID }}&proposal_id={{ .ActiveProposalID }}"></a>
+        {{ if not (eq .ActiveProposal.ID 0)}}
+            <form hx-post="/proposal/{{.ActiveProposalID}}/add_change/create_unit" hx-target="#graph">
+                <input type="text" name="name" placeholder="Unit name">
+                <button type="submit">Create unit</button>
+            </form>
+        {{ else }}
+            <p>Activate a proposal to see curriculum modification tools</p>
+        {{ end }}
+        
+        {{ if .PositionedGraph.PositionedUnits }}
+            {{ range .PositionedGraph.PositionedUnits }}
+                <a hx-get="/unit/{{.Unit.ID}}/details" hx-target="#details">
+                    <div class="unit" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
+                        <div class="node" id="node-{{ .Unit.ID}}" ></div>
+                        <p>{{ .Unit.Name }}</p>
+                        <div class="changes">
+                            // Links to make a request to the server to make create a change with the active proposal id
+                            <a href="/change/create?unit_id={{ .Unit.ID }}&proposal_id={{ .ActiveProposalID }}"></a>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            {{ end }}
         {{ end }}
 
     </div>
@@ -103,6 +108,16 @@
             <br>
             <button type="submit">Save Changes</button>
         </form>
+        <div id="proposal-changes">
+            <h3>Changes</h3>
+            <ul>
+                {{ range .ActiveProposal.Changes }}
+                    <li>
+                        <a href="/change/{{ .ID }}/details">{{ .Title }}</a>
+                    </li>
+                {{ end }}
+            </ul>
+        </div>
         <button hx-delete="teach/proposal/{{ .ActiveProposal.ID }}" hx-target="main" hx-swap="outerHTML" class="red">Delete</button>
         <button hx-post="teach/proposal/{{ .ActiveProposal.ID }}/submit">Submit</button>
     </dialog>
