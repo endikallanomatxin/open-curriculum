@@ -81,7 +81,9 @@ function createArrow(from, to) {
 
 
 // Now iterate over the dependencies array and create the arrows
-dependencies.forEach(dep => createArrow(dep.from, dep.to))
+if (typeof dependencies !== "undefined") {
+    dependencies.forEach(dep => createArrow(dep.from, dep.to));
+}
 
 // Redraw the arrows when the window is resized
 window.addEventListener("resize", () => {

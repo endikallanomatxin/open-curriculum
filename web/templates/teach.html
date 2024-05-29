@@ -108,25 +108,15 @@
             <br>
             <button type="submit">Save Changes</button>
         </form>
-        <div id="proposal-changes">
-            <h3>Changes</h3>
-            <ul>
-                {{ range .ActiveProposal.Changes }}
-                    <li>
-                        <a href="/change/{{ .ID }}/details">{{ .Title }}</a>
-                    </li>
-                {{ end }}
-            </ul>
-        </div>
         <button hx-delete="teach/proposal/{{ .ActiveProposal.ID }}" hx-target="main" hx-swap="outerHTML" class="red">Delete</button>
         <button hx-post="teach/proposal/{{ .ActiveProposal.ID }}/submit">Submit</button>
     </dialog>
 
-   <script>
+    <script>
         function initializeCreateProposalDialog() {
             var createProposalDialog = document.getElementById('create-proposal-dialog');
             var createProposalButton = document.getElementById('create-proposal-button');
-            var createProposalClose= document.getElementById('create-proposal-close');
+            var createProposalClose = document.getElementById('create-proposal-close');
             var createProposalSubmit = document.querySelector('#create-proposal-dialog form button[type="submit"]');
 
             createProposalButton.addEventListener('click', () => {
@@ -166,7 +156,7 @@
     </script> 
     <script>
         var dependencies = [
-            {{ range .Dependencies }}
+            {{ range .PositionedGraph.Dependencies }}
                 { from: {{ .DependsOnID }}, to: {{ .UnitID }} },
             {{ end }}
         ];
