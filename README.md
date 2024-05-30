@@ -14,6 +14,24 @@ sudo docker compose up --build
 sudo docker compose -f docker-compose.dev.yml up --build
 ```
 
+To use the db:
+
+```bash
+psql mydatabase -U myusername
+```
+
+To see all tables:
+    
+```sql
+\dt
+```
+
+To see all rows in a table:
+
+```sql
+SELECT * FROM mytable;
+```
+
 
 ## Resources
 

@@ -4,11 +4,12 @@ import (
 	"app/db"
 	"app/models"
 	"fmt"
+	"html/template"
+	"log"
 	"net/http"
 	"reflect"
 	"strconv"
 	"strings"
-	"text/template"
 
 	structtomap "github.com/Klathmon/StructToMap"
 )
@@ -80,6 +81,11 @@ func SetLanguageCookie(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, redirectURL, http.StatusSeeOther)
 }
 
+// typeIs checks if the type of an object is exactly the provided type name.
+func typeIs(typeName string, i interface{}) bool {
+	return reflect.TypeOf(i).String() == typeName
+}
+
 func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data interface{}, block interface{}) {
 	supportedLanguages := []string{"en", "es", "eu"} // Update this list based on your available languages
 	var lang string
@@ -103,11 +109,16 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 		tmplLang = tmpl[:len(tmpl)-5] + "-" + lang + ".html"
 	}
 
-	// Try to parse the template files
-	t, err := template.ParseFiles("web/templates/base.html", "web/templates/"+tmplLang)
+	// Add custom functions to the template
+	funcs := template.FuncMap{
+		"typeIs": typeIs,
+	}
+
+	// Try to parse the template files with custom functions
+	t, err := template.New("base.html").Funcs(funcs).ParseFiles("web/templates/base.html", "web/templates/"+tmplLang)
 	if err != nil {
 		// Fallback to the default template if language-specific one fails
-		t, err = template.ParseFiles("web/templates/base.html", "web/templates/"+tmpl)
+		t, err = template.New("base.html").Funcs(funcs).ParseFiles("web/templates/base.html", "web/templates/"+tmpl)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -118,51 +129,75 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 	var newdata map[string]interface{}
 	if data == nil {
 		newdata = make(map[string]interface{})
-	} else if reflect.TypeOf(data).Kind() == reflect.Struct {
-		newdata, _ = structtomap.Convert(data)
-	} else if m, ok := data.(map[string]interface{}); ok {
-		newdata = m
 	} else {
-		http.Error(w, "Data type not supported", http.StatusInternalServerError)
-		return
+		switch reflect.TypeOf(data).Kind() {
+		case reflect.Struct:
+			newdata, err = structtomap.Convert(data)
+			if err != nil {
+				log.Printf("Error converting struct to map: %v", err)
+				http.Error(w, "Failed to convert struct to map", http.StatusInternalServerError)
+				return
+			}
+		case reflect.Map:
+			if m, ok := data.(map[string]interface{}); ok {
+				newdata = m
+			} else {
+				http.Error(w, "Data type not supported", http.StatusInternalServerError)
+				return
+			}
+		default:
+			http.Error(w, "Unsupported data type", http.StatusInternalServerError)
+			return
+		}
 	}
 	newdata["URL"] = r.URL.Path
 
 	// Render the specific block if provided
 	if block != nil && block != "" {
-		err = t.ExecuteTemplate(w, block.(string), newdata)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+		if blockName, ok := block.(string); ok {
+			err = t.ExecuteTemplate(w, blockName, newdata)
+			if err != nil {
+				log.Printf("Error executing template block %s: %v", blockName, err)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+			return
+		} else {
+			http.Error(w, "Invalid block type", http.StatusInternalServerError)
 			return
 		}
-		return
 	}
 
 	// Render the base template
-	err = t.ExecuteTemplate(w, "base.html", newdata)
+	err = t.Execute(w, newdata)
 	if err != nil {
+		log.Printf("Error executing template: %v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
 }
 
 func GetActiveProposal(r *http.Request) models.Proposal {
-	var active_proposal models.Proposal
+	var activeProposal models.Proposal
+
+	activeProposalIDStr := r.URL.Query().Get("active_proposal_id")
 
 	// If the request contains an active proposal id, change the active proposal
-	if r.URL.Query().Get("active_proposal_id") != "" && r.URL.Query().Get("active_proposal_id") != "0" {
-		active_proposa_id, err := strconv.Atoi(r.URL.Query().Get("active_proposal_id"))
+	if activeProposalIDStr != "" && activeProposalIDStr != "0" {
+		activeProposalID, err := strconv.Atoi(activeProposalIDStr)
 		if err != nil {
-			fmt.Println("Error converting active_proposal_id to int")
+			fmt.Println("Error converting active_proposal_id to int:", err)
+			return models.Proposal{
+				ID:          0,
+				Title:       "No active proposal",
+				Description: "Invalid proposal ID provided",
+			}
 		}
-		active_proposal = db.GetProposal(active_proposa_id)
+		activeProposal = db.GetProposal(activeProposalID)
 	} else {
-		active_proposal = models.Proposal{
+		activeProposal = models.Proposal{
 			ID:          0,
 			Title:       "No active proposal",
 			Description: "There are no active proposals",
 		}
 	}
-
-	return active_proposal
+	return activeProposal
 }

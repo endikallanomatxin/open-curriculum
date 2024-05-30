@@ -66,8 +66,10 @@ func GetProposals() []models.Proposal {
 		var p models.Proposal
 		err := rows.Scan(&p.ID, &p.Title, &p.Description, &p.CreatedAt)
 		if err != nil {
-			log.Fatalf("Error scanning proposals: %q", err)
+			log.Fatalf("Error scanning proposal: %q", err)
 		}
+		changes := GetProposalChanges(p.ID)
+		p.Changes = changes
 		proposals = append(proposals, p)
 	}
 
@@ -84,6 +86,9 @@ func GetProposal(id int) models.Proposal {
 	if err != nil {
 		log.Fatalf("Error querying proposal: %q", err)
 	}
+
+	changes := GetProposalChanges(p.ID)
+	p.Changes = changes
 
 	return p
 }

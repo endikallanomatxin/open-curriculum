@@ -18,7 +18,7 @@
 <main>
     <div id="graph">
         {{ if not (eq .ActiveProposal.ID 0)}}
-            <form hx-post="/proposal/{{.ActiveProposalID}}/add_change/create_unit" hx-target="#graph">
+            <form hx-post="/teach/proposal/{{.ActiveProposal.ID}}/add_change/unit_creation?active_proposal_id={{.ActiveProposal.ID}}" hx-target="body">
                 <input type="text" name="name" placeholder="Unit name">
                 <button type="submit">Create unit</button>
             </form>
@@ -108,6 +108,29 @@
             <br>
             <button type="submit">Save Changes</button>
         </form>
+        <div id = "changes-list">
+            <h3>Changes</h3>
+            {{ range .ActiveProposal.Changes }}
+                {{ $change := . }}
+                {{ if (typeIs "models.UnitCreation" $change) }}
+                    <li>Created unit: {{ $change.Name }}</li>
+                {{ else if (typeIs "models.UnitDeletion" $change) }}
+                    <li>Deleted unit ID: {{ $change.UnitID }}</li>
+                {{ else if (typeIs "models.UnitUpdate" $change) }}
+                    <li>Updated unit ID: {{ $change.UnitID }}, new name: {{ $change.Name }}</li>
+                {{ else if (typeIs "models.DependencyCreation" $change) }}
+                    <li>Created dependency from unit ID: {{ $change.UnitID }} to {{ $change.DependsOnID }}</li>
+                {{ else if (typeIs "models.DependencyDeletion" $change) }}
+                    <li>Deleted dependency from unit ID: {{ $change.UnitID }} to {{ $change.DependsOnID }}</li>
+                {{ else if (typeIs "models.DocumentModification" $change) }}
+                    <li>Modified document in unit ID: {{ $change.UnitID }}, content: {{ $change.Content }}</li>
+                {{ else if (typeIs "models.DocumentFileUpload" $change) }}
+                    <li>Uploaded file for unit ID: {{ $change.UnitID }}</li>
+                {{ else if (typeIs "models.VideoModification" $change) }}
+                    <li>Modified video in unit ID: {{ $change.UnitID }}, content: {{ $change.Content }}</li>
+                {{ end }}
+            {{ end }}
+        </div>
         <button hx-delete="teach/proposal/{{ .ActiveProposal.ID }}" hx-target="main" hx-swap="outerHTML" class="red">Delete</button>
         <button hx-post="teach/proposal/{{ .ActiveProposal.ID }}/submit">Submit</button>
     </dialog>
@@ -118,7 +141,7 @@
             var createProposalButton = document.getElementById('create-proposal-button');
             var createProposalClose = document.getElementById('create-proposal-close');
             var createProposalSubmit = document.querySelector('#create-proposal-dialog form button[type="submit"]');
-
+            
             createProposalButton.addEventListener('click', () => {
                 createProposalDialog.showModal();
             });
@@ -135,6 +158,9 @@
         function initializeProposalDetailsDialog() {
             var proposalDetailsDialog = document.getElementById('proposal-details-dialog');
             var proposalDetailsButton = document.getElementById('proposal-details-button');
+            if (!proposalDetailsButton) {
+                return;
+            }
             var proposalDetailsClose = document.getElementById('proposal-details-close');
             var proposalDetailsDelete = document.querySelector('#proposal-details-dialog button[hx-delete]');
 
@@ -149,6 +175,8 @@
             proposalDetailsDelete.addEventListener('click', () => {
                 proposalDetailsDialog.close();
             });
+
+            console.log('Properly run again');
         }
 
             initializeCreateProposalDialog();

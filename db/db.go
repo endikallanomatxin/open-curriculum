@@ -25,6 +25,7 @@ func Init() {
 	ChangesCreateTables()
 	ProposalsCreateTables()
 	PollsCreateTables()
+	ChangesCreateTables()
 
 	log.Println("Database initialized")
 }

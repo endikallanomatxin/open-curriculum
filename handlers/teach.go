@@ -14,8 +14,6 @@ func Teach(w http.ResponseWriter, r *http.Request) {
 	graph := services.GetProposedGraph(active_proposal.ID)
 	positionedGraph := services.CalculatePositions(graph)
 
-	fmt.Println("Graph", graph)
-
 	data := struct {
 		PositionedGraph models.PositionedGraph
 		Proposals       []models.Proposal
@@ -23,7 +21,7 @@ func Teach(w http.ResponseWriter, r *http.Request) {
 	}{
 		PositionedGraph: positionedGraph,
 		Proposals:       db.GetProposals(),
-		ActiveProposal:  GetActiveProposal(r),
+		ActiveProposal:  active_proposal,
 	}
 
 	RenderTemplate(w, r, "teach.html", data, nil)
@@ -106,10 +104,25 @@ func AddUnitCreation(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	name := r.Form.Get("name")
 
-	u := models.Unit{
-		Name:    name,
-		Content: "",
+	_, err := db.AddUnitCreation(id, name)
+	if err != nil {
+		fmt.Println(err)
 	}
 
-	db.CreateUnit(u)
+	active_proposal := GetActiveProposal(r)
+	graph := services.GetProposedGraph(active_proposal.ID)
+	positionedGraph := services.CalculatePositions(graph)
+
+	data := struct {
+		PositionedGraph models.PositionedGraph
+		Proposals       []models.Proposal
+		ActiveProposal  models.Proposal
+	}{
+		PositionedGraph: positionedGraph,
+		Proposals:       db.GetProposals(),
+		ActiveProposal:  active_proposal,
+	}
+
+	// Just send ok
+	RenderTemplate(w, r, "teach.html", data, nil)
 }
