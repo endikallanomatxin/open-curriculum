@@ -38,7 +38,8 @@ func main() {
 	mux.HandleFunc("DELETE /teach/proposal/{id}", handlers.DeleteProposal)
 
 	// Adding changes to a proposal
-	mux.HandleFunc("POST /teach/proposal/{id}/add_change/unit_creation", handlers.AddUnitCreation)
+	mux.HandleFunc("POST /teach/proposal/{id}/unit_creation", handlers.CreateUnitCreation)
+	mux.HandleFunc("DELETE /teach/proposal/{id}/unit_creation/{change_id}", handlers.DeleteUnitCreation)
 
 	mux.HandleFunc("/units", handlers.Units)
 	mux.HandleFunc("/unit/{id}", handlers.Unit)

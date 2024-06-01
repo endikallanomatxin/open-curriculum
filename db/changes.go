@@ -230,7 +230,7 @@ func GetProposalChanges(proposalId int) []models.Change {
 	return changes
 }
 
-func AddUnitCreation(proposalId int, name string) (int, error) {
+func CreateUnitCreation(proposalId int, name string) (int, error) {
 	var id int
 	err := db.QueryRow(`
 		INSERT INTO unit_creations (proposal_id, name)
@@ -241,6 +241,17 @@ func AddUnitCreation(proposalId int, name string) (int, error) {
 		return 0, err
 	}
 	return id, nil
+}
+
+func DeleteUnitCreation(changeId int) error {
+	_, err := db.Exec(`
+		DELETE FROM unit_creations
+		WHERE id = $1
+	`, changeId)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func AddUnitDeletion(proposalId int, unitId int) (int, error) {

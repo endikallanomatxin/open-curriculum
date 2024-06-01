@@ -97,14 +97,14 @@ func DeleteProposal(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, r, "teach.html", data, "main")
 }
 
-func AddUnitCreation(w http.ResponseWriter, r *http.Request) {
+func CreateUnitCreation(w http.ResponseWriter, r *http.Request) {
 	id := 0
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/add_change/unit_creation", &id)
+	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_creation", &id)
 
 	r.ParseForm()
 	name := r.Form.Get("name")
 
-	_, err := db.AddUnitCreation(id, name)
+	_, err := db.CreateUnitCreation(id, name)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -124,5 +124,29 @@ func AddUnitCreation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Just send ok
+	RenderTemplate(w, r, "teach.html", data, nil)
+}
+
+func DeleteUnitCreation(w http.ResponseWriter, r *http.Request) {
+	proposal_id := 0
+	change_id := 0
+	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_creation/%d", &proposal_id, &change_id)
+
+	db.DeleteUnitCreation(change_id)
+
+	active_proposal := GetActiveProposal(r)
+	graph := services.GetProposedGraph(active_proposal.ID)
+	positionedGraph := services.CalculatePositions(graph)
+
+	data := struct {
+		PositionedGraph models.PositionedGraph
+		Proposals       []models.Proposal
+		ActiveProposal  models.Proposal
+	}{
+		PositionedGraph: positionedGraph,
+		Proposals:       db.GetProposals(),
+		ActiveProposal:  active_proposal,
+	}
+
 	RenderTemplate(w, r, "teach.html", data, nil)
 }
