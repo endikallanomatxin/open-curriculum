@@ -71,7 +71,26 @@ func GetProposedGraph(proposalID int) models.Graph {
 	units := db.GetUnits()
 	dependencies := db.GetAllDependencies()
 
-	// TODO: Apply proposal changes
+	if proposalID == 0 {
+		return models.Graph{
+			Units:        units,
+			Dependencies: dependencies,
+		}
+	}
+
+	proposal := db.GetProposal(proposalID)
+
+	// Apply proposal changes
+	for _, change := range proposal.Changes {
+		switch change := change.(type) {
+		case models.UnitCreation:
+			units = append(units, models.Unit{
+				ID:                change.ID,
+				Name:              change.Name,
+				IsAProposedChange: true,
+			})
+		}
+	}
 
 	return models.Graph{
 		Units:        units,

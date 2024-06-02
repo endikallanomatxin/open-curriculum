@@ -1,10 +1,11 @@
 package models
 
 type Unit struct {
-	ID      int
-	Name    string
-	Content string
-	GroupID int
+	ID                int
+	Name              string
+	Content           string
+	GroupID           int
+	IsAProposedChange bool `default:"false"`
 }
 
 type Group struct {

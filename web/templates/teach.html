@@ -27,17 +27,24 @@
         {{ end }}
         
         {{ if .PositionedGraph.PositionedUnits }}
+            {{ $activeProposalID := .ActiveProposal.ID}}
             {{ range .PositionedGraph.PositionedUnits }}
+                {{ if .Unit.IsAProposedChange }}
+                    <a>
+                        <div class="unit" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
+                            <div class="node" id="node-{{ .Unit.ID}}" ></div>
+                            <p>{{ .Unit.Name }}</p>
+                            <button class="red" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">X</button>
+                        </div>
+                    </a>
+                {{ else }}
                 <a hx-get="/unit/{{.Unit.ID}}/details" hx-target="#details">
                     <div class="unit" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
                         <div class="node" id="node-{{ .Unit.ID}}" ></div>
                         <p>{{ .Unit.Name }}</p>
-                        <div class="changes">
-                            // Links to make a request to the server to make create a change with the active proposal id
-                            <a href="/change/create?unit_id={{ .Unit.ID }}&proposal_id={{ .ActiveProposalID }}"></a>
-                        </div>
                     </div>
                 </a>
+                {{ end }}
             {{ end }}
         {{ end }}
 
