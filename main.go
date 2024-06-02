@@ -32,14 +32,21 @@ func main() {
 	// TEACH
 	mux.HandleFunc("/teach", handlers.Teach)
 
-	// Proposal CRUD
+	// Proposal
 	mux.HandleFunc("POST /teach/proposal/create", handlers.CreateProposal)
 	mux.HandleFunc("PUT /teach/proposal/{id}/update", handlers.UpdateProposal)
 	mux.HandleFunc("DELETE /teach/proposal/{id}", handlers.DeleteProposal)
+	mux.HandleFunc("PUT /teach/proposal/{id}/submit", handlers.SubmitProposal)
 
-	// Adding changes to a proposal
+	// Changes
 	mux.HandleFunc("POST /teach/proposal/{id}/unit_creation", handlers.CreateUnitCreation)
 	mux.HandleFunc("DELETE /teach/proposal/{id}/unit_creation/{change_id}", handlers.DeleteUnitCreation)
+
+	// Polls
+	mux.HandleFunc("GET /teach/polls", handlers.Polls)
+	mux.HandleFunc("GET /teach/poll/{id}", handlers.Poll)
+	mux.HandleFunc("POST /teach/poll/{id}/yes", handlers.VoteYes)
+	mux.HandleFunc("POST /teach/poll/{id}/no", handlers.VoteNo)
 
 	mux.HandleFunc("/units", handlers.Units)
 	mux.HandleFunc("/unit/{id}", handlers.Unit)

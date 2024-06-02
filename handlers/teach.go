@@ -20,7 +20,7 @@ func Teach(w http.ResponseWriter, r *http.Request) {
 		ActiveProposal  models.Proposal
 	}{
 		PositionedGraph: positionedGraph,
-		Proposals:       db.GetProposals(),
+		Proposals:       db.GetUnsubmittedProposals(),
 		ActiveProposal:  active_proposal,
 	}
 
@@ -44,7 +44,7 @@ func CreateProposal(w http.ResponseWriter, r *http.Request) {
 		Proposals      []models.Proposal
 		ActiveProposal models.Proposal
 	}{
-		Proposals:      db.GetProposals(),
+		Proposals:      db.GetUnsubmittedProposals(),
 		ActiveProposal: GetActiveProposal(r),
 	}
 
@@ -73,7 +73,7 @@ func UpdateProposal(w http.ResponseWriter, r *http.Request) {
 		Proposals      []models.Proposal
 		ActiveProposal models.Proposal
 	}{
-		Proposals:      db.GetProposals(),
+		Proposals:      db.GetUnsubmittedProposals(),
 		ActiveProposal: db.GetProposal(id),
 	}
 
@@ -90,11 +90,20 @@ func DeleteProposal(w http.ResponseWriter, r *http.Request) {
 		Proposals      []models.Proposal
 		ActiveProposal models.Proposal
 	}{
-		Proposals:      db.GetProposals(),
+		Proposals:      db.GetUnsubmittedProposals(),
 		ActiveProposal: GetActiveProposal(r),
 	}
 
 	RenderTemplate(w, r, "teach.html", data, "main")
+}
+
+func SubmitProposal(w http.ResponseWriter, r *http.Request) {
+	id := 0
+	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/submit", &id)
+
+	db.SubmitProposal(id)
+
+	http.Redirect(w, r, "/teach", http.StatusFound)
 }
 
 func CreateUnitCreation(w http.ResponseWriter, r *http.Request) {
@@ -119,7 +128,7 @@ func CreateUnitCreation(w http.ResponseWriter, r *http.Request) {
 		ActiveProposal  models.Proposal
 	}{
 		PositionedGraph: positionedGraph,
-		Proposals:       db.GetProposals(),
+		Proposals:       db.GetUnsubmittedProposals(),
 		ActiveProposal:  active_proposal,
 	}
 
@@ -144,9 +153,54 @@ func DeleteUnitCreation(w http.ResponseWriter, r *http.Request) {
 		ActiveProposal  models.Proposal
 	}{
 		PositionedGraph: positionedGraph,
-		Proposals:       db.GetProposals(),
+		Proposals:       db.GetUnsubmittedProposals(),
 		ActiveProposal:  active_proposal,
 	}
 
 	RenderTemplate(w, r, "teach.html", data, nil)
+}
+
+func Polls(w http.ResponseWriter, r *http.Request) {
+	data := struct {
+		Polls []interface{}
+	}{
+		Polls: db.GetUnResolvedPolls(),
+	}
+	RenderTemplate(w, r, "polls.html", data, nil)
+}
+
+func Poll(w http.ResponseWriter, r *http.Request) {
+
+	pollID := 0
+	fmt.Sscanf(r.URL.Path, "/teach/poll/%d", &pollID)
+
+	poll := db.GetPoll(pollID)
+
+	data := struct {
+		Poll models.SingleProposalPoll
+	}{
+		Poll: poll,
+	}
+
+	RenderTemplate(w, r, "poll.html", data, nil)
+}
+
+func VoteYes(w http.ResponseWriter, r *http.Request) {
+	pollID := 0
+	fmt.Sscanf(r.URL.Path, "/teach/poll/%d/yes", &pollID)
+
+	db.VoteYes(pollID)
+
+	redirectTo := fmt.Sprintf("/teach/poll/%d", pollID)
+	http.Redirect(w, r, redirectTo, http.StatusFound)
+}
+
+func VoteNo(w http.ResponseWriter, r *http.Request) {
+	pollID := 0
+	fmt.Sscanf(r.URL.Path, "/teach/poll/%d/no", &pollID)
+
+	db.VoteNo(pollID)
+
+	redirectTo := fmt.Sprintf("/teach/poll/%d", pollID)
+	http.Redirect(w, r, redirectTo, http.StatusFound)
 }

@@ -20,7 +20,7 @@ func Learn(w http.ResponseWriter, r *http.Request) {
 		ActiveProposal  models.Proposal
 	}{
 		PositionedGraph: positionedGraph,
-		Proposals:       db.GetProposals(),
+		Proposals:       db.GetUnsubmittedProposals(),
 		ActiveProposal:  GetActiveProposal(r),
 	}
 

@@ -1,0 +1,29 @@
+{{ define "head" }}
+<title>Units</title>
+<link rel="stylesheet" href="/static/css/teach_and_learn.css">
+<link rel="stylesheet" href="/static/css/teach.css">
+<script src="/static/js/graph.js" defer></script>
+{{ end }}
+
+{{ define "body" }}
+<nav id="top_bar">
+    <a href="/"><img id="logo" src="/static/media/logo.svg"></a>
+    <a href="/teach/proposals">Curriculum design</a>
+    <a href="/teach/tasks">Tasks</a>
+    <a href="/teach/certifications">certifications</a>
+</nav>
+
+<main>
+    <div id="polls">
+        {{ range .Polls }}
+                <p>{{ .Proposal.Title }}</p>
+                <a href="/teach/poll/{{ .ID }}">View poll</a>
+        {{ end }}
+    </div>
+    <div id="bottom-bar">
+        <div id="polls">
+            <a href="/teach">Back to the curriculum editor</a>
+        </div>
+    </div>
+</main>
+{{ end }}
