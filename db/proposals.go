@@ -56,6 +56,9 @@ func DeleteProposal(id int) {
 
 func GetProposals() []models.Proposal {
 	rows, err := db.Query("SELECT id, title, description, created_at FROM proposals")
+	if errors.Is(err, sql.ErrNoRows) {
+		return []models.Proposal{}
+	}
 	if err != nil {
 		log.Fatalf("Error querying proposals: %q", err)
 	}
@@ -83,6 +86,9 @@ func GetProposal(id int) models.Proposal {
 		FROM proposals
 		WHERE id = $1;
 	`, id).Scan(&p.ID, &p.Title, &p.Description, &p.CreatedAt)
+	if errors.Is(err, sql.ErrNoRows) {
+		return models.Proposal{}
+	}
 	if err != nil {
 		log.Fatalf("Error querying proposal: %q", err)
 	}
