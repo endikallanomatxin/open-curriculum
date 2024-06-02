@@ -17,14 +17,6 @@
 {{ block "main" .}}
 <main>
     <div id="graph">
-        {{ if not (eq .ActiveProposal.ID 0)}}
-            <form hx-post="/teach/proposal/{{.ActiveProposal.ID}}/unit_creation?active_proposal_id={{.ActiveProposal.ID}}" hx-target="body">
-                <input type="text" name="name" placeholder="Unit name">
-                <button type="submit">Create unit</button>
-            </form>
-        {{ else }}
-            <p>Activate a proposal to see curriculum modification tools</p>
-        {{ end }}
         
         {{ if .PositionedGraph.PositionedUnits }}
             {{ $activeProposalID := .ActiveProposal.ID}}
@@ -46,6 +38,15 @@
                 </a>
                 {{ end }}
             {{ end }}
+        {{ end }}
+
+        {{ if not (eq .ActiveProposal.ID 0)}}
+            <form hx-post="/teach/proposal/{{.ActiveProposal.ID}}/unit_creation?active_proposal_id={{.ActiveProposal.ID}}" hx-target="body">
+                <input type="text" name="name" placeholder="Unit name">
+                <button type="submit">Create unit</button>
+            </form>
+        {{ else }}
+            <p>Activate a proposal to see curriculum modification tools</p>
         {{ end }}
 
     </div>
