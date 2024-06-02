@@ -67,7 +67,7 @@
             <div id="proposals-bar">
                 {{ if .Proposals }}
                 Active proposal
-                <select hx-get="/teach" hx-target="body" hx-trigger="change" hx-include="#active-proposal" id="active-proposal" name="active_proposal_id">
+                <select hx-get="/teach" hx-target="body" hx-trigger="change" hx-include="#active-proposal" id="active-proposal" name="active_proposal_id" hx-replace-url="true">
                     {{ if eq .ActiveProposal.ID 0 }}
                         <option value="0" selected>None</option>
                     {{ else }}
