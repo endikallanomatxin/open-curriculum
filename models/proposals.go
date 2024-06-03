@@ -11,8 +11,6 @@ type Proposal struct {
 	CreatedAt   time.Time
 	Changes     []Change
 	Submitted   bool `default:"false"`
-	Accepted    bool `default:"false"`
-	Rejected    bool `default:"false"`
 }
 
 type Change interface{}

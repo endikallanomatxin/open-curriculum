@@ -7,6 +7,7 @@ type SingleProposalPoll struct {
 	YesVotes   int
 	NoVotes    int
 	Resolved   bool `default:"false"`
+	Accepted   bool `default:"false"`
 }
 
 type MultipleProposalPoll struct {

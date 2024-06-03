@@ -22,6 +22,18 @@
         <button hx-post="/teach/poll/{{ .Poll.ID }}/yes" hx-target="main" hx-swap="outerHTML">Yes</button>
         <button class="red" hx-post="/teach/poll/{{ .Poll.ID }}/no" hx-target="main" hx-swap="outerHTML">No</button>
     </div>
+    <div>
+        <h3>Comments</h3>
+        <ul>
+            {{ range .Comments }}
+                <li>{{ .Content }}</li>
+            {{ end }}
+        </ul>
+        <form hx-post="/teach/poll/{{ .Poll.ID }}/comment" hx-target="main" hx-swap="outerHTML">
+            <input type="text" name="content" placeholder="Comment">
+            <button type="submit">Comment</button>
+        </form>
+    </div>
     <div id="bottom-bar">
         <div id="polls">
             <a href="/teach/polls">Back to polls</a>

@@ -78,3 +78,40 @@ func DeleteUnit(id int) {
 		log.Fatalf("Error deleting unit: %q", err)
 	}
 }
+
+func UpdateGraph() {
+	// This goes over all accepted polls and updates the graph with its proposals
+
+	// Delete all units and dependencies
+	_, err := db.Exec("DELETE FROM units")
+	if err != nil {
+		log.Fatalf("Error deleting units: %q", err)
+	}
+	_, err = db.Exec("DELETE FROM dependencies")
+	if err != nil {
+		log.Fatalf("Error deleting dependencies: %q", err)
+	}
+
+	// Get all accepted polls
+	acceptedPolls := GetAcceptedPolls()
+	for _, poll := range acceptedPolls {
+		// Poll is an interface
+		// If it a SingleProposalPoll
+		if poll, ok := poll.(models.SingleProposalPoll); ok {
+			proposal := poll.Proposal
+			for _, change := range proposal.Changes {
+				switch change := change.(type) {
+				case models.UnitCreation:
+					CreateUnit(models.Unit{Name: change.Name})
+				case models.DependencyCreation:
+					_, err := db.Exec("INSERT INTO dependencies (unit_id, depends_on_id) VALUES ($1, $2)", change.UnitID, change.DependsOnID)
+					if err != nil {
+						log.Fatalf("Error creating dependency: %q", err)
+					}
+				}
+			}
+		}
+	}
+
+	// TODO: Maybe it is better if the changes have a method Apply() that applies the change to the graph. And it doesn't have to be rewritten.
+}
