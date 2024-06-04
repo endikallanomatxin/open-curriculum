@@ -52,3 +52,42 @@ main {
     width: 100%;
     margin: 0.4em 0;
 }
+
+#proposal-details-dialog>#changes-list {
+    margin: 2em 0;
+}
+
+div.change{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: 0.5em 0;
+}
+
+div.change .type{
+    font-size:0.5em;
+    font-weight: 700;
+    padding:0.5em;
+    border-radius:0.5em;
+}
+
+div.change a{
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+div.change:hover{
+    a{
+    opacity: 1;
+    }
+}
+
+div.change .type.red{
+    background-color: var(--red-1);
+    color:var(--red-8);
+}
+
+div.change .type.green{
+    background-color: var(--green-1);
+    color:var(--green-8);
+}

@@ -133,17 +133,21 @@
         </form>
         <div id="changes-list">
             <h3>Changes</h3>
-            <ul>
                 {{ $activeProposalID := .ActiveProposal.ID }}
                 {{ range .ActiveProposal.Changes }}
                     {{ $change := . }}
                     {{ if (typeIs "models.UnitCreation" $change) }}
-                        <li>
-                            Created unit: {{ $change.Name }}
-                            <a hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ $change.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">X</a>
-                        </li>
+                        <div class="change">
+                            <div class="type green">CREATE UNIT</div>
+                            <div>{{ $change.Name }}</div>
+                            <a class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ $change.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">Undo</a>
+                        </div>
                     {{ else if (typeIs "models.UnitDeletion" $change) }}
-                        <li>Deleted unit ID: {{ $change.UnitID }}</li>
+                        <div class="change">
+                            <div class="type red">DELETE UNIT</div>
+                            <div>{{ $change.UnitID }}</div>
+                            <a class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ $change.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">Undo</a>
+                        </div>
                     {{ else if (typeIs "models.UnitUpdate" $change) }}
                         <li>Updated unit ID: {{ $change.UnitID }}, new name: {{ $change.Name }}</li>
                     {{ else if (typeIs "models.DependencyCreation" $change) }}
@@ -158,7 +162,6 @@
                         <li>Modified video in unit ID: {{ $change.UnitID }}, content: {{ $change.Content }}</li>
                     {{ end }}
                 {{ end }}
-            </ul>
         </div>
         <button hx-delete="teach/proposal/{{ .ActiveProposal.ID }}" hx-target="main" hx-swap="outerHTML" class="red">Delete</button>
         <button hx-put="teach/proposal/{{ .ActiveProposal.ID }}/submit" hx-target="body" hx-replace-url="true">Submit</button>
