@@ -254,6 +254,30 @@ func DeleteUnitCreation(changeId int) error {
 	return nil
 }
 
+func CreateUnitDeletion(proposalId int, unitId int) (int, error) {
+	var id int
+	err := db.QueryRow(`
+		INSERT INTO unit_deletions (proposal_id, unit_id)
+		VALUES ($1, $2)
+		RETURNING id
+	`, proposalId, unitId).Scan(&id)
+	if err != nil {
+		return 0, err
+	}
+	return id, nil
+}
+
+func DeleteUnitDeletion(changeId int) error {
+	_, err := db.Exec(`
+		DELETE FROM unit_deletions
+		WHERE id = $1
+	`, changeId)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func AddUnitDeletion(proposalId int, unitId int) (int, error) {
 	var id int
 	err := db.QueryRow(`

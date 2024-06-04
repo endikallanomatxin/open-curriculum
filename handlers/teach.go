@@ -160,6 +160,58 @@ func DeleteUnitCreation(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, r, "teach.html", data, nil)
 }
 
+func CreateUnitDeletion(w http.ResponseWriter, r *http.Request) {
+	proposal_id := 0
+	unit_id := 0
+	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_deletion/%d", &proposal_id, &unit_id)
+
+	db.CreateUnitDeletion(proposal_id, unit_id)
+
+	active_proposal := GetActiveProposal(r)
+	graph := services.GetProposedGraph(active_proposal.ID)
+	positionedGraph := services.CalculatePositions(graph)
+
+	data := struct {
+		PositionedGraph models.PositionedGraph
+		Proposals       []models.Proposal
+		ActiveProposal  models.Proposal
+	}{
+		PositionedGraph: positionedGraph,
+		Proposals:       db.GetUnsubmittedProposals(),
+		ActiveProposal:  active_proposal,
+	}
+
+	RenderTemplate(w, r, "teach.html", data, nil)
+}
+
+func DeleteUnitDeletion(w http.ResponseWriter, r *http.Request) {
+	proposal_id := 0
+	change_id := 0
+	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_deletion/%d", &proposal_id, &change_id)
+
+	fmt.Println("Deleting unit deletion", change_id)
+	err := db.DeleteUnitDeletion(change_id)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	active_proposal := GetActiveProposal(r)
+	graph := services.GetProposedGraph(active_proposal.ID)
+	positionedGraph := services.CalculatePositions(graph)
+
+	data := struct {
+		PositionedGraph models.PositionedGraph
+		Proposals       []models.Proposal
+		ActiveProposal  models.Proposal
+	}{
+		PositionedGraph: positionedGraph,
+		Proposals:       db.GetUnsubmittedProposals(),
+		ActiveProposal:  active_proposal,
+	}
+
+	RenderTemplate(w, r, "teach.html", data, nil)
+}
+
 func Polls(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		Polls []interface{}

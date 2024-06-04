@@ -92,6 +92,12 @@ func UpdateGraph() {
 		log.Fatalf("Error deleting dependencies: %q", err)
 	}
 
+	// Restart DB autoincrement
+	_, err = db.Exec("ALTER SEQUENCE units_id_seq RESTART WITH 1")
+	if err != nil {
+		log.Fatalf("Error restarting units_id_seq: %q", err)
+	}
+
 	// Get all accepted polls
 	acceptedPolls := GetAcceptedPolls()
 	for _, poll := range acceptedPolls {
@@ -103,15 +109,12 @@ func UpdateGraph() {
 				switch change := change.(type) {
 				case models.UnitCreation:
 					CreateUnit(models.Unit{Name: change.Name})
-				case models.DependencyCreation:
-					_, err := db.Exec("INSERT INTO dependencies (unit_id, depends_on_id) VALUES ($1, $2)", change.UnitID, change.DependsOnID)
-					if err != nil {
-						log.Fatalf("Error creating dependency: %q", err)
-					}
+				case models.UnitDeletion:
+					DeleteUnit(change.UnitID)
 				}
 			}
 		}
 	}
-
+	// TODO: Los cambios no tienen que hacer referencia al id de la unidad, sino al último cambio que la modificó.
 	// TODO: Maybe it is better if the changes have a method Apply() that applies the change to the graph. And it doesn't have to be rewritten.
 }

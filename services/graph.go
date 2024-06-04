@@ -71,6 +71,11 @@ func GetProposedGraph(proposalID int) models.Graph {
 	units := db.GetUnits()
 	dependencies := db.GetAllDependencies()
 
+	// Mark units as existing
+	for i := range units {
+		units[i].Type = "Existing"
+	}
+
 	if proposalID == 0 {
 		return models.Graph{
 			Units:        units,
@@ -83,11 +88,19 @@ func GetProposedGraph(proposalID int) models.Graph {
 	// Apply proposal changes
 	for _, change := range proposal.Changes {
 		switch change := change.(type) {
+		case models.UnitDeletion:
+			for i, unit := range units {
+				if unit.ID == change.UnitID {
+					unit.Type = "ProposedDeletion"
+					unit.ChangeID = change.ID
+					units[i] = unit
+				}
+			}
 		case models.UnitCreation:
 			units = append(units, models.Unit{
-				ID:                change.ID,
-				Name:              change.Name,
-				IsAProposedChange: true,
+				ChangeID: change.ID,
+				Name:     change.Name,
+				Type:     "ProposedCreation",
 			})
 		}
 	}

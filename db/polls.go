@@ -91,17 +91,12 @@ func GetAcceptedPolls() []interface{} {
 func GetPoll(pollID int) models.SingleProposalPoll {
 	poll := models.SingleProposalPoll{}
 
-	fmt.Println("pollID", pollID)
-
 	err := db.QueryRow(`
 		SELECT * FROM single_proposal_polls WHERE id = $1;
 	`, pollID).Scan(&poll.ID, &poll.ProposalID, &poll.YesVotes, &poll.NoVotes, &poll.Resolved, &poll.Accepted)
 	if err != nil {
 		fmt.Println(err)
 	}
-
-	fmt.Println("poll", poll)
-	fmt.Println("poll.ProposalID", poll.ProposalID)
 
 	poll.Proposal = GetProposal(poll.ProposalID)
 
@@ -111,7 +106,6 @@ func GetPoll(pollID int) models.SingleProposalPoll {
 func CheckPoll(pollID int) {
 	// If yes-no is greater than 10, resolve the poll
 	poll := GetPoll(pollID)
-	fmt.Println("poll", poll)
 	if poll.YesVotes-poll.NoVotes > 10 {
 		_, err := db.Exec(`
 			UPDATE single_proposal_polls
@@ -121,7 +115,6 @@ func CheckPoll(pollID int) {
 		if err != nil {
 			fmt.Println(err)
 		}
-		fmt.Println("Poll", poll, "resolved")
 		UpdateGraph()
 		return
 	}

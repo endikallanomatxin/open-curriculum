@@ -1,11 +1,12 @@
 package models
 
 type Unit struct {
-	ID                int
-	Name              string
-	Content           string
-	GroupID           int
-	IsAProposedChange bool `default:"false"`
+	ID       int
+	Name     string
+	Content  string
+	GroupID  int
+	Type     string // 'Existing', 'ProposedCreation', 'ProposedDeletion', 'ProposedModification', 'ProposedRename'
+	ChangeID int
 }
 
 type Group struct {

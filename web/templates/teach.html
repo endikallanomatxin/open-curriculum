@@ -21,19 +21,34 @@
         {{ if .PositionedGraph.PositionedUnits }}
             {{ $activeProposalID := .ActiveProposal.ID}}
             {{ range .PositionedGraph.PositionedUnits }}
-                {{ if .Unit.IsAProposedChange }}
+                {{ if eq .Unit.Type "ProposedCreation" }}
                     <a>
-                        <div class="unit" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
+                        <div class="unit proposed-creation" id="unit-{{ .Unit.ChangeID }}" style="--horizontal-position: {{.HorizontalPosition}}">
+                            <div class="node" id="node-{{ .Unit.ChangeID}}" ></div>
+                            <p>{{ .Unit.Name }}</p>
+                            <div class="controls">
+                                <button class="delete red" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">X</button>
+                            </div>
+                        </div>
+                    </a>
+                {{ else if eq .Unit.Type "ProposedDeletion" }}
+                    <a>
+                        <div class="unit proposed-deletion" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
                             <div class="node" id="node-{{ .Unit.ID}}" ></div>
                             <p>{{ .Unit.Name }}</p>
-                            <button class="red" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">X</button>
+                            <div class="controls">
+                                <button class="delete red" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">R</button>
+                            </div>
                         </div>
                     </a>
                 {{ else }}
                 <a hx-get="/unit/{{.Unit.ID}}/details" hx-target="#details">
-                    <div class="unit" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
+                    <div class="unit existing" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
                         <div class="node" id="node-{{ .Unit.ID}}" ></div>
                         <p>{{ .Unit.Name }}</p>
+                        <div class="controls">
+                            <button class="delete red" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .Unit.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">X</button>
+                        </div>
                     </div>
                 </a>
                 {{ end }}
