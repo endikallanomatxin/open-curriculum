@@ -15,6 +15,22 @@
 - Create opening animation of logo
 
 - Platform demo:
+    - Teach:
+        - Proposal creation
+            - [x] Creation
+            - [x] Activation
+            - [x] Submission
+            - [/] Adding changes:
+                - [x] Unit creation
+                - [x] Unit deletion
+                - [ ] Unit rename
+                - [ ] Unit content modification
+                - [ ] Dependency creation
+                - [ ] Dependency modification
+        - Voting mode
+            - [ ] See relevant polls
+            - [ ] Open a poll and vote on it
+            - 
     - Learn
         - [x] See tree
         - [x] See unit details
@@ -22,17 +38,7 @@
         - [ ] Mark units as seen.
         - [ ] Unit recommendation engine
 
-    - Teach:
-        - Proposal creation
-            - [ ] Activate a proposal for the changes to be auto-staged to.
-                Now the proposal is going to be saved in cookies. We should later chagne this.
-            - [ ] Create changes
-            - [ ] Submit a proposal.
 
-        - Voting mode
-            - [ ] See relevant polls
-            - [ ] Open a poll and vote on it
-            - 
 
 
 Por decidir:
