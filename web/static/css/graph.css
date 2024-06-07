@@ -48,12 +48,7 @@ div.unit p{
     margin:0;
     font-weight: 600;
     font-size: 1.2em;
-    width: calc(50vw - 10rem);
-}
-
-div.unit button{
-    font-size: 0.3em;
-    padding: 0.4em 1em;
+    width: calc(40vw - 20rem);
 }
 
 div.node{
@@ -79,4 +74,41 @@ div.unit.proposed-creation div.node{
 div.unit.proposed-deletion div.node{
     border: 0.3rem solid var(--red-7);
     background-color: var(--red-1);
+}
+
+div.controls {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    margin-right:0.5em;
+    
+    button{
+        font-size: 0.3em;
+        padding: 0.4em 0.8em;
+        white-space: nowrap;
+    }
+
+    button.edit{
+        background-color: rgb(50, 67, 130);
+    }
+
+    button.rename{
+        background-color: rgb(195, 124, 53);
+    }
+
+    button.deps{
+        background-color: rgb(75, 50, 130)
+    }
+
+    button.certs{
+        background-color: rgb(204, 175, 10)
+    }
+
+    button.delete{
+        background-color: rgb(130, 50, 50);
+    }
+
+    button.undo{
+        background-color: var(--neutral-5);
+    }
 }

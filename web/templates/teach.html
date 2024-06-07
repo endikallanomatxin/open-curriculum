@@ -27,7 +27,10 @@
                             <div class="node" id="node-{{ .Unit.ChangeID}}" ></div>
                             <p>{{ .Unit.Name }}</p>
                             <div class="controls">
-                                <button class="delete red" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">X</button>
+                                <button class="edit" >Edit content</button>
+                                <button class="rename orange" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Rename</button>
+                                <button class="deps" >Edit dependencies</button>
+                                <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
                             </div>
                         </div>
                     </a>
@@ -37,7 +40,7 @@
                             <div class="node" id="node-{{ .Unit.ID}}" ></div>
                             <p>{{ .Unit.Name }}</p>
                             <div class="controls">
-                                <button class="delete red" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">R</button>
+                                <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
                             </div>
                         </div>
                     </a>
@@ -47,7 +50,11 @@
                         <div class="node" id="node-{{ .Unit.ID}}" ></div>
                         <p>{{ .Unit.Name }}</p>
                         <div class="controls">
-                            <button class="delete red" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .Unit.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">X</button>
+                            <button class="edit">Edit content</button>
+                            <button class="rename">Rename</button>
+                            <button class="deps">Edit dependencies</button>
+                            <button class="certs">Copy certifications to</button>
+                            <button class="delete" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .Unit.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Delete</button>
                         </div>
                     </div>
                 </a>
