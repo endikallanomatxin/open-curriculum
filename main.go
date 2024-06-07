@@ -20,6 +20,8 @@ func main() {
 	mux.HandleFunc("/manifest", handlers.Manifest)
 	mux.HandleFunc("/foundation", handlers.Foundation)
 
+	mux.HandleFunc("/set-language", handlers.SetLanguageCookie)
+
 	mux.HandleFunc("GET /unit/{id}/details", handlers.GetUnitDetails)
 
 	// ----------------
@@ -31,6 +33,8 @@ func main() {
 
 	// TEACH
 	mux.HandleFunc("/teach", handlers.Teach)
+	mux.HandleFunc("/teach/set-active-proposal-ID", handlers.SetActiveProposalID)
+	mux.HandleFunc("/teach/set-open-unit-ID", handlers.SetOpenUnitID)
 
 	// Proposal
 	mux.HandleFunc("POST /teach/proposal/create", handlers.CreateProposal)
@@ -55,8 +59,6 @@ func main() {
 	mux.HandleFunc("/dependencies", handlers.Dependencies)
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
-
-	mux.HandleFunc("/set-language", handlers.SetLanguageCookie)
 
 	if os.Getenv("ENV") == "dev" {
 		http.ListenAndServe(":8080", mux)

@@ -173,15 +173,72 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 	}
 }
 
+func SetActiveProposalID(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(r.URL.Query().Get("active_proposal_id"))
+	if err != nil {
+		http.Error(w, "Invalid proposal ID", http.StatusBadRequest)
+		return
+	}
+
+	cookie := http.Cookie{
+		Name:   "active_proposal_id",
+		Value:  strconv.Itoa(id),
+		Path:   "/",
+		MaxAge: 60 * 60 * 24 * 7, // 1 week
+	}
+
+	http.SetCookie(w, &cookie)
+
+	http.Redirect(w, r, "/teach", http.StatusFound)
+}
+
 func GetActiveProposalID(r *http.Request) int {
-	activeProposalIDStr := r.URL.Query().Get("active_proposal_id")
-	if activeProposalIDStr == "" {
+	activeProposalIDCookie, err := r.Cookie("active_proposal_id")
+	if err != nil {
 		return 0
 	}
+
+	activeProposalIDStr := activeProposalIDCookie.Value
+
 	activeProposalID, err := strconv.Atoi(activeProposalIDStr)
 	if err != nil {
 		fmt.Println("Error converting active_proposal_id to int:", err)
 		return 0
 	}
 	return activeProposalID
+}
+
+func SetOpenUnitID(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Setting open unit ID")
+	id := 0
+	fmt.Sscanf(r.URL.Query().Get("open_unit_id"), "%d", &id)
+
+	cookie := http.Cookie{
+		Name:   "open_unit_id",
+		Value:  strconv.Itoa(id),
+		Path:   "/",
+		MaxAge: 60 * 60 * 24 * 7, // 1 week
+	}
+
+	fmt.Println("Setting open unit ID to", id)
+
+	http.SetCookie(w, &cookie)
+
+	http.Redirect(w, r, "/teach", http.StatusFound)
+}
+
+func GetOpenUnitID(r *http.Request) int {
+	openUnitIDCookie, err := r.Cookie("open_unit_id")
+	if err != nil {
+		return 0
+	}
+
+	openUnitIDStr := openUnitIDCookie.Value
+
+	openUnitID, err := strconv.Atoi(openUnitIDStr)
+	if err != nil {
+		fmt.Println("Error converting open_unit_id to int:", err)
+		return 0
+	}
+	return openUnitID
 }

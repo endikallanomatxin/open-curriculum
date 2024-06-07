@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func renderTeachTemplate(w http.ResponseWriter, r *http.Request, activeProposalID int) {
+func renderTeachTemplate(w http.ResponseWriter, r *http.Request, activeProposalID int, openUnitID int) {
 	graph := services.GetProposedGraph(activeProposalID)
 	positionedGraph := services.CalculatePositions(graph)
 
@@ -24,21 +24,35 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request, activeProposalI
 		activeProposal = db.GetProposal(activeProposalID)
 	}
 
+	openUnit := models.Unit{}
+
+	if openUnitID == 0 {
+		openUnit = models.Unit{
+			ID:      0,
+			Name:    "No open unit",
+			Content: "There are no open units",
+		}
+	} else {
+		openUnit = db.GetUnit(openUnitID)
+	}
+
 	data := struct {
 		PositionedGraph models.PositionedGraph
 		Proposals       []models.Proposal
 		ActiveProposal  models.Proposal
+		OpenUnit        models.Unit
 	}{
 		PositionedGraph: positionedGraph,
 		Proposals:       db.GetUnsubmittedProposals(),
 		ActiveProposal:  activeProposal,
+		OpenUnit:        openUnit,
 	}
 
 	RenderTemplate(w, r, "teach.html", data, nil)
 }
 
 func Teach(w http.ResponseWriter, r *http.Request) {
-	renderTeachTemplate(w, r, GetActiveProposalID(r))
+	renderTeachTemplate(w, r, GetActiveProposalID(r), GetOpenUnitID(r))
 }
 
 func CreateProposal(w http.ResponseWriter, r *http.Request) {
@@ -53,7 +67,7 @@ func CreateProposal(w http.ResponseWriter, r *http.Request) {
 
 	id := db.CreateProposal(p)
 
-	renderTeachTemplate(w, r, id)
+	renderTeachTemplate(w, r, id, GetOpenUnitID(r))
 }
 
 func UpdateProposal(w http.ResponseWriter, r *http.Request) {
@@ -73,7 +87,7 @@ func UpdateProposal(w http.ResponseWriter, r *http.Request) {
 	}
 	db.UpdateProposal(p)
 
-	renderTeachTemplate(w, r, GetActiveProposalID(r))
+	renderTeachTemplate(w, r, GetActiveProposalID(r), GetOpenUnitID(r))
 }
 
 func DeleteProposal(w http.ResponseWriter, r *http.Request) {
@@ -82,7 +96,7 @@ func DeleteProposal(w http.ResponseWriter, r *http.Request) {
 
 	db.DeleteProposal(id)
 
-	renderTeachTemplate(w, r, GetActiveProposalID(r))
+	renderTeachTemplate(w, r, GetActiveProposalID(r), GetOpenUnitID(r))
 }
 
 func SubmitProposal(w http.ResponseWriter, r *http.Request) {
@@ -106,7 +120,7 @@ func CreateUnitCreation(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	renderTeachTemplate(w, r, id)
+	renderTeachTemplate(w, r, id, GetOpenUnitID(r))
 }
 
 func DeleteUnitCreation(w http.ResponseWriter, r *http.Request) {
@@ -116,7 +130,7 @@ func DeleteUnitCreation(w http.ResponseWriter, r *http.Request) {
 
 	db.DeleteUnitCreation(change_id)
 
-	renderTeachTemplate(w, r, proposal_id)
+	renderTeachTemplate(w, r, proposal_id, GetOpenUnitID(r))
 }
 
 func CreateUnitDeletion(w http.ResponseWriter, r *http.Request) {
@@ -126,7 +140,7 @@ func CreateUnitDeletion(w http.ResponseWriter, r *http.Request) {
 
 	db.CreateUnitDeletion(proposal_id, unit_id)
 
-	renderTeachTemplate(w, r, proposal_id)
+	renderTeachTemplate(w, r, proposal_id, GetOpenUnitID(r))
 }
 
 func DeleteUnitDeletion(w http.ResponseWriter, r *http.Request) {
@@ -140,7 +154,7 @@ func DeleteUnitDeletion(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	renderTeachTemplate(w, r, proposal_id)
+	renderTeachTemplate(w, r, proposal_id, GetOpenUnitID(r))
 }
 
 func Polls(w http.ResponseWriter, r *http.Request) {

@@ -11,13 +11,12 @@
     <a href="/"><img id="logo" src="/static/media/logo.svg"></a>
     <a href="/teach/proposals">Curriculum design</a>
     <a href="/teach/tasks">Tasks</a>
-    <a href="/teach/certifications">certifications</a>
+    <a href="/teach/certifications">Certifications</a>
 </nav>
 
 {{ block "main" . }}
 <main>
     <div id="graph">
-        
         {{ if .PositionedGraph.PositionedUnits }}
             {{ $activeProposalID := .ActiveProposal.ID}}
             {{ range .PositionedGraph.PositionedUnits }}
@@ -27,9 +26,9 @@
                             <div class="node" id="node-{{ .Unit.ChangeID}}" ></div>
                             <p>{{ .Unit.Name }}</p>
                             <div class="controls">
-                                <button class="edit" >Edit content</button>
+                                <button class="edit">Edit content</button>
                                 <button class="rename" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Rename</button>
-                                <button class="deps" >Edit dependencies</button>
+                                <button class="deps">Edit dependencies</button>
                                 <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
                             </div>
                         </div>
@@ -45,7 +44,7 @@
                         </div>
                     </a>
                 {{ else }}
-                    <a hx-get="/unit/{{.Unit.ID}}/details" hx-target="#details">
+                    <a hx-get="/teach/set-open-unit-ID?open_unit_id={{ .Unit.ID }}" hx-target="body">
                         <div class="unit existing" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
                             <div class="node" id="node-{{ .Unit.ID}}" ></div>
                             <p>{{ .Unit.Name }}</p>
@@ -75,16 +74,26 @@
 
     </div>
     <div id="details">
-    {{ block "unit_details" .}}
-        {{ if .Unit }}
-        {{ with .Unit}}
-            <h2>{{.Name}}</h2>
-            <p>{{.Content}}</p>
+        {{ block "unit_details" . }}
+            {{ if .OpenUnit }}
+                {{ with .OpenUnit }}
+                    <h2>{{ .Name }}</h2>
+                    <form id="rename-form" hx-put="/unit/{{ .ID }}/rename" hx-target="#details" hx-swap="outerHTML">
+                        <label for="new-name">Rename Unit:</label>
+                        <input type="text" id="new-name" name="new_name" value="{{ .Name }}">
+                        <button type="submit">Rename</button>
+                    </form>
+                    <p>{{ .Content }}</p>
+                    <form id="edit-content-form" hx-put="/unit/{{ .ID }}/edit" hx-target="#details" hx-swap="outerHTML">
+                        <label for="new-content">Edit Content:</label>
+                        <textarea id="new-content" name="new_content">{{ .Content }}</textarea>
+                        <button type="submit">Save</button>
+                    </form>
+                {{ end }}
+            {{ else }}
+                <p>Select a unit to view its details</p>
+            {{ end }}
         {{ end }}
-        {{ else }}
-            <p>Select a unit to view its details</p>
-        {{ end }}
-    {{ end }}
     </div>
 
     <div id="bottom-bar">
@@ -92,7 +101,7 @@
             <div id="proposals-bar">
                 {{ if .Proposals }}
                 Active proposal
-                <select hx-get="/teach" hx-target="body" hx-trigger="change" hx-include="#active-proposal" id="active-proposal" name="active_proposal_id" hx-replace-url="true">
+                <select hx-get="/teach/set-active-proposal-ID" hx-target="body" hx-trigger="change" hx-include="#active-proposal" id="active-proposal" name="active_proposal_id" hx-replace-url="true">
                     {{ if eq .ActiveProposal.ID 0 }}
                         <option value="0" selected>None</option>
                     {{ else }}
@@ -102,7 +111,7 @@
                         {{ if eq .ID $.ActiveProposal.ID }}
                             <option value="{{ .ID }}" selected>{{ .Title }}</option>
                         {{ else }}
-                            <option value="{{ .ID }}" >{{ .Title }}</option>
+                            <option value="{{ .ID }}">{{ .Title }}</option>
                         {{ end }}
                     {{ end }}
                 </select>
@@ -122,7 +131,7 @@
 
     <dialog id="create-proposal-dialog">
         <button id="create-proposal-close" class="close">✕</button>
-        <form hx-post="teach/proposal/create" hx-target="main" hx-swap="outerHTML">
+        <form hx-post="/teach/proposal/create" hx-target="main" hx-swap="outerHTML">
             <input type="text" name="title" placeholder="Proposal title">
             <input type="text" name="description" placeholder="Proposal description">
             <button type="submit">Create proposal</button>
@@ -220,8 +229,8 @@
             console.log('Properly run again');
         }
 
-            initializeCreateProposalDialog();
-            initializeProposalDetailsDialog();
+        initializeCreateProposalDialog();
+        initializeProposalDetailsDialog();
     </script>
     <script>
         var dependencies = [
