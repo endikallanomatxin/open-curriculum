@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"app/db"
-	"app/models"
 	"fmt"
 	"html/template"
 	"log"
@@ -175,29 +173,15 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 	}
 }
 
-func GetActiveProposal(r *http.Request) models.Proposal {
-	var activeProposal models.Proposal
-
+func GetActiveProposalID(r *http.Request) int {
 	activeProposalIDStr := r.URL.Query().Get("active_proposal_id")
-
-	// If the request contains an active proposal id, change the active proposal
-	if activeProposalIDStr != "" && activeProposalIDStr != "0" {
-		activeProposalID, err := strconv.Atoi(activeProposalIDStr)
-		if err != nil {
-			fmt.Println("Error converting active_proposal_id to int:", err)
-			return models.Proposal{
-				ID:          0,
-				Title:       "No active proposal",
-				Description: "Invalid proposal ID provided",
-			}
-		}
-		activeProposal = db.GetProposal(activeProposalID)
-	} else {
-		activeProposal = models.Proposal{
-			ID:          0,
-			Title:       "No active proposal",
-			Description: "There are no active proposals",
-		}
+	if activeProposalIDStr == "" {
+		return 0
 	}
-	return activeProposal
+	activeProposalID, err := strconv.Atoi(activeProposalIDStr)
+	if err != nil {
+		fmt.Println("Error converting active_proposal_id to int:", err)
+		return 0
+	}
+	return activeProposalID
 }

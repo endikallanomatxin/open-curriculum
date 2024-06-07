@@ -28,7 +28,7 @@
                             <p>{{ .Unit.Name }}</p>
                             <div class="controls">
                                 <button class="edit" >Edit content</button>
-                                <button class="rename orange" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Rename</button>
+                                <button class="rename" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Rename</button>
                                 <button class="deps" >Edit dependencies</button>
                                 <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
                             </div>
@@ -45,19 +45,21 @@
                         </div>
                     </a>
                 {{ else }}
-                <a hx-get="/unit/{{.Unit.ID}}/details" hx-target="#details">
-                    <div class="unit existing" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
-                        <div class="node" id="node-{{ .Unit.ID}}" ></div>
-                        <p>{{ .Unit.Name }}</p>
-                        <div class="controls">
-                            <button class="edit">Edit content</button>
-                            <button class="rename">Rename</button>
-                            <button class="deps">Edit dependencies</button>
-                            <button class="certs">Copy certifications to</button>
-                            <button class="delete" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .Unit.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Delete</button>
+                    <a hx-get="/unit/{{.Unit.ID}}/details" hx-target="#details">
+                        <div class="unit existing" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
+                            <div class="node" id="node-{{ .Unit.ID}}" ></div>
+                            <p>{{ .Unit.Name }}</p>
+                            {{ if not ( eq $activeProposalID 0 )}}
+                                <div class="controls">
+                                    <button class="edit">Edit content</button>
+                                    <button class="rename">Rename</button>
+                                    <button class="deps">Edit dependencies</button>
+                                    <button class="certs">Copy certifications to</button>
+                                    <button class="delete" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .Unit.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Delete</button>
+                                </div>
+                            {{ end }}
                         </div>
-                    </div>
-                </a>
+                    </a>
                 {{ end }}
             {{ end }}
         {{ end }}

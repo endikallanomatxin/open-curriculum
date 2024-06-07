@@ -27,6 +27,7 @@
                 - [ ] Unit content modification
                 - [ ] Dependency creation
                 - [ ] Dependency modification
+            - When you click the close button of the dialogue, the page should be refreshed.
         - Voting mode
             - [ ] See relevant polls
             - [ ] Open a poll and vote on it
@@ -38,6 +39,7 @@
         - [ ] Mark units as seen.
         - [ ] Unit recommendation engine
 
+- CSRF protection
 
 
 

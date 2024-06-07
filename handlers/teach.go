@@ -8,11 +8,21 @@ import (
 	"net/http"
 )
 
-func Teach(w http.ResponseWriter, r *http.Request) {
-
-	active_proposal := GetActiveProposal(r)
-	graph := services.GetProposedGraph(active_proposal.ID)
+func renderTeachTemplate(w http.ResponseWriter, r *http.Request, activeProposalID int) {
+	graph := services.GetProposedGraph(activeProposalID)
 	positionedGraph := services.CalculatePositions(graph)
+
+	activeProposal := models.Proposal{}
+
+	if activeProposalID == 0 {
+		activeProposal = models.Proposal{
+			ID:          0,
+			Title:       "No active proposal",
+			Description: "There are no active proposals",
+		}
+	} else {
+		activeProposal = db.GetProposal(activeProposalID)
+	}
 
 	data := struct {
 		PositionedGraph models.PositionedGraph
@@ -21,10 +31,14 @@ func Teach(w http.ResponseWriter, r *http.Request) {
 	}{
 		PositionedGraph: positionedGraph,
 		Proposals:       db.GetUnsubmittedProposals(),
-		ActiveProposal:  active_proposal,
+		ActiveProposal:  activeProposal,
 	}
 
 	RenderTemplate(w, r, "teach.html", data, nil)
+}
+
+func Teach(w http.ResponseWriter, r *http.Request) {
+	renderTeachTemplate(w, r, GetActiveProposalID(r))
 }
 
 func CreateProposal(w http.ResponseWriter, r *http.Request) {
@@ -37,18 +51,9 @@ func CreateProposal(w http.ResponseWriter, r *http.Request) {
 		Description: description,
 	}
 
-	db.CreateProposal(p)
+	id := db.CreateProposal(p)
 
-	// Render only the block proposals from the teach.html template
-	data := struct {
-		Proposals      []models.Proposal
-		ActiveProposal models.Proposal
-	}{
-		Proposals:      db.GetUnsubmittedProposals(),
-		ActiveProposal: GetActiveProposal(r),
-	}
-
-	RenderTemplate(w, r, "teach.html", data, "main")
+	renderTeachTemplate(w, r, id)
 }
 
 func UpdateProposal(w http.ResponseWriter, r *http.Request) {
@@ -68,16 +73,7 @@ func UpdateProposal(w http.ResponseWriter, r *http.Request) {
 	}
 	db.UpdateProposal(p)
 
-	// Render the updated template
-	data := struct {
-		Proposals      []models.Proposal
-		ActiveProposal models.Proposal
-	}{
-		Proposals:      db.GetUnsubmittedProposals(),
-		ActiveProposal: db.GetProposal(id),
-	}
-
-	RenderTemplate(w, r, "teach.html", data, "main")
+	renderTeachTemplate(w, r, GetActiveProposalID(r))
 }
 
 func DeleteProposal(w http.ResponseWriter, r *http.Request) {
@@ -86,15 +82,7 @@ func DeleteProposal(w http.ResponseWriter, r *http.Request) {
 
 	db.DeleteProposal(id)
 
-	data := struct {
-		Proposals      []models.Proposal
-		ActiveProposal models.Proposal
-	}{
-		Proposals:      db.GetUnsubmittedProposals(),
-		ActiveProposal: GetActiveProposal(r),
-	}
-
-	RenderTemplate(w, r, "teach.html", data, "main")
+	renderTeachTemplate(w, r, GetActiveProposalID(r))
 }
 
 func SubmitProposal(w http.ResponseWriter, r *http.Request) {
@@ -118,22 +106,7 @@ func CreateUnitCreation(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	active_proposal := GetActiveProposal(r)
-	graph := services.GetProposedGraph(active_proposal.ID)
-	positionedGraph := services.CalculatePositions(graph)
-
-	data := struct {
-		PositionedGraph models.PositionedGraph
-		Proposals       []models.Proposal
-		ActiveProposal  models.Proposal
-	}{
-		PositionedGraph: positionedGraph,
-		Proposals:       db.GetUnsubmittedProposals(),
-		ActiveProposal:  active_proposal,
-	}
-
-	// Just send ok
-	RenderTemplate(w, r, "teach.html", data, nil)
+	renderTeachTemplate(w, r, id)
 }
 
 func DeleteUnitCreation(w http.ResponseWriter, r *http.Request) {
@@ -143,21 +116,7 @@ func DeleteUnitCreation(w http.ResponseWriter, r *http.Request) {
 
 	db.DeleteUnitCreation(change_id)
 
-	active_proposal := GetActiveProposal(r)
-	graph := services.GetProposedGraph(active_proposal.ID)
-	positionedGraph := services.CalculatePositions(graph)
-
-	data := struct {
-		PositionedGraph models.PositionedGraph
-		Proposals       []models.Proposal
-		ActiveProposal  models.Proposal
-	}{
-		PositionedGraph: positionedGraph,
-		Proposals:       db.GetUnsubmittedProposals(),
-		ActiveProposal:  active_proposal,
-	}
-
-	RenderTemplate(w, r, "teach.html", data, nil)
+	renderTeachTemplate(w, r, proposal_id)
 }
 
 func CreateUnitDeletion(w http.ResponseWriter, r *http.Request) {
@@ -167,21 +126,7 @@ func CreateUnitDeletion(w http.ResponseWriter, r *http.Request) {
 
 	db.CreateUnitDeletion(proposal_id, unit_id)
 
-	active_proposal := GetActiveProposal(r)
-	graph := services.GetProposedGraph(active_proposal.ID)
-	positionedGraph := services.CalculatePositions(graph)
-
-	data := struct {
-		PositionedGraph models.PositionedGraph
-		Proposals       []models.Proposal
-		ActiveProposal  models.Proposal
-	}{
-		PositionedGraph: positionedGraph,
-		Proposals:       db.GetUnsubmittedProposals(),
-		ActiveProposal:  active_proposal,
-	}
-
-	RenderTemplate(w, r, "teach.html", data, nil)
+	renderTeachTemplate(w, r, proposal_id)
 }
 
 func DeleteUnitDeletion(w http.ResponseWriter, r *http.Request) {
@@ -195,21 +140,7 @@ func DeleteUnitDeletion(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	active_proposal := GetActiveProposal(r)
-	graph := services.GetProposedGraph(active_proposal.ID)
-	positionedGraph := services.CalculatePositions(graph)
-
-	data := struct {
-		PositionedGraph models.PositionedGraph
-		Proposals       []models.Proposal
-		ActiveProposal  models.Proposal
-	}{
-		PositionedGraph: positionedGraph,
-		Proposals:       db.GetUnsubmittedProposals(),
-		ActiveProposal:  active_proposal,
-	}
-
-	RenderTemplate(w, r, "teach.html", data, nil)
+	renderTeachTemplate(w, r, proposal_id)
 }
 
 func Polls(w http.ResponseWriter, r *http.Request) {
