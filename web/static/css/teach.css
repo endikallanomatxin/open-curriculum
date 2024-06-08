@@ -82,12 +82,17 @@ div.change:hover{
     }
 }
 
-div.change .type.red{
+div.change .type.create{
+    background-color: var(--green-1);
+    color:var(--green-8);
+}
+
+div.change .type.delete{
     background-color: var(--red-1);
     color:var(--red-8);
 }
 
-div.change .type.green{
-    background-color: var(--green-1);
-    color:var(--green-8);
+div.change .type.rename{
+    background-color: var(--orange-1);
+    color:var(--orange-8);
 }

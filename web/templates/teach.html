@@ -41,6 +41,17 @@
                             </div>
                         </div>
                     </a>
+                {{ else if eq .Unit.Type "ProposedRename" }}
+                    <a>
+                        <div class="unit proposed-rename" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
+                            <div class="node" id="node-{{ .Unit.ID}}" ></div>
+                            <p>{{ .Unit.Name }}</p>
+                            <div class="controls">
+                                <button class="deps">Edit dependencies</button>
+                                <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
+                            </div>
+                        </div>
+                    </a>
                 {{ else }}
                     <a hx-get="/teach/set-open-unit-ID?open_unit_id={{ .Unit.ID }}" hx-target="body">
                         <div class="unit existing" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
@@ -59,7 +70,7 @@
         {{ end }}
 
         {{ if not (eq .ActiveProposal.ID 0)}}
-            <form hx-post="/teach/proposal/{{.ActiveProposal.ID}}/unit_creation?active_proposal_id={{.ActiveProposal.ID}}" hx-target="body">
+            <form hx-post="/teach/proposal/{{.ActiveProposal.ID}}/unit_creation" hx-target="body">
                 <input type="text" name="name" placeholder="Unit name">
                 <button type="submit">Create unit</button>
             </form>
@@ -71,16 +82,13 @@
     <div id="details">
         {{ block "unit_details" . }}
             {{ if .OpenUnit }}
+                {{ $activeProposalID := .ActiveProposal.ID}}
                 {{ with .OpenUnit }}
-                    <h2>{{ .Name }}</h2>
-                    <form id="rename-form" hx-put="/unit/{{ .ID }}/rename" hx-target="#details" hx-swap="outerHTML">
-                        <label for="new-name">Rename Unit:</label>
-                        <input type="text" id="new-name" name="new_name" value="{{ .Name }}">
+                    <form id="rename-form" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ .ID }}" hx-target="body" hx-swap="outerHTML">
+                        <input type="text" id="name" name="name" value="{{ .Name }}">
                         <button type="submit">Rename</button>
                     </form>
-                    <p>{{ .Content }}</p>
                     <form id="edit-content-form" hx-put="/unit/{{ .ID }}/edit" hx-target="#details" hx-swap="outerHTML">
-                        <label for="new-content">Edit Content:</label>
                         <textarea id="new-content" name="new_content">{{ .Content }}</textarea>
                         <button type="submit">Save</button>
                     </form>
@@ -146,35 +154,29 @@
         </form>
         <div id="changes-list">
             <h3>Changes</h3>
-                {{ $activeProposalID := .ActiveProposal.ID }}
-                {{ range .ActiveProposal.Changes }}
-                    {{ $change := . }}
-                    {{ if (typeIs "models.UnitCreation" $change) }}
-                        <div class="change">
-                            <div class="type green">CREATE UNIT</div>
-                            <div>{{ $change.Name }}</div>
-                            <a class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ $change.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">Undo</a>
-                        </div>
-                    {{ else if (typeIs "models.UnitDeletion" $change) }}
-                        <div class="change">
-                            <div class="type red">DELETE UNIT</div>
-                            <div>{{ $change.UnitID }}</div>
-                            <a class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ $change.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">Undo</a>
-                        </div>
-                    {{ else if (typeIs "models.UnitUpdate" $change) }}
-                        <li>Updated unit ID: {{ $change.UnitID }}, new name: {{ $change.Name }}</li>
-                    {{ else if (typeIs "models.DependencyCreation" $change) }}
-                        <li>Created dependency from unit ID: {{ $change.UnitID }} to {{ $change.DependsOnID }}</li>
-                    {{ else if (typeIs "models.DependencyDeletion" $change) }}
-                        <li>Deleted dependency from unit ID: {{ $change.UnitID }} to {{ $change.DependsOnID }}</li>
-                    {{ else if (typeIs "models.DocumentModification" $change) }}
-                        <li>Modified document in unit ID: {{ $change.UnitID }}, content: {{ $change.Content }}</li>
-                    {{ else if (typeIs "models.DocumentFileUpload" $change) }}
-                        <li>Uploaded file for unit ID: {{ $change.UnitID }}</li>
-                    {{ else if (typeIs "models.VideoModification" $change) }}
-                        <li>Modified video in unit ID: {{ $change.UnitID }}, content: {{ $change.Content }}</li>
-                    {{ end }}
+            {{ $activeProposalID := .ActiveProposal.ID }}
+            {{ range .ActiveProposal.Changes }}
+                {{ $change := . }}
+                {{ if (typeIs "models.UnitCreation" $change) }}
+                    <div class="change">
+                        <div class="type create">CREATE UNIT</div>
+                        <div>{{ $change.Name }}</div>
+                        <a class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ $change.ID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">Undo</a>
+                    </div>
+                {{ else if (typeIs "models.UnitDeletion" $change) }}
+                    <div class="change">
+                        <div class="type delete">DELETE UNIT</div>
+                        <div>{{ $change.UnitID }}</div>
+                        <a class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ $change.ID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">Undo</a>
+                    </div>
+                {{ else if (typeIs "models.UnitRename" $change) }}
+                    <div class="change">
+                        <div class="type rename">RENAME UNIT</div>
+                        <div>{{ $change.Name }}</div>
+                        <a class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ $change.ID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">Undo</a>
+                    </div>
                 {{ end }}
+            {{ end }}
         </div>
         <button hx-delete="teach/proposal/{{ .ActiveProposal.ID }}" hx-target="main" hx-swap="outerHTML" class="red">Delete</button>
         <button hx-put="teach/proposal/{{ .ActiveProposal.ID }}/submit" hx-target="body" hx-replace-url="true">Submit</button>

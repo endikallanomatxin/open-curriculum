@@ -79,6 +79,13 @@ func DeleteUnit(id int) {
 	}
 }
 
+func RenameUnit(id int, name string) {
+	_, err := db.Exec("UPDATE units SET name = $1 WHERE id = $2", name, id)
+	if err != nil {
+		log.Fatalf("Error renaming unit: %q", err)
+	}
+}
+
 func UpdateGraph() {
 	// This goes over all accepted polls and updates the graph with its proposals
 
@@ -111,6 +118,8 @@ func UpdateGraph() {
 					CreateUnit(models.Unit{Name: change.Name})
 				case models.UnitDeletion:
 					DeleteUnit(change.UnitID)
+				case models.UnitRename:
+					RenameUnit(change.UnitID, change.Name)
 				}
 			}
 		}

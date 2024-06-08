@@ -14,7 +14,7 @@ type UnitDeletion struct {
 	UnitID     int
 }
 
-type UnitUpdate struct {
+type UnitRename struct {
 	ID         int
 	ProposalID int
 	UnitID     int

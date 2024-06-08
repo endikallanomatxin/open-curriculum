@@ -24,6 +24,7 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request, activeProposalI
 		activeProposal = db.GetProposal(activeProposalID)
 	}
 
+	// TODO: This has to change to consider changes
 	openUnit := models.Unit{}
 
 	if openUnitID == 0 {
@@ -153,6 +154,29 @@ func DeleteUnitDeletion(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	renderTeachTemplate(w, r, proposal_id, GetOpenUnitID(r))
+}
+
+func CreateUnitRename(w http.ResponseWriter, r *http.Request) {
+	proposal_id := 0
+	unit_id := 0
+	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_rename/%d", &proposal_id, &unit_id)
+
+	r.ParseForm()
+	name := r.Form.Get("name")
+
+	db.CreateUnitRename(proposal_id, unit_id, name)
+
+	renderTeachTemplate(w, r, proposal_id, GetOpenUnitID(r))
+}
+
+func DeleteUnitRename(w http.ResponseWriter, r *http.Request) {
+	proposal_id := 0
+	change_id := 0
+	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_rename/%d", &proposal_id, &change_id)
+
+	db.DeleteUnitRename(change_id)
 
 	renderTeachTemplate(w, r, proposal_id, GetOpenUnitID(r))
 }

@@ -38,6 +38,16 @@ div.unit.proposed-deletion:hover{
     color: var(--red-8);
 }
 
+div.unit.proposed-rename{
+    background-color: var(--orange-0);
+    color: var(--orange-7);
+}
+
+div.unit.proposed-rename:hover{
+    background-color: var(--orange-1);
+    color: var(--orange-8);
+}
+
 .unit * {
     display: inline-block;
 }
@@ -76,6 +86,11 @@ div.unit.proposed-deletion div.node{
     background-color: var(--red-1);
 }
 
+div.unit.proposed-rename div.node{
+    border: 0.3rem solid var(--orange-7);
+    background-color: var(--orange-1);
+}
+
 div.controls {
     display: flex;
     gap: 0.5em;
@@ -88,20 +103,8 @@ div.controls {
         white-space: nowrap;
     }
 
-    button.edit{
-        background-color: rgb(50, 67, 130);
-    }
-
-    button.rename{
-        background-color: rgb(195, 124, 53);
-    }
-
     button.deps{
         background-color: rgb(75, 50, 130)
-    }
-
-    button.certs{
-        background-color: rgb(204, 175, 10)
     }
 
     button.delete{

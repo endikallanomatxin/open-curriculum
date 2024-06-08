@@ -30,7 +30,7 @@ func ChangesCreateTables() {
 	}
 
 	_, err = db.Exec(`
-		CREATE TABLE IF NOT EXISTS unit_updates (
+		CREATE TABLE IF NOT EXISTS unit_renames (
 			id SERIAL PRIMARY KEY,
 			proposal_id INTEGER,
 			unit_id INTEGER,
@@ -153,7 +153,7 @@ func GetProposalChanges(proposalId int) []models.Change {
 
 	rows, err = db.Query(`
 		SELECT id, unit_id, name
-		FROM unit_updates
+		FROM unit_renames
 		WHERE proposal_id = $1
 	`, proposalId)
 	if err != nil {
@@ -162,7 +162,7 @@ func GetProposalChanges(proposalId int) []models.Change {
 	defer rows.Close()
 
 	for rows.Next() {
-		var c models.UnitUpdate
+		var c models.UnitRename
 		err := rows.Scan(&c.ID, &c.UnitID, &c.Name)
 		if err != nil {
 			fmt.Println(err)
@@ -278,23 +278,10 @@ func DeleteUnitDeletion(changeId int) error {
 	return nil
 }
 
-func AddUnitDeletion(proposalId int, unitId int) (int, error) {
+func CreateUnitRename(proposalId int, unitId int, name string) (int, error) {
 	var id int
 	err := db.QueryRow(`
-		INSERT INTO unit_deletions (proposal_id, unit_id)
-		VALUES ($1, $2)
-		RETURNING id
-	`, proposalId, unitId).Scan(&id)
-	if err != nil {
-		return 0, err
-	}
-	return id, nil
-}
-
-func AddUnitUpdate(proposalId int, unitId int, name string) (int, error) {
-	var id int
-	err := db.QueryRow(`
-		INSERT INTO unit_updates (proposal_id, unit_id, name)
+		INSERT INTO unit_renames (proposal_id, unit_id, name)
 		VALUES ($1, $2, $3)
 		RETURNING id
 	`, proposalId, unitId, name).Scan(&id)
@@ -304,68 +291,13 @@ func AddUnitUpdate(proposalId int, unitId int, name string) (int, error) {
 	return id, nil
 }
 
-func AddDependencyCreation(proposalId int, unitIsOperation bool, unitId int, dependsOnIsOperation bool, dependsOnId int) (int, error) {
-	var id int
-	err := db.QueryRow(`
-		INSERT INTO dependency_creations (proposal_id, unit_is_operation, unit_id, depends_on_is_operation, depends_on_id)
-		VALUES ($1, $2, $3, $4, $5)
-		RETURNING id
-	`, proposalId, unitIsOperation, unitId, dependsOnIsOperation, dependsOnId).Scan(&id)
+func DeleteUnitRename(changeId int) error {
+	_, err := db.Exec(`
+		DELETE FROM unit_renames
+		WHERE id = $1
+	`, changeId)
 	if err != nil {
-		return 0, err
+		return err
 	}
-	return id, nil
+	return nil
 }
-
-func AddDependencyDeletion(proposalId int, unitId int, dependsOnId int) (int, error) {
-	var id int
-	err := db.QueryRow(`
-		INSERT INTO dependency_deletions (proposal_id, unit_id, depends_on_id)
-		VALUES ($1, $2, $3)
-		RETURNING id
-	`, proposalId, unitId, dependsOnId).Scan(&id)
-	if err != nil {
-		return 0, err
-	}
-	return id, nil
-}
-
-func AddDocumentModification(proposalId int, unitId int, fromLine int, toLine int, content string) (int, error) {
-	var id int
-	err := db.QueryRow(`
-		INSERT INTO document_modifications (proposal_id, unit_id, from_line, to_line, content)
-		VALUES ($1, $2, $3, $4, $5)
-		RETURNING id
-	`, proposalId, unitId, fromLine, toLine, content).Scan(&id)
-	if err != nil {
-		return 0, err
-	}
-	return id, nil
-}
-
-// func AddDocumentFileUpload(proposalId int, unitId int) (int, error) {
-// 	var id int
-// 	err := db.QueryRow(`
-// 		INSERT INTO document_file_uploads (proposal_id, unit_id)
-// 		VALUES ($1, $2)
-// 		RETURNING id
-// 	`, proposalId, unitId).Scan(&id)
-// 	if err != nil {
-// 		return 0, err
-// 	}
-// 	return id, nil
-// }
-//
-// func AddVideoModification(proposalId int, unitId int, fromTime int, toTime int, content string) (int, error) {
-// 	var id int
-// 	err := db.QueryRow(`
-// 		INSERT INTO video_modifications (proposal_id, unit_id, from_time, to_time, content)
-// 		VALUES ($1, $2, $3, $4, $5)
-// 		RETURNING id
-// 	`, proposalId, unitId, fromTime, toTime, content).Scan(&id)
-// 	if err != nil {
-// 		return 0, err
-// 	}
-// 	return id, nil
-// }
-//

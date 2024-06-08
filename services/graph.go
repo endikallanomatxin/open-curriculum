@@ -102,6 +102,15 @@ func GetProposedGraph(proposalID int) models.Graph {
 				Name:     change.Name,
 				Type:     "ProposedCreation",
 			})
+		case models.UnitRename:
+			for i, unit := range units {
+				if unit.ID == change.UnitID {
+					unit.Type = "ProposedRename"
+					unit.ChangeID = change.ID
+					unit.Name = change.Name
+					units[i] = unit
+				}
+			}
 		}
 	}
 

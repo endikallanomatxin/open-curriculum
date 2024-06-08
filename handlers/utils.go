@@ -209,7 +209,6 @@ func GetActiveProposalID(r *http.Request) int {
 }
 
 func SetOpenUnitID(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Setting open unit ID")
 	id := 0
 	fmt.Sscanf(r.URL.Query().Get("open_unit_id"), "%d", &id)
 
@@ -219,8 +218,6 @@ func SetOpenUnitID(w http.ResponseWriter, r *http.Request) {
 		Path:   "/",
 		MaxAge: 60 * 60 * 24 * 7, // 1 week
 	}
-
-	fmt.Println("Setting open unit ID to", id)
 
 	http.SetCookie(w, &cookie)
 
