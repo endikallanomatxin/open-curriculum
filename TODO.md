@@ -26,12 +26,12 @@
                 - [ ] Unit rename
                 - [ ] Unit content modification
                 - [ ] Dependency creation
-                - [ ] Dependency modification
+                - [ ] Dependency deletion
+                - [ ] Transfer certifications and reads (it has to be done every time you delete something)
             - When you click the close button of the dialogue, the page should be refreshed.
         - Voting mode
             - [ ] See relevant polls
             - [ ] Open a poll and vote on it
-            - 
     - Learn
         - [x] See tree
         - [x] See unit details
