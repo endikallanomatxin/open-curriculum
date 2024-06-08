@@ -16,19 +16,21 @@
 
 - Platform demo:
     - Teach:
-        - Proposal creation
+        - Proposals
             - [x] Creation
             - [x] Activation
             - [x] Submission
             - [/] Adding changes:
                 - [x] Unit creation
                 - [x] Unit deletion
-                - [ ] Unit rename
+                - [x] Unit rename
                 - [ ] Unit content modification
                 - [ ] Dependency creation
                 - [ ] Dependency deletion
                 - [ ] Transfer certifications and reads (it has to be done every time you delete something)
-            - When you click the close button of the dialogue, the page should be refreshed.
+            - Fix:
+                - Cannot access to details of a proposed unit. Open unit should consider proposed changes.
+                - When you click the close button of the dialogue, the page should be refreshed.
         - Voting mode
             - [ ] See relevant polls
             - [ ] Open a poll and vote on it
