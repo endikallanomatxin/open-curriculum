@@ -58,7 +58,8 @@ div.unit p{
     margin:0;
     font-weight: 600;
     font-size: 1.2em;
-    width: calc(40vw - 20rem);
+    width: 50%;
+    text-overflow: ellipsis;
 }
 
 div.node{
