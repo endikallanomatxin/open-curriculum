@@ -254,6 +254,19 @@ func DeleteUnitCreation(changeId int) error {
 	return nil
 }
 
+func GetUnitCreation(changeId int) (models.UnitCreation, error) {
+	var c models.UnitCreation
+	err := db.QueryRow(`
+		SELECT id, name
+		FROM unit_creations
+		WHERE id = $1
+	`, changeId).Scan(&c.ID, &c.Name)
+	if err != nil {
+		return c, err
+	}
+	return c, nil
+}
+
 func CreateUnitDeletion(proposalId int, unitId int) (int, error) {
 	var id int
 	err := db.QueryRow(`

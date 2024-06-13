@@ -12,6 +12,8 @@
 
     - Redo proposal and poll images
 
+- Create an explainer video
+
 - Create opening animation of logo
 
 - Platform demo:
