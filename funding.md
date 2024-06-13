@@ -39,6 +39,12 @@ https://www.fundaciones.org/es/inicio
     - El 05/20 me llamaron para decirme que acudiera al Beaz, que lo gestionan allí.
     - El 05/22 llamé al Beaz y me dijeron que les mandara un email a beaz@bizkaia.eus
 
+- BBK Ekin.
+    
+    https://www.bbk.eus/proiektuak/bbk-ekin-emprendedores/?hsCtaTracking=082132c2-825c-496d-9197-c5d003ff4be8%7Ce981ce04-e3db-4af4-87c5-e89f6d8ee22d
+
+    12/17
+
 
 - Innobasque
 
