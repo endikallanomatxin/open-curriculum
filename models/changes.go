@@ -24,22 +24,18 @@ type UnitRename struct {
 // Dependencies
 
 type DependencyCreation struct {
-	ID                   int
-	ProposalID           int
-	UnitIsOperation      bool
-	UnitID               int
-	DependsOnIsOperation bool
-	DependsOnID          int
-	// They can depend on unit creations,
-	// the IsOperation field is used to differentiate.
-	// If it is true, the ID is a UnitCreation ID.
+	ID                  int
+	ProposalID          int
+	UnitIsProposed      bool
+	UnitID              int
+	DependsOnIsProposed bool
+	DependsOnID         int
 }
 
 type DependencyDeletion struct {
-	ID          int
-	ProposalID  int
-	UnitID      int
-	DependsOnID int
+	ID           int
+	ProposalID   int
+	DependencyID int
 }
 
 // Documents

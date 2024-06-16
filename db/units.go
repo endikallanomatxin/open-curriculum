@@ -51,11 +51,13 @@ func GetUnits() []models.Unit {
 	return units
 }
 
-func CreateUnit(u models.Unit) {
-	_, err := db.Exec("INSERT INTO units (name, content) VALUES ($1, $2)", u.Name, u.Content)
+func CreateUnit(u models.Unit) int {
+	var id int
+	err := db.QueryRow("INSERT INTO units (name, content) VALUES ($1, $2) RETURNING id", u.Name, u.Content).Scan(&id)
 	if err != nil {
 		log.Fatalf("Error creating unit: %q", err)
 	}
+	return id
 }
 
 func GetUnit(id int) models.Unit {
@@ -90,19 +92,23 @@ func UpdateGraph() {
 	// This goes over all accepted polls and updates the graph with its proposals
 
 	// Delete all units and dependencies
-	_, err := db.Exec("DELETE FROM units")
-	if err != nil {
-		log.Fatalf("Error deleting units: %q", err)
-	}
-	_, err = db.Exec("DELETE FROM dependencies")
+	_, err := db.Exec("DELETE FROM dependencies")
 	if err != nil {
 		log.Fatalf("Error deleting dependencies: %q", err)
+	}
+	_, err = db.Exec("DELETE FROM units")
+	if err != nil {
+		log.Fatalf("Error deleting units: %q", err)
 	}
 
 	// Restart DB autoincrement
 	_, err = db.Exec("ALTER SEQUENCE units_id_seq RESTART WITH 1")
 	if err != nil {
 		log.Fatalf("Error restarting units_id_seq: %q", err)
+	}
+	_, err = db.Exec("ALTER SEQUENCE dependencies_id_seq RESTART WITH 1")
+	if err != nil {
+		log.Fatalf("Error restarting dependencies_id_seq: %q", err)
 	}
 
 	// Get all accepted polls
@@ -111,19 +117,34 @@ func UpdateGraph() {
 		// Poll is an interface
 		// If it a SingleProposalPoll
 		if poll, ok := poll.(models.SingleProposalPoll); ok {
+			createdUnitMap := make(map[int]int)
 			proposal := poll.Proposal
 			for _, change := range proposal.Changes {
 				switch change := change.(type) {
 				case models.UnitCreation:
-					CreateUnit(models.Unit{Name: change.Name})
+					CreatedUnitID := CreateUnit(models.Unit{Name: change.Name})
+					createdUnitMap[change.ID] = CreatedUnitID
 				case models.UnitDeletion:
 					DeleteUnit(change.UnitID)
 				case models.UnitRename:
 					RenameUnit(change.UnitID, change.Name)
+				case models.DependencyCreation:
+					var UnitID, DependsOnID int
+					if change.UnitIsProposed {
+						UnitID = createdUnitMap[change.UnitID]
+					} else {
+						UnitID = change.UnitID
+					}
+					if change.DependsOnIsProposed {
+						DependsOnID = createdUnitMap[change.DependsOnID]
+					} else {
+						DependsOnID = change.DependsOnID
+					}
+					CreateDependency(UnitID, DependsOnID)
+				case models.DependencyDeletion:
+					DeleteDependency(change.DependencyID)
 				}
 			}
 		}
 	}
-	// TODO: Los cambios no tienen que hacer referencia al id de la unidad, sino al último cambio que la modificó.
-	// TODO: Maybe it is better if the changes have a method Apply() that applies the change to the graph. And it doesn't have to be rewritten.
 }

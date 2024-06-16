@@ -63,7 +63,7 @@ func hasCycle(unitID, targetID int, visited, path map[int]bool) bool {
 }
 
 func GetUnitDependencies(unit_id int) []models.Unit {
-	rows, err := db.Query("SELECT units.id, units.name, units.description FROM dependencies JOIN units ON dependencies.depends_on_id = units.id WHERE dependencies.unit_id = $1", unit_id)
+	rows, err := db.Query("SELECT units.id, units.name, units.content FROM dependencies JOIN units ON dependencies.depends_on_id = units.id WHERE dependencies.unit_id = $1", unit_id)
 	if err != nil {
 		log.Fatalf("Error querying dependencies: %q", err)
 	}
@@ -101,6 +101,36 @@ func GetAllDependencies() []models.Dependency {
 	return dependencies
 }
 
+func GetDependency(id int) models.Dependency {
+	var d models.Dependency
+	err := db.QueryRow("SELECT id, unit_id, depends_on_id FROM dependencies WHERE id = $1", id).Scan(&d.ID, &d.UnitID, &d.DependsOnID)
+	if err != nil {
+		log.Fatalf("Error querying dependency: %q", err)
+	}
+	return d
+}
+
+// If the dependency exists, return its ID.
+// Otherwise, return 0
+func FindDependency(unit_id int, depends_on_id int) int {
+	rows, err := db.Query("SELECT id FROM dependencies WHERE unit_id = $1 AND depends_on_id = $2", unit_id, depends_on_id)
+	if err != nil {
+		log.Fatalf("Error querying dependencies: %q", err)
+	}
+	defer rows.Close()
+
+	if rows.Next() {
+		var id int
+		err := rows.Scan(&id)
+		if err != nil {
+			log.Fatalf("Error scanning dependencies: %q", err)
+		}
+		return id
+	}
+
+	return 0
+}
+
 func CreateDependency(unit_id int, depends_on_id int) error {
 	// Check if the new dependency will create a circular dependency
 	if err := CheckCircularDependency(unit_id, depends_on_id); err != nil {
@@ -116,8 +146,8 @@ func CreateDependency(unit_id int, depends_on_id int) error {
 	return nil
 }
 
-func DeleteDependency(unit_id int, depends_on_id int) {
-	_, err := db.Exec("DELETE FROM dependencies WHERE unit_id = $1 AND depends_on_id = $2", unit_id, depends_on_id)
+func DeleteDependency(dependencyID int) {
+	_, err := db.Exec("DELETE FROM dependencies WHERE id = $1", dependencyID)
 	if err != nil {
 		log.Fatalf("Error deleting dependency: %q", err)
 	}

@@ -52,6 +52,13 @@ div.unit.proposed-rename:hover{
     display: inline-block;
 }
 
+div.unit a{
+    text-decoration: none;
+    color: inherit;
+    margin:0;
+    padding:0;
+}
+
 div.unit p{
     padding-left: 0.5rem;
     padding-right: 1rem;
@@ -105,14 +112,20 @@ div.controls {
     }
 
     button.deps{
-        background-color: rgb(75, 50, 130)
+        background-color: var(--purple-1);
+        color: var(--purple-7);
+        border: 0.1rem solid var(--purple-7);
     }
 
     button.delete{
-        background-color: rgb(130, 50, 50);
+        background-color: var(--red-1);
+        color: var(--red-7);
+        border: 0.1rem solid var(--red-7);
     }
 
     button.undo{
-        background-color: var(--neutral-5);
+        background-color: var(--neutral-1);
+        color: var(--neutral-7);
+        border: 0.1rem solid var(--neutral-7);
     }
 }

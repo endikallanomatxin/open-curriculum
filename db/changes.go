@@ -45,9 +45,9 @@ func ChangesCreateTables() {
 		CREATE TABLE IF NOT EXISTS dependency_creations (
 			id SERIAL PRIMARY KEY,
 			proposal_id INTEGER,
-			unit_is_operation BOOLEAN,
+			unit_is_proposed BOOLEAN,
 			unit_id INTEGER,
-			depends_on_is_operation BOOLEAN,
+			depends_on_is_proposed BOOLEAN,
 			depends_on_id INTEGER
 		)
 	`)
@@ -59,8 +59,7 @@ func ChangesCreateTables() {
 		CREATE TABLE IF NOT EXISTS dependency_deletions (
 			id SERIAL PRIMARY KEY,
 			proposal_id INTEGER,
-			unit_id INTEGER,
-			depends_on_id INTEGER
+			dependency_id INTEGER
 		)
 	`)
 	if err != nil {
@@ -171,7 +170,7 @@ func GetProposalChanges(proposalId int) []models.Change {
 	}
 
 	rows, err = db.Query(`
-		SELECT id, unit_is_operation, unit_id, depends_on_is_operation, depends_on_id
+		SELECT id, unit_is_proposed, unit_id, depends_on_is_proposed, depends_on_id
 		FROM dependency_creations
 		WHERE proposal_id = $1
 	`, proposalId)
@@ -182,7 +181,7 @@ func GetProposalChanges(proposalId int) []models.Change {
 
 	for rows.Next() {
 		var c models.DependencyCreation
-		err := rows.Scan(&c.ID, &c.UnitIsOperation, &c.UnitID, &c.DependsOnIsOperation, &c.DependsOnID)
+		err := rows.Scan(&c.ID, &c.UnitIsProposed, &c.UnitID, &c.DependsOnIsProposed, &c.DependsOnID)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -190,7 +189,7 @@ func GetProposalChanges(proposalId int) []models.Change {
 	}
 
 	rows, err = db.Query(`
-		SELECT id, unit_id, depends_on_id
+		SELECT id, dependency_id
 		FROM dependency_deletions
 		WHERE proposal_id = $1
 	`, proposalId)
@@ -201,7 +200,7 @@ func GetProposalChanges(proposalId int) []models.Change {
 
 	for rows.Next() {
 		var c models.DependencyDeletion
-		err := rows.Scan(&c.ID, &c.UnitID, &c.DependsOnID)
+		err := rows.Scan(&c.ID, &c.DependencyID)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -309,6 +308,52 @@ func DeleteUnitRename(changeId int) error {
 		DELETE FROM unit_renames
 		WHERE id = $1
 	`, changeId)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func CreateDependencyCreation(proposalID int, unitIsProposed bool, unitID int, dependsOnIsProposed bool, dependsOnID int) (int, error) {
+	var id int
+	err := db.QueryRow(`
+		INSERT INTO dependency_creations (proposal_id, unit_is_proposed, unit_id, depends_on_is_proposed, depends_on_id)
+		VALUES ($1, $2, $3, $4, $5)
+		RETURNING id
+	`, proposalID, unitIsProposed, unitID, dependsOnIsProposed, dependsOnID).Scan(&id)
+	if err != nil {
+		return 0, err
+	}
+	return id, nil
+}
+
+func DeleteDependencyCreation(changeID int) error {
+	_, err := db.Exec(`
+		DELETE FROM dependency_creations
+		WHERE id = $1
+	`, changeID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func CreateDependencyDeletion(proposalID int, dependencyID int) error {
+	_, err := db.Exec(`
+		INSERT INTO dependency_deletions (proposal_id, dependency_id)
+		VALUES ($1, $2)
+	`, proposalID, dependencyID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeleteDependencyDeletion(changeID int) error {
+	_, err := db.Exec(`
+		DELETE FROM dependency_deletions
+		WHERE id = $1
+	`, changeID)
 	if err != nil {
 		return err
 	}

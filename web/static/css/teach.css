@@ -96,3 +96,13 @@ div.change .type.rename{
     background-color: var(--orange-1);
     color:var(--orange-8);
 }
+
+div.change .type.dependency_creation{
+    background-color: var(--purple-1);
+    color:var(--purple-8);
+}
+
+div.change .type.dependency_deletion{
+    background-color: var(--purple-1);
+    color:var(--purple-8);
+}

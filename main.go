@@ -52,6 +52,10 @@ func main() {
 	mux.HandleFunc("PUT /teach/proposal/{id}/unit_rename/{unit_id}", handlers.CreateUnitRename)
 	mux.HandleFunc("DELETE /teach/proposal/{id}/unit_rename/{change_id}", handlers.DeleteUnitRename)
 
+	mux.HandleFunc("POST /teach/proposal/{id}/toggle_dependency", handlers.ToggleDependency)
+	mux.HandleFunc("DELETE /teach/proposal/{id}/dependency_creation/{change_id}", handlers.DeleteDependencyCreation)
+	mux.HandleFunc("DELETE /teach/proposal/{id}/dependency_deletion/{change_id}", handlers.DeleteDependencyDeletion)
+
 	// Polls
 	mux.HandleFunc("GET /teach/polls", handlers.Polls)
 	mux.HandleFunc("GET /teach/poll/{id}", handlers.Poll)

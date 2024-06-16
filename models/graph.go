@@ -19,6 +19,8 @@ type Dependency struct {
 	ID          int
 	UnitID      int
 	DependsOnID int
+	Type        string // 'Existing', 'ProposedCreation', 'ProposedDeletion'
+	ChangeID    int
 }
 
 type Graph struct {

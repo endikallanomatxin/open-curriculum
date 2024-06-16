@@ -128,10 +128,10 @@ func GetUnsubmittedProposals() []models.Proposal {
 func GetProposal(id int) models.Proposal {
 	var p models.Proposal
 	err := db.QueryRow(`
-		SELECT id, title, description, created_at
+		SELECT id, title, description, created_at, submitted
 		FROM proposals
 		WHERE id = $1;
-	`, id).Scan(&p.ID, &p.Title, &p.Description, &p.CreatedAt)
+	`, id).Scan(&p.ID, &p.Title, &p.Description, &p.CreatedAt, &p.Submitted)
 	if errors.Is(err, sql.ErrNoRows) {
 		return models.Proposal{}
 	}

@@ -27,13 +27,17 @@
                 - [x] Unit deletion
                 - [x] Unit rename
                 - [ ] Unit content modification
-                - [ ] Dependency creation
-                - [ ] Dependency deletion
+                - [x] Dependency creation
+                - [x] Dependency deletion
                 - [ ] Transfer certifications and reads (it has to be done every time you delete something)
             - Fix:
-                - Cannot access to details of a proposed unit. Open unit should consider proposed changes.
+                - Para elegir la unidad abierta, se pasa la tabla como argumento. Igual es mejor hacer como he hecho con las dependencias y que el cambio sea proposed, ya que las únicas tablas posibles son units y unit_creations.
+                - Cuando se intenta abrir una unidad que no existe (que puede pasar porque queda guardado en las cookies), se para el programa.
                 - When you click the close button of the dialogue, the page should be refreshed.
-        - Voting mode
+                - Al crear una propuesta que se autoactive
+        - Voting:
+            - [x] Basic single proposal poll voting
+            - [ ] Multiple proposals poll voting
             - [ ] See relevant polls
             - [ ] Open a poll and vote on it
     - Learn
