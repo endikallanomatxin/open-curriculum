@@ -8,15 +8,15 @@
 
     /* Colors */
     --neutral-0: hsl(35, 45%, 97%);
-    --neutral-1: hsl(35, 38%, 92%);
-    --neutral-2: hsl(35, 32%, 88%);
-    --neutral-3: hsl(35, 25%, 70%);
-    --neutral-4: hsl(35, 20%, 60%);
-    --neutral-5: hsl(35, 18%, 50%);
-    --neutral-6: hsl(35, 16%, 40%);
-    --neutral-7: hsl(35, 12%, 30%);
-    --neutral-8: hsl(35, 10%, 20%);
-    --neutral-9: hsl(35, 7%, 14%);
+    --neutral-1: hsl(35, 40%, 92%);
+    --neutral-2: hsl(35, 38%, 88%);
+    --neutral-3: hsl(35, 28%, 73%);
+    --neutral-4: hsl(35, 28%, 63%);
+    --neutral-5: hsl(31, 18%, 60%);
+    --neutral-6: hsl(35, 20%, 40%);
+    --neutral-7: hsl(35, 16%, 30%);
+    --neutral-8: hsl(35, 16%, 20%);
+    --neutral-9: hsl(35, 12%, 14%);
 
     --green-0: hsl(160, 20%, 90%);
     --green-1: hsl(160, 22%, 80%);
@@ -29,22 +29,22 @@
     --green-8: hsl(160, 40%, 20%);
     --green-9: hsl(160, 40%, 10%);
 
-    --red-0: hsl(0, 20%, 90%);
-    --red-1: hsl(0, 24%, 80%);
-    --red-2: hsl(0, 26%, 70%);
-    --red-3: hsl(0, 28%, 60%);
-    --red-4: hsl(0, 34%, 51%);
-    --red-5: hsl(0, 36%, 39%);
-    --red-6: hsl(0, 39%, 32%);
-    --red-7: hsl(0, 45%, 26%);
-    --red-8: hsl(0, 49%, 19%);
-    --red-9: hsl(0, 40%, 10%);
+    --red-0: hsl(350, 20%, 90%);
+    --red-1: hsl(350, 24%, 80%);
+    --red-2: hsl(350, 26%, 70%);
+    --red-3: hsl(350, 28%, 60%);
+    --red-4: hsl(350, 31%, 49%);
+    --red-5: hsl(350, 51%, 34%);
+    --red-6: hsl(351, 49%, 28%);
+    --red-7: hsl(351, 47%, 27%);
+    --red-8: hsl(350, 49%, 19%);
+    --red-9: hsl(350, 40%, 10%);
 
     --orange-0: hsl(35, 31%, 89%);
     --orange-1: hsl(29, 49%, 83%);
     --orange-2: hsl(29, 55%, 75%);
     --orange-3: hsl(29, 60%, 65%);
-    --orange-4: hsl(29, 65%, 55%);
+    --orange-4: hsl(29, 59%, 57%);
     --orange-5: hsl(29, 70%, 45%);
     --orange-6: hsl(29, 75%, 35%);
     --orange-7: hsl(29, 79%, 28%);
@@ -62,16 +62,16 @@
     --blue-8: hsl(200, 40%, 20%);
     --blue-9: hsl(200, 40%, 10%);
 
-    --purple-0: hsl(280, 20%, 90%);
-    --purple-1: hsl(280, 22%, 80%);
-    --purple-2: hsl(280, 24%, 70%);
-    --purple-3: hsl(280, 26%, 57%);
-    --purple-4: hsl(280, 30%, 46%);
-    --purple-5: hsl(280, 37%, 40%);
-    --purple-6: hsl(282, 38%, 27%);
-    --purple-7: hsl(280, 37%, 24%);
-    --purple-8: hsl(281, 43%, 19%);
-    --purple-9: hsl(280, 45%, 9%);
+    --purple-0: hsl(270, 20%, 90%);
+    --purple-1: hsl(270, 22%, 80%);
+    --purple-2: hsl(270, 24%, 70%);
+    --purple-3: hsl(270, 26%, 57%);
+    --purple-4: hsl(270, 25%, 48%);
+    --purple-5: hsl(270, 49%, 36%);
+    --purple-6: hsl(270, 38%, 27%);
+    --purple-7: hsl(270, 37%, 24%);
+    --purple-8: hsl(270, 43%, 19%);
+    --purple-9: hsl(270, 45%, 9%);
     
 
 
@@ -144,19 +144,28 @@ nav#back{
     position: fixed;
     top: 1rem;
     left: 1rem;
-    background-color: var(--background-dark);
+    background-color: var(--neutral-1);
     z-index: 100;
     border-radius: 2rem;
+    a {
+        color: var(--neutral-7);
+    }
 }
 
 nav#language{
-    padding: 1rem 1.5rem;
+    font-size: 0.8em;
+    padding: 1em 1.5em;
     position: fixed;
-    top: 1rem;
-    right: 1rem;
-    background-color: var(--background-dark);
+    top: 2rem;
+    right: 2rem;
+    background-color: var(--neutral-1);
     z-index: 100;
     border-radius: 2rem;
+    color: var(--neutral-3);
+    a {
+        font-weight: bold;
+        color:var(--neutral-5);
+    }
 }
 
 

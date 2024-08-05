@@ -18,6 +18,7 @@
     background-color: var(--background-dark);
     padding: 0.5rem 1rem;
     border-radius:100px;
+    color: var(--neutral-6);
 }
 
 main {

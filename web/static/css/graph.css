@@ -106,26 +106,21 @@ div.controls {
     margin-right:0.5em;
     
     button{
-        font-size: 0.3em;
+        font-size: 0.6em;
+        color:white;
         padding: 0.4em 0.8em;
         white-space: nowrap;
     }
 
     button.deps{
-        background-color: var(--purple-1);
-        color: var(--purple-7);
-        border: 0.1rem solid var(--purple-7);
+        background-color: var(--purple-4);
     }
 
     button.delete{
-        background-color: var(--red-1);
-        color: var(--red-7);
-        border: 0.1rem solid var(--red-7);
+        background-color: var(--red-4);
     }
 
     button.undo{
-        background-color: var(--neutral-1);
-        color: var(--neutral-7);
-        border: 0.1rem solid var(--neutral-7);
+        background-color: var(--neutral-4);
     }
 }
