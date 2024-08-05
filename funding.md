@@ -5,6 +5,21 @@ https://www.fundaciones.org/es/inicio
 
 ## Concursos a los que presentarlo:
 
+- [X] BQUO by Dominion.
+    https://bquobydominion.com/sobre-bquo
+
+
+- [/] Spri. Ekintzaile.
+
+    https://www.spri.eus/es/ayudas/ekintzaile/
+
+    12/31
+
+    - El 05/18 rellené el formulario en la página de ekintzaile.
+    - El 05/20 me llamaron para decirme que acudiera al Beaz, que lo gestionan allí.
+    - El 05/22 llamé al Beaz y me dijeron que les mandara un email a beaz@bizkaia.eus
+
+
 - ZITEK.
 
     https://zitek.eus/eu/2024/03/21/think-big-2024-enpresa-ideien-lehiaketa/
@@ -28,16 +43,6 @@ https://www.fundaciones.org/es/inicio
 
     Igual demasiado enfocado en la rentabilidad.
 
-
-- [/] Spri. Ekintzaile.
-
-    https://www.spri.eus/es/ayudas/ekintzaile/
-
-    12/31
-
-    - El 05/18 rellené el formulario en la página de ekintzaile.
-    - El 05/20 me llamaron para decirme que acudiera al Beaz, que lo gestionan allí.
-    - El 05/22 llamé al Beaz y me dijeron que les mandara un email a beaz@bizkaia.eus
 
 - BBK Ekin.
     
