@@ -78,7 +78,7 @@
                 {{ $activeProposalID := .ActiveProposal.ID}}
                 {{ with .OpenUnit }}
                     {{ if eq .Type "ProposedCreation" }}
-                        <form id="create-form" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .ID }}" hx-target="body" hx-swap="outerHTML">
+                        <form id="rename-form" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .ID }}" hx-target="body" hx-swap="outerHTML">
                             <input type="text" id="name" name="name" value="{{ .Name }}">
                             <button type="submit">Rename</button>
                         </form>

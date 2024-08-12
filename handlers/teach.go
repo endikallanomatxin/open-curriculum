@@ -157,6 +157,21 @@ func CreateUnitCreation(w http.ResponseWriter, r *http.Request) {
 	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
 }
 
+func UpdateUnitCreation(w http.ResponseWriter, r *http.Request) {
+	proposal_id := 0
+	unit_id := 0
+	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_creation/%d", &proposal_id, &unit_id)
+
+	r.ParseForm()
+	name := r.Form.Get("name")
+
+	db.UpdateUnitCreation(unit_id, name)
+
+	activeProposalID := GetActiveProposalID(r)
+	openUnitTable, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
+}
+
 func DeleteUnitCreation(w http.ResponseWriter, r *http.Request) {
 	proposal_id := 0
 	change_id := 0

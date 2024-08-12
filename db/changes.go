@@ -242,6 +242,18 @@ func CreateUnitCreation(proposalId int, name string) (int, error) {
 	return id, nil
 }
 
+func UpdateUnitCreation(changeId int, name string) error {
+	_, err := db.Exec(`
+		UPDATE unit_creations
+		SET name = $1
+		WHERE id = $2
+	`, name, changeId)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func DeleteUnitCreation(changeId int) error {
 	_, err := db.Exec(`
 		DELETE FROM unit_creations

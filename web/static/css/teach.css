@@ -106,3 +106,8 @@ div.change .type.dependency_deletion{
     background-color: var(--purple-1);
     color:var(--purple-8);
 }
+
+.controls button{
+    font-size: 0.7em;
+    padding: 0.4em 0.8em;
+}
