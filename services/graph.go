@@ -50,12 +50,19 @@ func CalculatePositions(graph models.Graph) models.PositionedGraph {
 	for _, units := range unitsByLevel {
 		// Distribuir equitativamente las unidades en el nivel
 		unitCount := len(units)
-		for i, unit := range units {
-			horizontalPosition := float64(i) / float64(unitCount-1) // Normalizar entre 0 y 1
+		if unitCount == 1 {
 			positionedUnits = append(positionedUnits, models.PositionedUnit{
-				Unit:               unit,
-				HorizontalPosition: horizontalPosition,
+				Unit: units[0],
+				HorizontalPosition: 0,
 			})
+		} else {
+			for i, unit := range units {
+				horizontalPosition := float64(i) / float64(unitCount-1) // Normalizar entre 0 y 1
+				positionedUnits = append(positionedUnits, models.PositionedUnit{
+					Unit:               unit,
+					HorizontalPosition: horizontalPosition,
+				})
+			}
 		}
 	}
 

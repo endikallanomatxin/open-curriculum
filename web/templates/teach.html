@@ -25,7 +25,7 @@
                         <div class="node" id="node-{{ .Unit.ChangeID}}" ></div>
                         <p hx-put="/teach/set-open-unit?table=unit_creations&id={{ .Unit.ChangeID }}" hx-target="body">{{ .Unit.Name }}</p>
                         <div class="controls">
-                            <button class="deps" onclick="editDependency(true, {{.Unit.ChangeID}})">Edit dependencies</button>
+                            <button class="deps" onclick="editDependency(true, {{.Unit.ChangeID}})">Edit deps</button>
                             <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                             <div class="node" id="node-{{ .Unit.ID}}" ></div>
                             <p>{{ .Unit.Name }}</p>
                             <div class="controls">
-                                <button class="deps" onclick="editDependency(false, {{.Unit.ID}})">Edit dependencies</button>
+                                <button class="deps" onclick="editDependency(false, {{.Unit.ID}})">Edit deps</button>
                                 <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                         <p hx-put="/teach/set-open-unit?table=units&id={{ .Unit.ID }}" hx-target="body">{{ .Unit.Name }}</p>
                         {{ if not ( eq $activeProposalID 0 )}}
                             <div class="controls">
-                                <button class="deps" onclick="editDependency(false, {{.Unit.ID}})">Edit dependencies</button>
+                                <button class="deps" onclick="editDependency(false, {{.Unit.ID}})">Edit deps</button>
                                 <button class="delete" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .Unit.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Delete</button>
                             </div>
                         {{ end }}
