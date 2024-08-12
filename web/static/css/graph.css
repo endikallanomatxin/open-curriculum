@@ -1,126 +1,124 @@
-div.unit{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0.6rem 0;
-    border-radius: 2rem;
-    margin-left: calc(var(--horizontal-position)*2rem);
-    transition: 0.2s;
-}
+#graph {
+    display: grid;
+    grid-template-columns: min-content 1fr auto;
+    grid-auto-rows: min-content;
+    gap: 0.6em;
 
-div.unit.existing{
-    background-color: var(--neutral-1);
-    color: var(--neutral-7);
-}
-
-div.unit.existing:hover{
-    background-color: var(--neutral-2);
-    color: var(--neutral-8);
-}
-
-div.unit.proposed-creation{
-    background-color: var(--green-0);
-    color: var(--green-7);
-}
-
-div.unit.proposed-creation:hover{
-    background-color: var(--green-1);
-    color: var(--green-8);
-}
-
-div.unit.proposed-deletion{
-    background-color: var(--red-0);
-    color: var(--red-7);
-}
-
-div.unit.proposed-deletion:hover{
-    background-color: var(--red-1);
-    color: var(--red-8);
-}
-
-div.unit.proposed-rename{
-    background-color: var(--orange-0);
-    color: var(--orange-7);
-}
-
-div.unit.proposed-rename:hover{
-    background-color: var(--orange-1);
-    color: var(--orange-8);
-}
-
-.unit * {
-    display: inline-block;
-}
-
-div.unit a{
-    text-decoration: none;
-    color: inherit;
-    margin:0;
-    padding:0;
-}
-
-div.unit p{
-    padding-left: 0.5rem;
-    padding-right: 1rem;
-    margin:0;
-    font-weight: 600;
-    font-size: 1.2em;
-    width: 50%;
-    text-overflow: ellipsis;
-}
-
-div.node{
-    content: '';
-    display: inline-block;
-    width: 1.6rem;
-    height: 1.6rem;
-    -moz-border-radius: 1.1rem;
-    -webkit-border-radius: 1.1rem;
-    border-radius: 1.1rem;
-}
-
-div.unit.existing div.node{
-    border: 0.3rem solid var(--neutral-4);
-    background-color: var(--neutral-2);
-}
-
-div.unit.proposed-creation div.node{
-    border: 0.3rem solid var(--green-7);
-    background-color: var(--green-1);
-}
-
-div.unit.proposed-deletion div.node{
-    border: 0.3rem solid var(--red-7);
-    background-color: var(--red-1);
-}
-
-div.unit.proposed-rename div.node{
-    border: 0.3rem solid var(--orange-7);
-    background-color: var(--orange-1);
-}
-
-div.controls {
-    display: flex;
-    gap: 0.5em;
-    align-items: center;
-    margin-right:0.5em;
+    >*{
+        grid-column: 1/-1;
+    }
     
-    button{
-        font-size: 0.6em;
-        color:white;
-        padding: 0.4em 0.8em;
-        white-space: nowrap;
-    }
+    >.unit{
+        display: grid;
+        grid-template-columns: subgrid;
+        padding:0;
 
-    button.deps{
-        background-color: var(--purple-4);
-    }
+        border-radius: 2rem;
+        margin-left: calc(var(--horizontal-position)*2rem);
+        transition: 0.2s;
 
-    button.delete{
-        background-color: var(--red-4);
-    }
+        >.node{
+            content: '';
+            width: 1.8em;
+            height: 1.8em;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+        }
 
-    button.undo{
-        background-color: var(--neutral-4);
+        >a{
+            text-decoration: none;
+            color: inherit;
+            margin:0;
+            padding:0;
+        }
+        
+        >p{
+            margin:0;
+            font-weight: 600;
+            font-size: 1.2em;
+            text-overflow: ellipsis;
+        }
+        
+        >.controls {
+            display: flex;
+            gap: 0.5em;
+            align-items: center;
+            margin-right:0.5em;
+
+            >button{
+                font-size: 0.6em;
+                color:white;
+                padding: 0.4em 0.8em;
+                white-space: nowrap;
+
+                &.deps{
+                    background-color: var(--purple-4);
+                }
+
+                &.delete{
+                    background-color: var(--red-4);
+                }
+
+                &.undo{
+                    background-color: var(--neutral-4);
+                }
+            }
+        }
+
+        
+        &.existing{
+            background-color: var(--neutral-1);
+            color: var(--neutral-7);
+            &:hover{
+                background-color: var(--neutral-2);
+                color: var(--neutral-8);
+            }
+            >.node{
+                border: 0.3em solid var(--neutral-4);
+                background-color: var(--neutral-2);
+            }
+        }
+
+        &.proposed-creation{
+            background-color: var(--green-0);
+            color: var(--green-7);
+            &:hover{
+                background-color: var(--green-1);
+                color: var(--green-8);
+            }
+            >.node{
+                border: 0.3em solid var(--green-7);
+                background-color: var(--green-1);
+            }
+        }
+
+        &.proposed-deletion{
+            background-color: var(--red-0);
+            color: var(--red-7);
+            &:hover{
+                background-color: var(--red-1);
+                color: var(--red-8);
+            }
+            >.node{
+                border: 0.3em solid var(--red-7);
+                background-color: var(--red-1);
+            }
+        }
+
+
+        &.proposed-rename{
+            background-color: var(--orange-0);
+            color: var(--orange-7);
+            &:hover{
+                background-color: var(--orange-1);
+                color: var(--orange-8);
+            }
+            >.node{
+                border: 0.3em solid var(--orange-7);
+                background-color: var(--orange-1);
+            }
+        }
+
     }
 }
