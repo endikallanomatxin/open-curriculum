@@ -48,6 +48,13 @@ func Unit(w http.ResponseWriter, r *http.Request) {
 		id := 0
 		fmt.Sscanf(r.URL.Path, "/unit/%d", &id)
 
+		unit, err := db.GetUnit(id)
+		if err != nil {
+			fmt.Println(err)
+			http.Error(w, "Unidad no encontrada", http.StatusNotFound)
+			return
+		}
+
 		// Datos que se pasarán a la plantilla
 		data := struct {
 			Title        string
@@ -56,7 +63,7 @@ func Unit(w http.ResponseWriter, r *http.Request) {
 			Units        []models.Unit
 		}{
 			Title:        "Detalle de la Unidad",
-			Unit:         db.GetUnit(id),
+			Unit:         unit,
 			Dependencies: db.GetUnitDependencies(id),
 			Units:        db.GetUnits(),
 		}

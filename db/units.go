@@ -60,13 +60,10 @@ func CreateUnit(u models.Unit) int {
 	return id
 }
 
-func GetUnit(id int) models.Unit {
+func GetUnit(id int) (models.Unit, error) {
 	var u models.Unit
 	err := db.QueryRow("SELECT id, name, content FROM units WHERE id = $1", id).Scan(&u.ID, &u.Name, &u.Content)
-	if err != nil {
-		log.Fatalf("Error querying unit: %q", err)
-	}
-	return u
+	return u, err
 }
 
 func DeleteUnit(id int) {

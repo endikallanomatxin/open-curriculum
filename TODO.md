@@ -28,7 +28,6 @@
                 - [x] Dependency deletion
                 - [ ] Transfer certifications and reads (it has to be done every time you delete something)
             - Fix:
-                - Cuando se intenta abrir una unidad que no existe (que puede pasar porque queda guardado en las cookies), se para el programa.
                 - When you click the close button of the dialogue, the page should be refreshed.
                 - Al crear una propuesta que se autoactive.
         - Voting:

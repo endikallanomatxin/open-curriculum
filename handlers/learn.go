@@ -31,10 +31,16 @@ func GetUnitDetails(w http.ResponseWriter, r *http.Request) {
 	id := 0
 	fmt.Sscanf(r.URL.Path, "/unit/%d/details", &id)
 
+	unit, err := db.GetUnit(id)
+	if err != nil {
+		http.Error(w, "Unit not found", http.StatusNotFound)
+		return
+	}
+
 	data := struct {
 		Unit models.Unit
 	}{
-		Unit: db.GetUnit(id),
+		Unit: unit,
 	}
 
 	RenderTemplate(w, r, "learn.html", data, "unit_details")
