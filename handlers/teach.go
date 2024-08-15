@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-func renderTeachTemplate(w http.ResponseWriter, r *http.Request, activeProposalID int, openUnitTable string, openUnitID int) {
+func renderTeachTemplate(w http.ResponseWriter, r *http.Request, activeProposalID int, openUnitIsProposed bool, openUnitID int) {
 
 	activeProposal := models.Proposal{}
 
@@ -44,10 +44,9 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request, activeProposalI
 			Content: "There are no open units",
 		}
 	} else {
-		if openUnitTable == "units" {
+		if !openUnitIsProposed {
 			openUnit = db.GetUnit(openUnitID)
-		}
-		if openUnitTable == "unit_creations" {
+		} else {
 			unitCreation, err := db.GetUnitCreation(openUnitID)
 			if err != nil {
 				fmt.Println(err)
@@ -78,8 +77,8 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request, activeProposalI
 
 func Teach(w http.ResponseWriter, r *http.Request) {
 	activeProposalID := GetActiveProposalID(r)
-	openUnitTable, openUnitID := GetOpenUnit(r)
-	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
+	openUnitIsProposed, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, activeProposalID, openUnitIsProposed, openUnitID)
 }
 
 func CreateProposal(w http.ResponseWriter, r *http.Request) {
@@ -94,8 +93,8 @@ func CreateProposal(w http.ResponseWriter, r *http.Request) {
 
 	id := db.CreateProposal(p)
 
-	openUnitTable, openUnitID := GetOpenUnit(r)
-	renderTeachTemplate(w, r, id, openUnitTable, openUnitID)
+	openUnitIsProposed, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, id, openUnitIsProposed, openUnitID)
 }
 
 func UpdateProposal(w http.ResponseWriter, r *http.Request) {
@@ -116,8 +115,8 @@ func UpdateProposal(w http.ResponseWriter, r *http.Request) {
 	db.UpdateProposal(p)
 
 	activeProposalID := GetActiveProposalID(r)
-	openUnitTable, openUnitID := GetOpenUnit(r)
-	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
+	openUnitIsProposed, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, activeProposalID, openUnitIsProposed, openUnitID)
 }
 
 func DeleteProposal(w http.ResponseWriter, r *http.Request) {
@@ -127,8 +126,8 @@ func DeleteProposal(w http.ResponseWriter, r *http.Request) {
 	db.DeleteProposal(id)
 
 	activeProposalID := GetActiveProposalID(r)
-	openUnitTable, openUnitID := GetOpenUnit(r)
-	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
+	openUnitIsProposed, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, activeProposalID, openUnitIsProposed, openUnitID)
 }
 
 func SubmitProposal(w http.ResponseWriter, r *http.Request) {
@@ -153,8 +152,8 @@ func CreateUnitCreation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	activeProposalID := GetActiveProposalID(r)
-	openUnitTable, openUnitID := GetOpenUnit(r)
-	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
+	openUnitIsProposed, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, activeProposalID, openUnitIsProposed, openUnitID)
 }
 
 func UpdateUnitCreation(w http.ResponseWriter, r *http.Request) {
@@ -168,8 +167,8 @@ func UpdateUnitCreation(w http.ResponseWriter, r *http.Request) {
 	db.UpdateUnitCreation(unit_id, name)
 
 	activeProposalID := GetActiveProposalID(r)
-	openUnitTable, openUnitID := GetOpenUnit(r)
-	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
+	openUnitIsProposed, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, activeProposalID, openUnitIsProposed, openUnitID)
 }
 
 func DeleteUnitCreation(w http.ResponseWriter, r *http.Request) {
@@ -180,8 +179,8 @@ func DeleteUnitCreation(w http.ResponseWriter, r *http.Request) {
 	db.DeleteUnitCreation(change_id)
 
 	activeProposalID := GetActiveProposalID(r)
-	openUnitTable, openUnitID := GetOpenUnit(r)
-	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
+	openUnitIsProposed, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, activeProposalID, openUnitIsProposed, openUnitID)
 }
 
 func CreateUnitDeletion(w http.ResponseWriter, r *http.Request) {
@@ -192,8 +191,8 @@ func CreateUnitDeletion(w http.ResponseWriter, r *http.Request) {
 	db.CreateUnitDeletion(proposal_id, unit_id)
 
 	activeProposalID := GetActiveProposalID(r)
-	openUnitTable, openUnitID := GetOpenUnit(r)
-	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
+	openUnitIsProposed, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, activeProposalID, openUnitIsProposed, openUnitID)
 }
 
 func DeleteUnitDeletion(w http.ResponseWriter, r *http.Request) {
@@ -208,8 +207,8 @@ func DeleteUnitDeletion(w http.ResponseWriter, r *http.Request) {
 	}
 
 	activeProposalID := GetActiveProposalID(r)
-	openUnitTable, openUnitID := GetOpenUnit(r)
-	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
+	openUnitIsProposed, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, activeProposalID, openUnitIsProposed, openUnitID)
 }
 
 func CreateUnitRename(w http.ResponseWriter, r *http.Request) {
@@ -223,8 +222,8 @@ func CreateUnitRename(w http.ResponseWriter, r *http.Request) {
 	db.CreateUnitRename(proposal_id, unit_id, name)
 
 	activeProposalID := GetActiveProposalID(r)
-	openUnitTable, openUnitID := GetOpenUnit(r)
-	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
+	openUnitIsProposed, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, activeProposalID, openUnitIsProposed, openUnitID)
 }
 
 func DeleteUnitRename(w http.ResponseWriter, r *http.Request) {
@@ -235,8 +234,8 @@ func DeleteUnitRename(w http.ResponseWriter, r *http.Request) {
 	db.DeleteUnitRename(change_id)
 
 	activeProposalID := GetActiveProposalID(r)
-	openUnitTable, openUnitID := GetOpenUnit(r)
-	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
+	openUnitIsProposed, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, activeProposalID, openUnitIsProposed, openUnitID)
 }
 
 func ToggleDependency(w http.ResponseWriter, r *http.Request) {
@@ -322,8 +321,8 @@ func DeleteDependencyCreation(w http.ResponseWriter, r *http.Request) {
 	db.DeleteDependencyCreation(change_id)
 
 	activeProposalID := GetActiveProposalID(r)
-	openUnitTable, openUnitID := GetOpenUnit(r)
-	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
+	openUnitIsProposed, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, activeProposalID, openUnitIsProposed, openUnitID)
 }
 
 func DeleteDependencyDeletion(w http.ResponseWriter, r *http.Request) {
@@ -334,8 +333,8 @@ func DeleteDependencyDeletion(w http.ResponseWriter, r *http.Request) {
 	db.DeleteDependencyDeletion(change_id)
 
 	activeProposalID := GetActiveProposalID(r)
-	openUnitTable, openUnitID := GetOpenUnit(r)
-	renderTeachTemplate(w, r, activeProposalID, openUnitTable, openUnitID)
+	openUnitIsProposed, openUnitID := GetOpenUnit(r)
+	renderTeachTemplate(w, r, activeProposalID, openUnitIsProposed, openUnitID)
 }
 
 func Polls(w http.ResponseWriter, r *http.Request) {

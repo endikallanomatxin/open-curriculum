@@ -210,16 +210,14 @@ func GetActiveProposalID(r *http.Request) int {
 
 func SetOpenUnit(w http.ResponseWriter, r *http.Request) {
 
-	table := r.URL.Query().Get("table")
-
-	tableCookie := http.Cookie{
-		Name:   "open_unit_table",
-		Value:  table,
+	isProposed := r.URL.Query().Get("is_proposed")
+	isProposedCookie := http.Cookie{
+		Name:   "open_unit_is_proposed",
+		Value:  isProposed,
 		Path:   "/",
 		MaxAge: 60 * 60 * 24 * 7, // 1 week
 	}
-
-	http.SetCookie(w, &tableCookie)
+	http.SetCookie(w, &isProposedCookie)
 
 	id, err := strconv.Atoi(r.URL.Query().Get("id"))
 	if err != nil {
@@ -227,40 +225,43 @@ func SetOpenUnit(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Invalid ID")
 		return
 	}
-
 	idCookie := http.Cookie{
 		Name:   "open_unit_id",
 		Value:  strconv.Itoa(id),
 		Path:   "/",
 		MaxAge: 60 * 60 * 24 * 7, // 1 week
 	}
-
 	http.SetCookie(w, &idCookie)
-
-	fmt.Println("Set open unit:", table, id)
 
 	http.Redirect(w, r, "/teach", http.StatusFound)
 }
 
-func GetOpenUnit(r *http.Request) (string, int) {
-	openUnitTableCookie, err := r.Cookie("open_unit_table")
+func GetOpenUnit(r *http.Request) (bool, int) {
+	openUnitIsProposedCookie, err := r.Cookie("open_unit_is_proposed")
 	if err != nil {
-		return "", 0
+		return false, 0
 	}
-
-	openUnitTableStr := openUnitTableCookie.Value
-
+	openUnitIsProposedStr := openUnitIsProposedCookie.Value
+	var openUnitIsProposed bool
+	if openUnitIsProposedStr == "true" {
+		openUnitIsProposed = true
+	} else if openUnitIsProposedStr == "false" {
+		openUnitIsProposed = false
+	} else {
+		fmt.Println("Error converting open_unit_is_proposed to bool:", err)
+		return false, 0
+	}
 	openUnitIDCookie, err := r.Cookie("open_unit_id")
 	if err != nil {
-		return "", 0
+		return false, 0
 	}
-
 	openUnitIDStr := openUnitIDCookie.Value
 	openUnitID, err := strconv.Atoi(openUnitIDStr)
 	if err != nil {
 		fmt.Println("Error converting open_unit_id to int:", err)
-		return "", 0
+		return false, 0
 	}
 
-	return openUnitTableStr, openUnitID
+	return openUnitIsProposed, openUnitID
 }
+

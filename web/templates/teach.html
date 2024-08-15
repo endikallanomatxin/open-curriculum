@@ -23,7 +23,7 @@
                 {{ if eq .Unit.Type "ProposedCreation" }}
                     <div class="unit proposed-creation" id="unit-{{ .Unit.ChangeID }}" style="--horizontal-position: {{.HorizontalPosition}}" proposed="true" unit_id="{{.Unit.ChangeID}}">
                         <div class="node" id="node-{{ .Unit.ChangeID}}" ></div>
-                        <p hx-put="/teach/set-open-unit?table=unit_creations&id={{ .Unit.ChangeID }}" hx-target="body">{{ .Unit.Name }}</p>
+                        <p hx-put="/teach/set-open-unit?is_proposed=true&id={{ .Unit.ChangeID }}" hx-target="body">{{ .Unit.Name }}</p>
                         <div class="controls">
                             <button class="deps" onclick="editDependency(true, {{.Unit.ChangeID}})">Edit deps</button>
                             <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
@@ -32,7 +32,7 @@
                 {{ else if eq .Unit.Type "ProposedDeletion" }}
                     <div class="unit proposed-deletion" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
                         <div class="node" id="node-{{ .Unit.ID}}" ></div>
-                        <p hx-put="/teach/set-open-unit?table=units&id={{ .Unit.ID }}" hx-target="body">{{ .Unit.Name }}</p>
+                        <p hx-put="/teach/set-open-unit?is_proposed=false&id={{ .Unit.ID }}" hx-target="body">{{ .Unit.Name }}</p>
                         <div class="controls">
                             <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
                         </div>
@@ -50,7 +50,7 @@
                 {{ else }}
                     <div class="unit existing" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}" proposed="false" unit_id="{{.Unit.ID}}">
                         <div class="node" id="node-{{ .Unit.ID}}" ></div>
-                        <p hx-put="/teach/set-open-unit?table=units&id={{ .Unit.ID }}" hx-target="body">{{ .Unit.Name }}</p>
+                        <p hx-put="/teach/set-open-unit?is_proposed=false&id={{ .Unit.ID }}" hx-target="body">{{ .Unit.Name }}</p>
                         {{ if not ( eq $activeProposalID 0 )}}
                             <div class="controls">
                                 <button class="deps" onclick="editDependency(false, {{.Unit.ID}})">Edit deps</button>

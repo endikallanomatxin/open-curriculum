@@ -1,5 +1,3 @@
-- Presentar la plataforma a concursos
-
 - Manifest:
 
     - Repasar traducción a euskera
@@ -14,9 +12,8 @@
 
 - Create an explainer video
 
-- Create opening animation of logo
-
 - Platform demo:
+    - Users
     - Teach:
         - Proposals
             - [x] Creation
@@ -31,10 +28,9 @@
                 - [x] Dependency deletion
                 - [ ] Transfer certifications and reads (it has to be done every time you delete something)
             - Fix:
-                - Para elegir la unidad abierta, se pasa la tabla como argumento. Igual es mejor hacer como he hecho con las dependencias y que el cambio sea proposed, ya que las únicas tablas posibles son units y unit_creations.
                 - Cuando se intenta abrir una unidad que no existe (que puede pasar porque queda guardado en las cookies), se para el programa.
                 - When you click the close button of the dialogue, the page should be refreshed.
-                - Al crear una propuesta que se autoactive
+                - Al crear una propuesta que se autoactive.
         - Voting:
             - [x] Basic single proposal poll voting
             - [ ] Multiple proposals poll voting
