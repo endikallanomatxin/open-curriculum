@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"app/db"
-	"app/models"
+	"app/logic"
 	"fmt"
 	"net/http"
 )
@@ -14,8 +14,8 @@ func Units(w http.ResponseWriter, r *http.Request) {
 		// Datos que se pasarán a la plantilla
 		data := struct {
 			Title        string
-			Units        []models.Unit
-			Dependencies []models.Dependency
+			Units        []logic.Unit
+			Dependencies []logic.Dependency
 		}{
 			Title:        "Página de Unidades",
 			Units:        db.GetUnits(),
@@ -29,7 +29,7 @@ func Units(w http.ResponseWriter, r *http.Request) {
 		name := r.Form.Get("name")
 		content := r.Form.Get("content")
 
-		u := models.Unit{
+		u := logic.Unit{
 			Name:    name,
 			Content: content,
 		}
@@ -45,7 +45,7 @@ func Unit(w http.ResponseWriter, r *http.Request) {
 	case "GET":
 
 		// Obtiene el ID de la URL
-		id := 0
+		var id int64
 		fmt.Sscanf(r.URL.Path, "/unit/%d", &id)
 
 		unit, err := db.GetUnit(id)
@@ -58,9 +58,9 @@ func Unit(w http.ResponseWriter, r *http.Request) {
 		// Datos que se pasarán a la plantilla
 		data := struct {
 			Title        string
-			Unit         models.Unit
-			Dependencies []models.Unit
-			Units        []models.Unit
+			Unit         logic.Unit
+			Dependencies []logic.Unit
+			Units        []logic.Unit
 		}{
 			Title:        "Detalle de la Unidad",
 			Unit:         unit,
@@ -71,7 +71,7 @@ func Unit(w http.ResponseWriter, r *http.Request) {
 		RenderTemplate(w, r, "unit.html", data, nil)
 
 	case "DELETE":
-		id := 0
+		var id int64
 		fmt.Sscanf(r.URL.Path, "/unit/%d", &id)
 
 		db.DeleteUnit(id)

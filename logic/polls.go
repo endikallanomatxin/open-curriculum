@@ -1,16 +1,16 @@
-package models
+package logic
 
 type SingleProposalPoll struct {
-	ID         int
-	ProposalID int
+	ID         int64
+	ProposalID int64
 	Proposal   Proposal
-	YesVotes   int
-	NoVotes    int
+	YesVotes   int32
+	NoVotes    int32
 	Resolved   bool `default:"false"`
 	Accepted   bool `default:"false"`
 }
 
 type MultipleProposalPoll struct {
-	ID          int
-	ProposalIDs []int
+	ID          int64
+	ProposalIDs []int64
 }

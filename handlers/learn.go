@@ -2,8 +2,7 @@ package handlers
 
 import (
 	"app/db"
-	"app/models"
-	"app/services"
+	"app/logic"
 	"fmt"
 	"net/http"
 )
@@ -11,13 +10,13 @@ import (
 func Learn(w http.ResponseWriter, r *http.Request) {
 	// Unitl more logic is implemented, let's just get all
 	activeProposalID := GetActiveProposalID(r)
-	graph := services.GetProposedGraph(activeProposalID)
-	positionedGraph := services.CalculatePositions(graph)
+	graph := db.GetProposedGraph(activeProposalID)
+	positionedGraph := graph.Positioned()
 
 	data := struct {
-		PositionedGraph models.PositionedGraph
-		Proposals       []models.Proposal
-		ActiveProposal  models.Proposal
+		PositionedGraph logic.PositionedGraph
+		Proposals       []logic.Proposal
+		ActiveProposal  logic.Proposal
 	}{
 		PositionedGraph: positionedGraph,
 		Proposals:       db.GetUnsubmittedProposals(),
@@ -31,14 +30,14 @@ func GetUnitDetails(w http.ResponseWriter, r *http.Request) {
 	id := 0
 	fmt.Sscanf(r.URL.Path, "/unit/%d/details", &id)
 
-	unit, err := db.GetUnit(id)
+	unit, err := db.GetUnit(int64(id))
 	if err != nil {
 		http.Error(w, "Unit not found", http.StatusNotFound)
 		return
 	}
 
 	data := struct {
-		Unit models.Unit
+		Unit logic.Unit
 	}{
 		Unit: unit,
 	}

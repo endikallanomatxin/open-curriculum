@@ -1,25 +1,24 @@
 package db
 
 import (
+	"app/logic"
 	"log"
-
-	models "app/models"
 )
 
 func UnitsCreateTables() {
 	createTables := `
 	CREATE TABLE IF NOT EXISTS groups (
-		id SERIAL PRIMARY KEY,
+		id BIGSERIAL PRIMARY KEY,
 		name VARCHAR(255) NOT NULL,
-		group_id INT,
+		group_id BIGINT,
 		FOREIGN KEY (group_id) REFERENCES groups(id)
 	);
 
 	CREATE TABLE IF NOT EXISTS units (
-		id SERIAL PRIMARY KEY,
+		id BIGSERIAL PRIMARY KEY,
 		name VARCHAR(255) NOT NULL,
 		content TEXT,
-		group_id INT,
+		group_id BIGINT,
 		FOREIGN KEY (group_id) REFERENCES groups(id)
 	);`
 
@@ -30,7 +29,7 @@ func UnitsCreateTables() {
 	}
 }
 
-func GetUnits() []models.Unit {
+func GetUnits() []logic.Unit {
 
 	rows, err := db.Query("SELECT id, name, content FROM units")
 	if err != nil {
@@ -38,9 +37,9 @@ func GetUnits() []models.Unit {
 	}
 	defer rows.Close()
 
-	units := []models.Unit{}
+	units := []logic.Unit{}
 	for rows.Next() {
-		var u models.Unit
+		var u logic.Unit
 		err := rows.Scan(&u.ID, &u.Name, &u.Content)
 		if err != nil {
 			log.Fatalf("Error scanning units: %q", err)
@@ -51,8 +50,8 @@ func GetUnits() []models.Unit {
 	return units
 }
 
-func CreateUnit(u models.Unit) int {
-	var id int
+func CreateUnit(u logic.Unit) int64 {
+	var id int64
 	err := db.QueryRow("INSERT INTO units (name, content) VALUES ($1, $2) RETURNING id", u.Name, u.Content).Scan(&id)
 	if err != nil {
 		log.Fatalf("Error creating unit: %q", err)
@@ -60,13 +59,13 @@ func CreateUnit(u models.Unit) int {
 	return id
 }
 
-func GetUnit(id int) (models.Unit, error) {
-	var u models.Unit
+func GetUnit(id int64) (logic.Unit, error) {
+	var u logic.Unit
 	err := db.QueryRow("SELECT id, name, content FROM units WHERE id = $1", id).Scan(&u.ID, &u.Name, &u.Content)
 	return u, err
 }
 
-func DeleteUnit(id int) {
+func DeleteUnit(id int64) {
 	// First delete the dependencies
 	_, err := db.Exec("DELETE FROM dependencies WHERE unit_id = $1 OR depends_on_id = $1", id)
 	if err != nil {
@@ -78,7 +77,7 @@ func DeleteUnit(id int) {
 	}
 }
 
-func RenameUnit(id int, name string) {
+func RenameUnit(id int64, name string) {
 	_, err := db.Exec("UPDATE units SET name = $1 WHERE id = $2", name, id)
 	if err != nil {
 		log.Fatalf("Error renaming unit: %q", err)
@@ -113,20 +112,20 @@ func UpdateGraph() {
 	for _, poll := range acceptedPolls {
 		// Poll is an interface
 		// If it a SingleProposalPoll
-		if poll, ok := poll.(models.SingleProposalPoll); ok {
-			createdUnitMap := make(map[int]int)
+		if poll, ok := poll.(logic.SingleProposalPoll); ok {
+			createdUnitMap := make(map[int64]int64)
 			proposal := poll.Proposal
 			for _, change := range proposal.Changes {
 				switch change := change.(type) {
-				case models.UnitCreation:
-					CreatedUnitID := CreateUnit(models.Unit{Name: change.Name})
+				case logic.UnitCreation:
+					CreatedUnitID := CreateUnit(logic.Unit{Name: change.Name})
 					createdUnitMap[change.ID] = CreatedUnitID
-				case models.UnitDeletion:
+				case logic.UnitDeletion:
 					DeleteUnit(change.UnitID)
-				case models.UnitRename:
+				case logic.UnitRename:
 					RenameUnit(change.UnitID, change.Name)
-				case models.DependencyCreation:
-					var UnitID, DependsOnID int
+				case logic.DependencyCreation:
+					var UnitID, DependsOnID int64
 					if change.UnitIsProposed {
 						UnitID = createdUnitMap[change.UnitID]
 					} else {
@@ -138,7 +137,7 @@ func UpdateGraph() {
 						DependsOnID = change.DependsOnID
 					}
 					CreateDependency(UnitID, DependsOnID)
-				case models.DependencyDeletion:
+				case logic.DependencyDeletion:
 					DeleteDependency(change.DependencyID)
 				}
 			}

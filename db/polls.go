@@ -1,7 +1,7 @@
 package db
 
 import (
-	"app/models"
+	"app/logic"
 	"fmt"
 )
 
@@ -31,7 +31,7 @@ func PollsCreateTables() {
 	}
 }
 
-func CreateSingleProposalPoll(proposalID int) {
+func CreateSingleProposalPoll(proposalID int64) {
 	_, err := db.Exec(`
 		INSERT INTO single_proposal_polls (proposal_id, yes_votes, no_votes, resolved)
 		VALUES ($1, 0, 0, FALSE)
@@ -51,7 +51,7 @@ func GetUnResolvedPolls() []interface{} {
 
 	polls := []interface{}{}
 	for rows.Next() {
-		p := models.SingleProposalPoll{}
+		p := logic.SingleProposalPoll{}
 		err = rows.Scan(&p.ID, &p.ProposalID, &p.YesVotes, &p.NoVotes, &p.Resolved, &p.Accepted)
 		if err != nil {
 			fmt.Println(err)
@@ -75,7 +75,7 @@ func GetAcceptedPolls() []interface{} {
 	polls := []interface{}{}
 
 	for rows.Next() {
-		p := models.SingleProposalPoll{}
+		p := logic.SingleProposalPoll{}
 		err = rows.Scan(&p.ID, &p.ProposalID, &p.YesVotes, &p.NoVotes, &p.Resolved, &p.Accepted)
 		if err != nil {
 			fmt.Println(err)
@@ -88,8 +88,8 @@ func GetAcceptedPolls() []interface{} {
 	return polls
 }
 
-func GetPoll(pollID int) models.SingleProposalPoll {
-	poll := models.SingleProposalPoll{}
+func GetPoll(pollID int64) logic.SingleProposalPoll {
+	poll := logic.SingleProposalPoll{}
 
 	err := db.QueryRow(`
 		SELECT * FROM single_proposal_polls WHERE id = $1;
@@ -103,7 +103,7 @@ func GetPoll(pollID int) models.SingleProposalPoll {
 	return poll
 }
 
-func CheckPoll(pollID int) {
+func CheckPoll(pollID int64) {
 	// If yes-no is greater than 10, resolve the poll
 	poll := GetPoll(pollID)
 	if poll.YesVotes-poll.NoVotes > 10 {
@@ -131,7 +131,7 @@ func CheckPoll(pollID int) {
 	}
 }
 
-func VoteYes(pollID int) {
+func VoteYes(pollID int64) {
 	_, err := db.Exec(`
 		UPDATE single_proposal_polls
 		SET yes_votes = yes_votes + 1
@@ -143,7 +143,7 @@ func VoteYes(pollID int) {
 	CheckPoll(pollID)
 }
 
-func VoteNo(pollID int) {
+func VoteNo(pollID int64) {
 	_, err := db.Exec(`
 		UPDATE single_proposal_polls
 		SET no_votes = no_votes + 1

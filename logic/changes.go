@@ -1,41 +1,41 @@
-package models
+package logic
 
 // Units
 
 type UnitCreation struct {
-	ID         int
-	ProposalID int
+	ID         int64
+	ProposalID int64
 	Name       string
 }
 
 type UnitDeletion struct {
-	ID         int
-	ProposalID int
-	UnitID     int
+	ID         int64
+	ProposalID int64
+	UnitID     int64
 }
 
 type UnitRename struct {
-	ID         int
-	ProposalID int
-	UnitID     int
+	ID         int64
+	ProposalID int64
+	UnitID     int64
 	Name       string
 }
 
 // Dependencies
 
 type DependencyCreation struct {
-	ID                  int
-	ProposalID          int
+	ID                  int64
+	ProposalID          int64
 	UnitIsProposed      bool
-	UnitID              int
+	UnitID              int64
 	DependsOnIsProposed bool
-	DependsOnID         int
+	DependsOnID         int64
 }
 
 type DependencyDeletion struct {
-	ID           int
-	ProposalID   int
-	DependencyID int
+	ID           int64
+	ProposalID   int64
+	DependencyID int64
 }
 
 // Documents
@@ -43,9 +43,9 @@ type DependencyDeletion struct {
 type DocumentModification struct {
 	// Analogous to a diff
 	// They are run from the end of the document to the beginning (so that line numbers don't change)
-	ID         int
-	ProposalID int
-	UnitID     int
+	ID         int64
+	ProposalID int64
+	UnitID     int64
 	FromLine   int
 	ToLine     int
 	Content    string // Can have multiple lines
@@ -54,18 +54,18 @@ type DocumentModification struct {
 }
 
 type DocumentFileUpload struct {
-	ID         int
-	ProposalID int
-	UnitID     int
+	ID         int64
+	ProposalID int64
+	UnitID     int64
 	// TODO
 }
 
 // Video
 
 type VideoModification struct {
-	ID         int
-	ProposalID int
-	UnitID     int
+	ID         int64
+	ProposalID int64
+	UnitID     int64
 	FromTime   int    // In miliseconds
 	ToTime     int    // In miliseconds
 	Content    string // Not a string

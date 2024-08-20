@@ -174,7 +174,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 }
 
 func SetActiveProposalID(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.URL.Query().Get("active_proposal_id"))
+	id, err := strconv.ParseInt(r.URL.Query().Get("active_proposal_id"), 10, 64)
 	if err != nil {
 		http.Error(w, "Invalid proposal ID", http.StatusBadRequest)
 		return
@@ -182,7 +182,7 @@ func SetActiveProposalID(w http.ResponseWriter, r *http.Request) {
 
 	cookie := http.Cookie{
 		Name:   "active_proposal_id",
-		Value:  strconv.Itoa(id),
+		Value:  strconv.FormatInt(id, 10),
 		Path:   "/",
 		MaxAge: 60 * 60 * 24 * 7, // 1 week
 	}
@@ -192,7 +192,7 @@ func SetActiveProposalID(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/teach", http.StatusFound)
 }
 
-func GetActiveProposalID(r *http.Request) int {
+func GetActiveProposalID(r *http.Request) int64 {
 	activeProposalIDCookie, err := r.Cookie("active_proposal_id")
 	if err != nil {
 		return 0
@@ -200,12 +200,12 @@ func GetActiveProposalID(r *http.Request) int {
 
 	activeProposalIDStr := activeProposalIDCookie.Value
 
-	activeProposalID, err := strconv.Atoi(activeProposalIDStr)
+	activeProposalID, err := strconv.ParseInt(activeProposalIDStr, 10, 64)
 	if err != nil {
 		fmt.Println("Error converting active_proposal_id to int:", err)
 		return 0
 	}
-	return activeProposalID
+	return int64(activeProposalID)
 }
 
 func SetOpenUnit(w http.ResponseWriter, r *http.Request) {
@@ -219,7 +219,7 @@ func SetOpenUnit(w http.ResponseWriter, r *http.Request) {
 	}
 	http.SetCookie(w, &isProposedCookie)
 
-	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+	id, err := strconv.ParseInt(r.URL.Query().Get("id"), 10, 64)
 	if err != nil {
 		http.Error(w, "Invalid ID", http.StatusBadRequest)
 		fmt.Println("Invalid ID")
@@ -227,7 +227,7 @@ func SetOpenUnit(w http.ResponseWriter, r *http.Request) {
 	}
 	idCookie := http.Cookie{
 		Name:   "open_unit_id",
-		Value:  strconv.Itoa(id),
+		Value:  strconv.FormatInt(id, 10),
 		Path:   "/",
 		MaxAge: 60 * 60 * 24 * 7, // 1 week
 	}
@@ -236,7 +236,7 @@ func SetOpenUnit(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/teach", http.StatusFound)
 }
 
-func GetOpenUnit(r *http.Request) (bool, int) {
+func GetOpenUnit(r *http.Request) (bool, int64) {
 	openUnitIsProposedCookie, err := r.Cookie("open_unit_is_proposed")
 	if err != nil {
 		return false, 0
@@ -256,7 +256,7 @@ func GetOpenUnit(r *http.Request) (bool, int) {
 		return false, 0
 	}
 	openUnitIDStr := openUnitIDCookie.Value
-	openUnitID, err := strconv.Atoi(openUnitIDStr)
+	openUnitID, err := strconv.ParseInt(openUnitIDStr, 10, 64)
 	if err != nil {
 		fmt.Println("Error converting open_unit_id to int:", err)
 		return false, 0
@@ -264,4 +264,3 @@ func GetOpenUnit(r *http.Request) (bool, int) {
 
 	return openUnitIsProposed, openUnitID
 }
-

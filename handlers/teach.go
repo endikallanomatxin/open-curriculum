@@ -2,8 +2,7 @@ package handlers
 
 import (
 	"app/db"
-	"app/models"
-	"app/services"
+	"app/logic"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -14,10 +13,10 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 	activeProposalID := GetActiveProposalID(r)
 	openUnitIsProposed, openUnitID := GetOpenUnit(r)
 
-	activeProposal := models.Proposal{}
+	activeProposal := logic.Proposal{}
 
 	if activeProposalID == 0 {
-		activeProposal = models.Proposal{
+		activeProposal = logic.Proposal{
 			ID:          0,
 			Title:       "No active proposal",
 			Description: "There are no active proposals",
@@ -25,7 +24,7 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 	} else {
 		activeProposal = db.GetProposal(activeProposalID)
 		if activeProposal.Submitted {
-			activeProposal = models.Proposal{
+			activeProposal = logic.Proposal{
 				ID:          0,
 				Title:       "No active proposal",
 				Description: "There are no active proposals",
@@ -35,14 +34,14 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	graph := services.GetProposedGraph(activeProposalID)
-	positionedGraph := services.CalculatePositions(graph)
+	graph := db.GetProposedGraph(activeProposalID)
+	positionedGraph := graph.Positioned()
 
-	openUnit := models.Unit{}
+	openUnit := logic.Unit{}
 	err := error(nil)
 
 	if openUnitID == 0 {
-		openUnit = models.Unit{
+		openUnit = logic.Unit{
 			ID:      0,
 			Name:    "No open unit",
 			Content: "There are no open units",
@@ -52,7 +51,7 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 			openUnit, err = db.GetUnit(openUnitID)
 			if err != nil {
 				fmt.Println(err)
-				openUnit = models.Unit{
+				openUnit = logic.Unit{
 					ID:      0,
 					Name:    "No open unit",
 					Content: "There are no open units",
@@ -62,13 +61,13 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 			unitCreation, err := db.GetUnitCreation(openUnitID)
 			if err != nil {
 				fmt.Println(err)
-				openUnit = models.Unit{
+				openUnit = logic.Unit{
 					ID:      0,
 					Name:    "No open unit",
 					Content: "There are no open units",
 				}
 			}
-			openUnit = models.Unit{
+			openUnit = logic.Unit{
 				ID:      unitCreation.ID,
 				Name:    unitCreation.Name,
 				Content: "",
@@ -78,10 +77,10 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := struct {
-		PositionedGraph models.PositionedGraph
-		Proposals       []models.Proposal
-		ActiveProposal  models.Proposal
-		OpenUnit        models.Unit
+		PositionedGraph logic.PositionedGraph
+		Proposals       []logic.Proposal
+		ActiveProposal  logic.Proposal
+		OpenUnit        logic.Unit
 	}{
 		PositionedGraph: positionedGraph,
 		Proposals:       db.GetUnsubmittedProposals(),
@@ -101,7 +100,7 @@ func CreateProposal(w http.ResponseWriter, r *http.Request) {
 	title := r.Form.Get("title")
 	description := r.Form.Get("description")
 
-	p := models.Proposal{
+	p := logic.Proposal{
 		Title:       title,
 		Description: description,
 	}
@@ -114,7 +113,7 @@ func CreateProposal(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateProposal(w http.ResponseWriter, r *http.Request) {
-	id := 0
+	var id int64
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/update", &id)
 
 	// Parse the form data
@@ -123,7 +122,7 @@ func UpdateProposal(w http.ResponseWriter, r *http.Request) {
 	description := r.Form.Get("description")
 
 	// Update the proposal in the database
-	p := models.Proposal{
+	p := logic.Proposal{
 		ID:          id,
 		Title:       title,
 		Description: description,
@@ -134,7 +133,7 @@ func UpdateProposal(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteProposal(w http.ResponseWriter, r *http.Request) {
-	id := 0
+	var id int64
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d", &id)
 
 	db.DeleteProposal(id)
@@ -143,7 +142,7 @@ func DeleteProposal(w http.ResponseWriter, r *http.Request) {
 }
 
 func SubmitProposal(w http.ResponseWriter, r *http.Request) {
-	id := 0
+	var id int64
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/submit", &id)
 
 	db.SubmitProposal(id)
@@ -152,7 +151,7 @@ func SubmitProposal(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateUnitCreation(w http.ResponseWriter, r *http.Request) {
-	id := 0
+	var id int64
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_creation", &id)
 
 	r.ParseForm()
@@ -167,8 +166,8 @@ func CreateUnitCreation(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateUnitCreation(w http.ResponseWriter, r *http.Request) {
-	proposal_id := 0
-	unit_id := 0
+	var proposal_id int64
+	var unit_id int64
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_creation/%d", &proposal_id, &unit_id)
 
 	r.ParseForm()
@@ -180,8 +179,8 @@ func UpdateUnitCreation(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUnitCreation(w http.ResponseWriter, r *http.Request) {
-	proposal_id := 0
-	change_id := 0
+	var proposal_id int64
+	var change_id int64
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_creation/%d", &proposal_id, &change_id)
 
 	db.DeleteUnitCreation(change_id)
@@ -190,8 +189,8 @@ func DeleteUnitCreation(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateUnitDeletion(w http.ResponseWriter, r *http.Request) {
-	proposal_id := 0
-	unit_id := 0
+	var proposal_id int64
+	var unit_id int64
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_deletion/%d", &proposal_id, &unit_id)
 
 	db.CreateUnitDeletion(proposal_id, unit_id)
@@ -200,8 +199,8 @@ func CreateUnitDeletion(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUnitDeletion(w http.ResponseWriter, r *http.Request) {
-	proposal_id := 0
-	change_id := 0
+	var proposal_id int64
+	var change_id int64
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_deletion/%d", &proposal_id, &change_id)
 
 	fmt.Println("Deleting unit deletion", change_id)
@@ -214,8 +213,8 @@ func DeleteUnitDeletion(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateUnitRename(w http.ResponseWriter, r *http.Request) {
-	proposal_id := 0
-	unit_id := 0
+	var proposal_id int64
+	var unit_id int64
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_rename/%d", &proposal_id, &unit_id)
 
 	r.ParseForm()
@@ -227,8 +226,8 @@ func CreateUnitRename(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUnitRename(w http.ResponseWriter, r *http.Request) {
-	proposal_id := 0
-	change_id := 0
+	var proposal_id int64
+	var change_id int64
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_rename/%d", &proposal_id, &change_id)
 
 	db.DeleteUnitRename(change_id)
@@ -238,7 +237,7 @@ func DeleteUnitRename(w http.ResponseWriter, r *http.Request) {
 
 func ToggleDependency(w http.ResponseWriter, r *http.Request) {
 	// Get the proposal ID from the URL
-	proposalID := 0
+	var proposalID int64
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/toggle_dependency", &proposalID)
 
 	// Get the unit_table and unit_id and depends_on_table and depends_on_id from the URI
@@ -248,7 +247,7 @@ func ToggleDependency(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Invalid unit_is_proposed")
 		return
 	}
-	unitID, err := strconv.Atoi(r.URL.Query().Get("unit_id"))
+	unitID, err := strconv.ParseInt(r.URL.Query().Get("unit_id"), 10, 64)
 	if err != nil {
 		http.Error(w, "Invalid unit ID", http.StatusBadRequest)
 		fmt.Println("Invalid unit ID")
@@ -261,7 +260,7 @@ func ToggleDependency(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Invalid depends_on_is_proposed")
 		return
 	}
-	dependsOnId, err := strconv.Atoi(r.URL.Query().Get("depends_on_id"))
+	dependsOnId, err := strconv.ParseInt(r.URL.Query().Get("depends_on_id"), 10, 64)
 	if err != nil {
 		http.Error(w, "Invalid depends_on ID", http.StatusBadRequest)
 		fmt.Println("Invalid depends_on ID")
@@ -274,7 +273,7 @@ func ToggleDependency(w http.ResponseWriter, r *http.Request) {
 		// Change is a generic interface
 		// Check what type it is
 		switch change := change.(type) {
-		case models.DependencyCreation:
+		case logic.DependencyCreation:
 			if change.UnitIsProposed == unitIsProposed && change.UnitID == unitID &&
 				change.DependsOnIsProposed == dependsOnIsProposed && change.DependsOnID == dependsOnId {
 				err := db.DeleteDependencyCreation(change.ID)
@@ -282,7 +281,7 @@ func ToggleDependency(w http.ResponseWriter, r *http.Request) {
 					fmt.Println(err)
 				}
 			}
-		case models.DependencyDeletion:
+		case logic.DependencyDeletion:
 			changedDependency := db.GetDependency(change.DependencyID)
 			if changedDependency.UnitID == unitID && changedDependency.DependsOnID == dependsOnId {
 				err := db.DeleteDependencyDeletion(change.ID)
@@ -312,8 +311,8 @@ func ToggleDependency(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteDependencyCreation(w http.ResponseWriter, r *http.Request) {
-	proposal_id := 0
-	change_id := 0
+	var proposal_id int64
+	var change_id int64
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/dependency_creation/%d", &proposal_id, &change_id)
 
 	db.DeleteDependencyCreation(change_id)
@@ -322,8 +321,8 @@ func DeleteDependencyCreation(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteDependencyDeletion(w http.ResponseWriter, r *http.Request) {
-	proposal_id := 0
-	change_id := 0
+	var proposal_id int64
+	var change_id int64
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/dependency_deletion/%d", &proposal_id, &change_id)
 
 	db.DeleteDependencyDeletion(change_id)
@@ -342,13 +341,13 @@ func Polls(w http.ResponseWriter, r *http.Request) {
 
 func Poll(w http.ResponseWriter, r *http.Request) {
 
-	pollID := 0
+	var pollID int64
 	fmt.Sscanf(r.URL.Path, "/teach/poll/%d", &pollID)
 
 	poll := db.GetPoll(pollID)
 
 	data := struct {
-		Poll models.SingleProposalPoll
+		Poll logic.SingleProposalPoll
 	}{
 		Poll: poll,
 	}
@@ -357,7 +356,7 @@ func Poll(w http.ResponseWriter, r *http.Request) {
 }
 
 func VoteYes(w http.ResponseWriter, r *http.Request) {
-	pollID := 0
+	var pollID int64
 	fmt.Sscanf(r.URL.Path, "/teach/poll/%d/yes", &pollID)
 
 	db.VoteYes(pollID)
@@ -367,7 +366,7 @@ func VoteYes(w http.ResponseWriter, r *http.Request) {
 }
 
 func VoteNo(w http.ResponseWriter, r *http.Request) {
-	pollID := 0
+	var pollID int64
 	fmt.Sscanf(r.URL.Path, "/teach/poll/%d/no", &pollID)
 
 	db.VoteNo(pollID)

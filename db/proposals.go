@@ -1,13 +1,12 @@
 package db
 
 import (
+	"app/logic"
 	"database/sql"
 	"errors"
 	"log"
 
 	_ "github.com/lib/pq"
-
-	models "app/models"
 )
 
 func ProposalsCreateTables() {
@@ -30,7 +29,7 @@ func ProposalsCreateTables() {
 	}
 }
 
-func CreateProposal(p models.Proposal) int {
+func CreateProposal(p logic.Proposal) int64 {
 	_, err := db.Exec(`
 		INSERT INTO proposals (title, description)
 		VALUES ($1, $2);
@@ -42,7 +41,7 @@ func CreateProposal(p models.Proposal) int {
 	return p.ID
 }
 
-func UpdateProposal(p models.Proposal) {
+func UpdateProposal(p logic.Proposal) {
 	_, err := db.Exec(`
 		UPDATE proposals
 		SET title = $1, description = $2
@@ -53,7 +52,7 @@ func UpdateProposal(p models.Proposal) {
 	}
 }
 
-func DeleteProposal(id int) {
+func DeleteProposal(id int64) {
 	_, err := db.Exec(`
 		DELETE FROM proposals WHERE id = $1;
 	`, id)
@@ -62,7 +61,7 @@ func DeleteProposal(id int) {
 	}
 }
 
-func SubmitProposal(proposalId int) {
+func SubmitProposal(proposalId int64) {
 	CreateSingleProposalPoll(proposalId)
 	_, err := db.Exec(`
 		UPDATE proposals
@@ -74,20 +73,20 @@ func SubmitProposal(proposalId int) {
 	}
 }
 
-func GetProposals() []models.Proposal {
+func GetProposals() []logic.Proposal {
 	// Might be able to delete this
 	rows, err := db.Query("SELECT id, title, description, created_at FROM proposals")
 	if errors.Is(err, sql.ErrNoRows) {
-		return []models.Proposal{}
+		return []logic.Proposal{}
 	}
 	if err != nil {
 		log.Fatalf("Error querying proposals: %q", err)
 	}
 	defer rows.Close()
 
-	proposals := []models.Proposal{}
+	proposals := []logic.Proposal{}
 	for rows.Next() {
-		var p models.Proposal
+		var p logic.Proposal
 		err := rows.Scan(&p.ID, &p.Title, &p.Description, &p.CreatedAt)
 		if err != nil {
 			log.Fatalf("Error scanning proposal: %q", err)
@@ -100,19 +99,19 @@ func GetProposals() []models.Proposal {
 	return proposals
 }
 
-func GetUnsubmittedProposals() []models.Proposal {
+func GetUnsubmittedProposals() []logic.Proposal {
 	rows, err := db.Query("SELECT id, title, description, created_at FROM proposals WHERE submitted = FALSE")
 	if errors.Is(err, sql.ErrNoRows) {
-		return []models.Proposal{}
+		return []logic.Proposal{}
 	}
 	if err != nil {
 		log.Fatalf("Error querying proposals: %q", err)
 	}
 	defer rows.Close()
 
-	proposals := []models.Proposal{}
+	proposals := []logic.Proposal{}
 	for rows.Next() {
-		var p models.Proposal
+		var p logic.Proposal
 		err := rows.Scan(&p.ID, &p.Title, &p.Description, &p.CreatedAt)
 		if err != nil {
 			log.Fatalf("Error scanning proposal: %q", err)
@@ -125,15 +124,15 @@ func GetUnsubmittedProposals() []models.Proposal {
 	return proposals
 }
 
-func GetProposal(id int) models.Proposal {
-	var p models.Proposal
+func GetProposal(id int64) logic.Proposal {
+	var p logic.Proposal
 	err := db.QueryRow(`
 		SELECT id, title, description, created_at, submitted
 		FROM proposals
 		WHERE id = $1;
 	`, id).Scan(&p.ID, &p.Title, &p.Description, &p.CreatedAt, &p.Submitted)
 	if errors.Is(err, sql.ErrNoRows) {
-		return models.Proposal{}
+		return logic.Proposal{}
 	}
 	if err != nil {
 		log.Fatalf("Error querying proposal: %q", err)

@@ -1,11 +1,11 @@
-package models
+package logic
 
 import "time"
 
 // Proposal
 type Proposal struct {
 	// Collection of changes
-	ID          int
+	ID          int64
 	Title       string
 	Description string
 	CreatedAt   time.Time

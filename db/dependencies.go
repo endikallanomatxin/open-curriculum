@@ -1,18 +1,17 @@
 package db
 
 import (
+	"app/logic"
 	"errors"
 	"log"
-
-	models "app/models"
 )
 
 func DependenciesCreateTables() {
 	_, err := db.Exec(`
 	CREATE TABLE IF NOT EXISTS dependencies (
 		id SERIAL PRIMARY KEY,
-		unit_id INT,
-		depends_on_id INT,
+		unit_id BIGINT,
+		depends_on_id BIGINT,
 		UNIQUE (unit_id, depends_on_id),
 		FOREIGN KEY (unit_id) REFERENCES units(id),
 		FOREIGN KEY (depends_on_id) REFERENCES units(id)
@@ -22,9 +21,9 @@ func DependenciesCreateTables() {
 	}
 }
 
-func CheckCircularDependency(unitID, dependsOnID int) error {
-	visited := make(map[int]bool)
-	path := make(map[int]bool)
+func CheckCircularDependency(unitID, dependsOnID int64) error {
+	visited := make(map[int64]bool)
+	path := make(map[int64]bool)
 
 	// Verificar si hay un ciclo comenzando desde la unidad objetivo hacia la unidad fuente
 	if hasCycle(dependsOnID, unitID, visited, path) {
@@ -34,7 +33,7 @@ func CheckCircularDependency(unitID, dependsOnID int) error {
 	return nil
 }
 
-func hasCycle(unitID, targetID int, visited, path map[int]bool) bool {
+func hasCycle(unitID, targetID int64, visited, path map[int64]bool) bool {
 	// Marcar la unidad actual como visitada y agregarla al camino actual
 	visited[unitID] = true
 	path[unitID] = true
@@ -62,16 +61,16 @@ func hasCycle(unitID, targetID int, visited, path map[int]bool) bool {
 	return false
 }
 
-func GetUnitDependencies(unit_id int) []models.Unit {
+func GetUnitDependencies(unit_id int64) []logic.Unit {
 	rows, err := db.Query("SELECT units.id, units.name, units.content FROM dependencies JOIN units ON dependencies.depends_on_id = units.id WHERE dependencies.unit_id = $1", unit_id)
 	if err != nil {
 		log.Fatalf("Error querying dependencies: %q", err)
 	}
 	defer rows.Close()
 
-	units := []models.Unit{}
+	units := []logic.Unit{}
 	for rows.Next() {
-		var u models.Unit
+		var u logic.Unit
 		err := rows.Scan(&u.ID, &u.Name, &u.Content)
 		if err != nil {
 			log.Fatalf("Error scanning dependencies: %q", err)
@@ -81,16 +80,16 @@ func GetUnitDependencies(unit_id int) []models.Unit {
 	return units
 }
 
-func GetAllDependencies() []models.Dependency {
+func GetAllDependencies() []logic.Dependency {
 	rows, err := db.Query("SELECT id, unit_id, depends_on_id FROM dependencies")
 	if err != nil {
 		log.Fatalf("Error querying dependencies: %q", err)
 	}
 	defer rows.Close()
 
-	dependencies := []models.Dependency{}
+	dependencies := []logic.Dependency{}
 	for rows.Next() {
-		var d models.Dependency
+		var d logic.Dependency
 		err := rows.Scan(&d.ID, &d.UnitID, &d.DependsOnID)
 		if err != nil {
 			log.Fatalf("Error scanning dependencies: %q", err)
@@ -101,8 +100,8 @@ func GetAllDependencies() []models.Dependency {
 	return dependencies
 }
 
-func GetDependency(id int) models.Dependency {
-	var d models.Dependency
+func GetDependency(id int64) logic.Dependency {
+	var d logic.Dependency
 	err := db.QueryRow("SELECT id, unit_id, depends_on_id FROM dependencies WHERE id = $1", id).Scan(&d.ID, &d.UnitID, &d.DependsOnID)
 	if err != nil {
 		log.Fatalf("Error querying dependency: %q", err)
@@ -112,7 +111,7 @@ func GetDependency(id int) models.Dependency {
 
 // If the dependency exists, return its ID.
 // Otherwise, return 0
-func FindDependency(unit_id int, depends_on_id int) int {
+func FindDependency(unit_id int64, depends_on_id int64) int64 {
 	rows, err := db.Query("SELECT id FROM dependencies WHERE unit_id = $1 AND depends_on_id = $2", unit_id, depends_on_id)
 	if err != nil {
 		log.Fatalf("Error querying dependencies: %q", err)
@@ -120,7 +119,7 @@ func FindDependency(unit_id int, depends_on_id int) int {
 	defer rows.Close()
 
 	if rows.Next() {
-		var id int
+		var id int64
 		err := rows.Scan(&id)
 		if err != nil {
 			log.Fatalf("Error scanning dependencies: %q", err)
@@ -131,7 +130,7 @@ func FindDependency(unit_id int, depends_on_id int) int {
 	return 0
 }
 
-func CreateDependency(unit_id int, depends_on_id int) error {
+func CreateDependency(unit_id int64, depends_on_id int64) error {
 	// Check if the new dependency will create a circular dependency
 	if err := CheckCircularDependency(unit_id, depends_on_id); err != nil {
 		return err
@@ -146,7 +145,7 @@ func CreateDependency(unit_id int, depends_on_id int) error {
 	return nil
 }
 
-func DeleteDependency(dependencyID int) {
+func DeleteDependency(dependencyID int64) {
 	_, err := db.Exec("DELETE FROM dependencies WHERE id = $1", dependencyID)
 	if err != nil {
 		log.Fatalf("Error deleting dependency: %q", err)

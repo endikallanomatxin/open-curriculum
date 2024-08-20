@@ -161,31 +161,31 @@
             {{ $activeProposalID := .ActiveProposal.ID }}
             {{ range .ActiveProposal.Changes }}
                 {{ $change := . }}
-                {{ if (typeIs "models.UnitCreation" $change) }}
+                {{ if (typeIs "logic.UnitCreation" $change) }}
                     <div class="change">
                         <div class="type create">CREATE UNIT</div>
                         <div>{{ $change.Name }}</div>
                         <a class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ $change.ID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">Undo</a>
                     </div>
-                {{ else if (typeIs "models.UnitDeletion" $change) }}
+                {{ else if (typeIs "logic.UnitDeletion" $change) }}
                     <div class="change">
                         <div class="type delete">DELETE UNIT</div>
                         <div>{{ $change.UnitID }}</div>
                         <a class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ $change.ID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">Undo</a>
                     </div>
-                {{ else if (typeIs "models.UnitRename" $change) }}
+                {{ else if (typeIs "logic.UnitRename" $change) }}
                     <div class="change">
                         <div class="type rename">RENAME UNIT</div>
                         <div>{{ $change.Name }}</div>
                         <a class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ $change.ID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">Undo</a>
                     </div>
-                {{ else if (typeIs "models.DependencyCreation" $change) }}
+                {{ else if (typeIs "logic.DependencyCreation" $change) }}
                     <div class="change">
                         <div class="type dependency_creation">ADD DEPENDENCY</div>
                         <div>{{ $change.DependsOnID }} > {{ $change.UnitID }}</div>
                         <a class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/dependency_creation/{{ $change.ID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">Undo</a>
                     </div>
-                {{ else if (typeIs "models.DependencyDeletion" $change) }}
+                {{ else if (typeIs "logic.DependencyDeletion" $change) }}
                     <div class="change">
                         <div class="type dependency_deletion">REMOVE DEPENDENCY</div>
                         <div>{{ $change.DependencyID }}</div>
