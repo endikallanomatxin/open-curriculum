@@ -23,6 +23,9 @@ type Unit struct {
 	AccumulatedRelevance float32
 	DirectAntecessors    []*Unit
 	DirectSuccessors     []*Unit
+
+	// For rendering
+	HorizontalPosition float64
 }
 
 type Group struct {
@@ -47,21 +50,23 @@ type Graph struct {
 	Dependencies []Dependency
 }
 
-func (g Graph) CalculateDirectAntecessorsAndSuccessors() {
+func (g *Graph) CalculateDirectAntecessorsAndSuccessors() {
+	for i := range g.Units {
+		g.Units[i].DirectAntecessors = nil // Resetting to avoid duplicating
+		g.Units[i].DirectSuccessors = nil  // Resetting to avoid duplicating
+	}
+
 	for _, dependency := range g.Dependencies {
-		for j, unit := range g.Units {
-			// Find the from and to units' indexes
-			if (!dependency.UnitIsProposed && unit.ID == dependency.UnitID) ||
-				(dependency.UnitIsProposed &&
-					unit.Type == "ProposedCreation" &&
-					unit.ChangeID == dependency.UnitID) {
-				unit.DirectAntecessors = append(unit.DirectAntecessors, &g.Units[j])
-			}
-			if (!dependency.DependsOnIsProposed && unit.ID == dependency.DependsOnID) ||
-				(dependency.DependsOnIsProposed &&
-					unit.Type == "ProposedCreation" &&
-					unit.ChangeID == dependency.DependsOnID) {
-				unit.DirectSuccessors = append(unit.DirectSuccessors, &g.Units[j])
+		for i := range g.Units {
+			if (!dependency.UnitIsProposed && g.Units[i].ID == dependency.UnitID) ||
+				(dependency.UnitIsProposed && g.Units[i].Type == "ProposedCreation" && g.Units[i].ChangeID == dependency.UnitID) {
+				for j := range g.Units {
+					if (!dependency.DependsOnIsProposed && g.Units[j].ID == dependency.DependsOnID) ||
+						(dependency.DependsOnIsProposed && g.Units[j].Type == "ProposedCreation" && g.Units[j].ChangeID == dependency.DependsOnID) {
+						g.Units[i].DirectAntecessors = append(g.Units[i].DirectAntecessors, &g.Units[j])
+						g.Units[j].DirectSuccessors = append(g.Units[j].DirectSuccessors, &g.Units[i])
+					}
+				}
 			}
 		}
 	}
@@ -85,7 +90,7 @@ func (n Node) ID() int64 {
 	}
 }
 
-func (g Graph) ToGonumGraph() *simple.DirectedGraph {
+func (g *Graph) ToGonumGraph() *simple.DirectedGraph {
 	directedGraph := simple.NewDirectedGraph()
 
 	for _, unit := range g.Units {
@@ -118,7 +123,7 @@ func (g Graph) ToGonumGraph() *simple.DirectedGraph {
 	return directedGraph
 }
 
-func (g Graph) CalculateAccumulatedRelevances() {
+func (g *Graph) CalculateAccumulatedRelevances() {
 
 	g.CalculateDirectAntecessorsAndSuccessors()
 
@@ -138,59 +143,115 @@ func (g Graph) CalculateAccumulatedRelevances() {
 	}
 }
 
-// For graph rendering
-
-type PositionedUnit struct {
-	Unit               Unit
-	HorizontalPosition float64
+func (g *Graph) SortAndPosition() {
+	g.Sort()
+	g.Position()
 }
 
-type PositionedGraph struct {
-	PositionedUnits []PositionedUnit
-	Dependencies    []Dependency
-}
+func (g *Graph) Sort() {
+	// Vertical position is determined by the order of the nodes.
+	// It is calculated by the topological sort algorithm, prioritizing by relevance.
 
-func (g Graph) Positioned() PositionedGraph {
-
-	/*
-		Vertical position. Order.
-			Kahn algorithm for topological sort but prioritizing by relevance.
-
-		Horizontal position.
-			Find leaves order them by relevance and assign them a horizontal
-			position (linspace from 0 to 1).
-			For each node above in the graph, assign it the average horizontal
-			position of its children.
-	*/
+	// No se si usar SortStabilized es lo que busco,
+	// Primero agrupa las unidades por grupos conectados y luego hace lo que busco.
+	// Los distintos grupos no están ordenador de forma inambigua.
 
 	// Topological sort
 	gonumGraph := g.ToGonumGraph()
-	g.CalculateAccumulatedRelevances()
 	sortedNodes, err := topo.SortStabilized(gonumGraph, func(nodes []graph.Node) {
 		sort.Slice(nodes, func(i, j int) bool {
 			return nodes[i].(Node).Unit.AccumulatedRelevance > nodes[j].(Node).Unit.AccumulatedRelevance
 		})
 	})
-	// No se si usar SortStabilized es lo que busco,
-	// Primero agrupa las unidades por grupos conectados y luego hace lo que busco.
-	// Los distintos grupos no están ordenador de forma inambigua.
 	if err != nil {
 		panic(err)
 	}
 
-	// Order
-	orderedUnits := []PositionedUnit{}
-	for _, node := range sortedNodes {
-		unit := *node.(Node).Unit
-		orderedUnits = append(orderedUnits, PositionedUnit{
-			Unit: unit,
-		})
+	// Reorder g.Units according to sortedNodes
+	newUnits := make([]Unit, len(sortedNodes))
+	for i, node := range sortedNodes {
+		newUnits[i] = *node.(Node).Unit
 	}
+	g.Units = newUnits
+}
 
-	positionedGraph := PositionedGraph{
-		PositionedUnits: orderedUnits,
-		Dependencies:    g.Dependencies,
+func (g *Graph) Position() {
+	g.CalculateDirectAntecessorsAndSuccessors()
+	g.InitializeHorizontalPositions()
+	for i := 0; i < 10; i++ {
+		g.AverageHorizontalPositionsBySuccessorsAndAntecessors()
+		g.NormalizeHorizontalPositions()
+		g.StraightenSingleConnections()
 	}
+	g.PutLonelyUnitsToZero()
+}
 
-	return positionedGraph
+func (g *Graph) InitializeHorizontalPositions() {
+	// Initialize horizontal positions
+	// TODO: This is just a shortcut
+	for i := range g.Units {
+		g.Units[i].HorizontalPosition = float64(i) / float64(len(g.Units)-1)
+	}
+}
+
+func (g *Graph) AverageHorizontalPositionsBySuccessorsAndAntecessors() {
+	// Average horizontal positions by successors and antecessors
+	for j := range g.Units {
+		unit := &g.Units[j]
+		if len(unit.DirectSuccessors) > 1 {
+			var average float64
+			for _, successor := range unit.DirectSuccessors {
+				average += successor.HorizontalPosition
+			}
+			unit.HorizontalPosition = average / float64(len(unit.DirectSuccessors))
+		}
+		if len(unit.DirectAntecessors) > 1 {
+			var average float64
+			for _, antecessor := range unit.DirectAntecessors {
+				average += antecessor.HorizontalPosition
+			}
+			unit.HorizontalPosition = average / float64(len(unit.DirectAntecessors))
+		}
+	}
+}
+
+func (g *Graph) NormalizeHorizontalPositions() {
+	// Normalize horizontal positions
+	var min, max float64
+	min = 1
+	max = 0
+	for _, unit := range g.Units {
+		if unit.HorizontalPosition < min {
+			min = unit.HorizontalPosition
+		}
+		if unit.HorizontalPosition > max {
+			max = unit.HorizontalPosition
+		}
+	}
+	for j := range g.Units {
+		g.Units[j].HorizontalPosition = (g.Units[j].HorizontalPosition - min) / (max - min)
+	}
+}
+
+func (g *Graph) StraightenSingleConnections() {
+	// Straighten the single connections
+	for j := range g.Units {
+		unit := &g.Units[j]
+		if len(unit.DirectSuccessors) == 1 && len(unit.DirectSuccessors[0].DirectAntecessors) == 1 {
+			unit.HorizontalPosition = unit.DirectSuccessors[0].HorizontalPosition
+		}
+		if len(unit.DirectAntecessors) == 1 && len(unit.DirectAntecessors[0].DirectSuccessors) == 1 {
+			unit.HorizontalPosition = unit.DirectAntecessors[0].HorizontalPosition
+		}
+	}
+}
+
+func (g *Graph) PutLonelyUnitsToZero() {
+	// Put the lonely units to 0
+	for i := range g.Units {
+		unit := &g.Units[i]
+		if len(unit.DirectSuccessors) == 0 && len(unit.DirectAntecessors) == 0 {
+			unit.HorizontalPosition = 0
+		}
+	}
 }

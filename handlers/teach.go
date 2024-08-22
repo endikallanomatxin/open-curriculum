@@ -35,7 +35,11 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	graph := db.GetProposedGraph(activeProposalID)
-	positionedGraph := graph.Positioned()
+	graph.SortAndPosition()
+
+	for _, unit := range graph.Units {
+		fmt.Println(unit.HorizontalPosition)
+	}
 
 	openUnit := logic.Unit{}
 	err := error(nil)
@@ -77,15 +81,15 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := struct {
-		PositionedGraph logic.PositionedGraph
-		Proposals       []logic.Proposal
-		ActiveProposal  logic.Proposal
-		OpenUnit        logic.Unit
+		Graph          logic.Graph
+		Proposals      []logic.Proposal
+		ActiveProposal logic.Proposal
+		OpenUnit       logic.Unit
 	}{
-		PositionedGraph: positionedGraph,
-		Proposals:       db.GetUnsubmittedProposals(),
-		ActiveProposal:  activeProposal,
-		OpenUnit:        openUnit,
+		Graph:          graph,
+		Proposals:      db.GetUnsubmittedProposals(),
+		ActiveProposal: activeProposal,
+		OpenUnit:       openUnit,
 	}
 
 	RenderTemplate(w, r, "teach.html", data, nil)

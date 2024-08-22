@@ -13,11 +13,11 @@
 </nav>
 <main>
     <div id="graph">
-        {{ range $graphedUnit := .PositionedUnits }}
-            <a hx-get="/unit/{{.Unit.ID}}/details" hx-target="#details">
-                <div class="unit" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
-                    <div class="node" id="node-{{ .Unit.ID}}" ></div>
-                    <p>{{ .Unit.Name }}</p>
+        {{ range $unit := .Units }}
+            <a hx-get="/unit/{{.ID}}/details" hx-target="#details">
+                <div class="unit" id="unit-{{ .ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
+                    <div class="node" id="node-{{ .ID}}" ></div>
+                    <p>{{ .Name }}</p>
                 </div>
             </a>
         {{ end }}

@@ -11,16 +11,16 @@ func Learn(w http.ResponseWriter, r *http.Request) {
 	// Unitl more logic is implemented, let's just get all
 	activeProposalID := GetActiveProposalID(r)
 	graph := db.GetProposedGraph(activeProposalID)
-	positionedGraph := graph.Positioned()
+	graph.SortAndPosition()
 
 	data := struct {
-		PositionedGraph logic.PositionedGraph
-		Proposals       []logic.Proposal
-		ActiveProposal  logic.Proposal
+		Graph          logic.Graph
+		Proposals      []logic.Proposal
+		ActiveProposal logic.Proposal
 	}{
-		PositionedGraph: positionedGraph,
-		Proposals:       db.GetUnsubmittedProposals(),
-		ActiveProposal:  db.GetProposal(activeProposalID),
+		Graph:          graph,
+		Proposals:      db.GetUnsubmittedProposals(),
+		ActiveProposal: db.GetProposal(activeProposalID),
 	}
 
 	RenderTemplate(w, r, "learn.html", data, nil)

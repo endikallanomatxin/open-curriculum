@@ -17,44 +17,44 @@
 {{ block "main" . }}
 <main>
     <div id="graph">
-        {{ if .PositionedGraph.PositionedUnits }}
+        {{ if .Graph.Units }}
             {{ $activeProposalID := .ActiveProposal.ID}}
-            {{ range .PositionedGraph.PositionedUnits }}
-                {{ if eq .Unit.Type "ProposedCreation" }}
-                    <div class="unit proposed-creation" id="unit-{{ .Unit.ChangeID }}" style="--horizontal-position: {{.HorizontalPosition}}" proposed="true" unit_id="{{.Unit.ChangeID}}">
-                        <div class="node" id="node-{{ .Unit.ChangeID}}" ></div>
-                        <p hx-put="/teach/set-open-unit?is_proposed=true&id={{ .Unit.ChangeID }}" hx-target="body">{{ .Unit.Name }}</p>
+            {{ range .Graph.Units }}
+                {{ if eq .Type "ProposedCreation" }}
+                    <div class="unit proposed-creation" id="unit-{{ .ChangeID }}" style="--horizontal-position: {{.HorizontalPosition}}" proposed="true" unit_id="{{.ChangeID}}">
+                        <div class="node" id="node-{{ .ChangeID}}" ></div>
+                        <p hx-put="/teach/set-open-unit?is_proposed=true&id={{ .ChangeID }}" hx-target="body">{{ .Name }}</p>
                         <div class="controls">
-                            <button class="deps" onclick="editDependency(true, {{.Unit.ChangeID}})">Edit deps</button>
-                            <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
+                            <button class="deps" onclick="editDependency(true, {{.ChangeID}})">Edit deps</button>
+                            <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
                         </div>
                     </div>
-                {{ else if eq .Unit.Type "ProposedDeletion" }}
-                    <div class="unit proposed-deletion" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
-                        <div class="node" id="node-{{ .Unit.ID}}" ></div>
-                        <p hx-put="/teach/set-open-unit?is_proposed=false&id={{ .Unit.ID }}" hx-target="body">{{ .Unit.Name }}</p>
+                {{ else if eq .Type "ProposedDeletion" }}
+                    <div class="unit proposed-deletion" id="unit-{{ .ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
+                        <div class="node" id="node-{{ .ID}}" ></div>
+                        <p hx-put="/teach/set-open-unit?is_proposed=false&id={{ .ID }}" hx-target="body">{{ .Name }}</p>
                         <div class="controls">
-                            <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
+                            <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
                         </div>
                     </div>
-                {{ else if eq .Unit.Type "ProposedRename" }}
-                        <div class="unit proposed-rename" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}" proposed="false" unit_id="{{.Unit.ID}}">
-                            <div class="node" id="node-{{ .Unit.ID}}" ></div>
-                            <p>{{ .Unit.Name }}</p>
+                {{ else if eq .Type "ProposedRename" }}
+                        <div class="unit proposed-rename" id="unit-{{ .ID }}" style="--horizontal-position: {{.HorizontalPosition}}" proposed="false" unit_id="{{.ID}}">
+                            <div class="node" id="node-{{ .ID}}" ></div>
+                            <p>{{ .Name }}</p>
                             <div class="controls">
-                                <button class="deps" onclick="editDependency(false, {{.Unit.ID}})">Edit deps</button>
-                                <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ .Unit.ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
+                                <button class="deps" onclick="editDependency(false, {{.ID}})">Edit deps</button>
+                                <button class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ .ChangeID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Undo</button>
                             </div>
                         </div>
                     </a>
                 {{ else }}
-                    <div class="unit existing" id="unit-{{ .Unit.ID }}" style="--horizontal-position: {{.HorizontalPosition}}" proposed="false" unit_id="{{.Unit.ID}}">
-                        <div class="node" id="node-{{ .Unit.ID}}" ></div>
-                        <p hx-put="/teach/set-open-unit?is_proposed=false&id={{ .Unit.ID }}" hx-target="body">{{ .Unit.Name }}</p>
+                    <div class="unit existing" id="unit-{{ .ID }}" style="--horizontal-position: {{.HorizontalPosition}}" proposed="false" unit_id="{{.ID}}">
+                        <div class="node" id="node-{{ .ID}}" ></div>
+                        <p hx-put="/teach/set-open-unit?is_proposed=false&id={{ .ID }}" hx-target="body">{{ .Name }}</p>
                         {{ if not ( eq $activeProposalID 0 )}}
                             <div class="controls">
-                                <button class="deps" onclick="editDependency(false, {{.Unit.ID}})">Edit deps</button>
-                                <button class="delete" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .Unit.ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Delete</button>
+                                <button class="deps" onclick="editDependency(false, {{.ID}})">Edit deps</button>
+                                <button class="delete" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .ID }}?active_proposal_id={{ $activeProposalID }}" hx-target="body" hx-swap="outerHTML">Delete</button>
                             </div>
                         {{ end }}
                     </div>
@@ -200,7 +200,7 @@
 
     <script>
         var dependencies = [
-            {{ range .PositionedGraph.Dependencies }}
+            {{ range .Graph.Dependencies }}
                 { from: {{ .DependsOnID }}, to: {{ .UnitID }} },
             {{ end }}
         ];
