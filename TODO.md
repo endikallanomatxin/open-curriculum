@@ -28,6 +28,7 @@
                 - [x] Dependency deletion
                 - [ ] Transfer certifications and reads (it has to be done every time you delete something)
             - Fix:
+                - When undoing a unit creation, dependencies to and from it should be deleted.
                 - When you click the close button of the dialogue, the page should be refreshed.
                 - Al crear una propuesta que se autoactive.
         - Voting:
