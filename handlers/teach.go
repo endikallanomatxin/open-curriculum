@@ -37,10 +37,6 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 	graph := db.GetProposedGraph(activeProposalID)
 	graph.SortAndPosition()
 
-	for _, unit := range graph.Units {
-		fmt.Println(unit.HorizontalPosition)
-	}
-
 	openUnit := logic.Unit{}
 	err := error(nil)
 

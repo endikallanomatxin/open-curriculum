@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"math"
 	"sort"
 
 	"gonum.org/v1/gonum/graph"
@@ -229,19 +230,28 @@ func (g *Graph) NormalizeHorizontalPositions() {
 		}
 	}
 	for j := range g.Units {
-		g.Units[j].HorizontalPosition = (g.Units[j].HorizontalPosition - min) / (max - min)
+		newPosition := (g.Units[j].HorizontalPosition - min) / (max - min)
+		if math.IsNaN(newPosition) {
+			newPosition = 0
+		}
+		g.Units[j].HorizontalPosition = newPosition
 	}
 }
 
 func (g *Graph) StraightenSingleConnections() {
 	// Straighten the single connections
-	for j := range g.Units {
-		unit := &g.Units[j]
-		if len(unit.DirectSuccessors) == 1 && len(unit.DirectSuccessors[0].DirectAntecessors) == 1 {
-			unit.HorizontalPosition = unit.DirectSuccessors[0].HorizontalPosition
-		}
-		if len(unit.DirectAntecessors) == 1 && len(unit.DirectAntecessors[0].DirectSuccessors) == 1 {
+	for i := 0; i < len(g.Units); i++ {
+		unit := &g.Units[i]
+		if !(len(unit.DirectSuccessors) > 1) &&
+			(len(unit.DirectAntecessors) == 1 && len(unit.DirectAntecessors[0].DirectSuccessors) == 1) {
 			unit.HorizontalPosition = unit.DirectAntecessors[0].HorizontalPosition
+		}
+	}
+	for i := len(g.Units) - 1; i >= 0; i-- {
+		unit := &g.Units[i]
+		if !(len(unit.DirectAntecessors) > 1) &&
+			(len(unit.DirectSuccessors) == 1 && len(unit.DirectSuccessors[0].DirectAntecessors) == 1) {
+			unit.HorizontalPosition = unit.DirectSuccessors[0].HorizontalPosition
 		}
 	}
 }
