@@ -271,7 +271,7 @@
             
         }
 
-        function editDependencyContinue(UnitIsProposed, UnitID, DepensOnIsProposed, DependsOnID){
+        function editDependencyContinue(UnitIsProposed, UnitID, DependsOnIsProposed, DependsOnID){
             // When a unit is clicked, this function is called
             // It sends a request to the server to create a dependency between the two units
 
@@ -282,7 +282,7 @@
             }
 
             // Send the request
-            fetch(`/teach/proposal/{{ .ActiveProposal.ID }}/toggle_dependency?unit_is_proposed=${UnitIsProposed}&unit_id=${UnitID}&depends_on_is_proposed=${dependsOnIsProposed}&depends_on_id=${DependsOnID}`, {
+            fetch(`/teach/proposal/{{ .ActiveProposal.ID }}/toggle_dependency?unit_is_proposed=${UnitIsProposed}&unit_id=${UnitID}&depends_on_is_proposed=${DependsOnIsProposed}&depends_on_id=${DependsOnID}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

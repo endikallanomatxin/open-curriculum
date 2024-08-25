@@ -103,17 +103,20 @@ func (g *Graph) ToGonumGraph() *simple.DirectedGraph {
 		fromNode := Node{}
 		toNode := Node{}
 		for _, unit := range g.Units {
-			if dependency.DependsOnIsProposed && unit.Type == "ProposedCreation" && unit.ChangeID == dependency.DependsOnID {
+			if (!dependency.DependsOnIsProposed && unit.ID == dependency.DependsOnID) ||
+				(dependency.DependsOnIsProposed && unit.ChangeID == dependency.DependsOnID) {
 				fromNode = Node{Unit: &unit}
-			} else if !dependency.DependsOnIsProposed && unit.ID == dependency.DependsOnID {
-				fromNode = Node{Unit: &unit}
+				if toNode.Unit != nil {
+					break
+				}
 			}
-			if dependency.UnitIsProposed && unit.Type == "ProposedCreation" && unit.ChangeID == dependency.UnitID {
+			if (!dependency.UnitIsProposed && unit.ID == dependency.UnitID) ||
+				(dependency.UnitIsProposed && unit.ChangeID == dependency.UnitID) {
 				toNode = Node{Unit: &unit}
-			} else if !dependency.UnitIsProposed && unit.ID == dependency.UnitID {
-				toNode = Node{Unit: &unit}
+				if fromNode.Unit != nil {
+					break
+				}
 			}
-
 		}
 		directedGraph.SetEdge(simple.Edge{
 			F: fromNode,

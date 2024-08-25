@@ -291,10 +291,9 @@ func ToggleDependency(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
-	// If there isn't, then it has to be created
 
+	// If there isn't, then it has to be created
 	dependencyID := db.FindDependency(unitID, dependsOnId)
-	fmt.Println("Found dependency ID:", dependencyID)
 	if dependencyID != 0 {
 		err := db.CreateDependencyDeletion(proposalID, dependencyID)
 		if err != nil {
@@ -306,8 +305,6 @@ func ToggleDependency(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 		}
 	}
-
-	fmt.Println("Toggling dependency between", unitID, "and", dependsOnId)
 }
 
 func DeleteDependencyCreation(w http.ResponseWriter, r *http.Request) {

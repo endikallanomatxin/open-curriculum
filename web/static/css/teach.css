@@ -12,6 +12,7 @@ main {
 @media (min-width: 1400px) {
     main {
         padding-top: 10vh;
+        padding-bottom: 10vh;
         max-width: 1200px;
         gap: 4rem;
         margin-left: auto;
