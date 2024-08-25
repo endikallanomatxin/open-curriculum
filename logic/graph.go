@@ -180,6 +180,7 @@ func (g *Graph) Position() {
 	g.CalculateDirectAntecessorsAndSuccessors()
 	g.InitializeHorizontalPositions()
 	for i := 0; i < 10; i++ {
+		g.EnsureMinimumDistanceOnBifurcations()
 		g.AverageHorizontalPositionsBySuccessorsAndAntecessors()
 		g.NormalizeHorizontalPositions()
 		g.StraightenSingleConnections()
@@ -262,6 +263,36 @@ func (g *Graph) PutLonelyUnitsToZero() {
 		unit := &g.Units[i]
 		if len(unit.DirectSuccessors) == 0 && len(unit.DirectAntecessors) == 0 {
 			unit.HorizontalPosition = 0
+		}
+	}
+}
+
+func (g *Graph) EnsureMinimumDistanceOnBifurcations() {
+	minimumDistance := 0.2
+	for i := 0; i < len(g.Units); i++ {
+		unit := &g.Units[i]
+		if len(unit.DirectAntecessors) > 1 && len(unit.DirectAntecessors) < int(1/minimumDistance) {
+			var previous, current *Unit
+			for j := 1; j < len(unit.DirectAntecessors); j++ {
+				previous = unit.DirectAntecessors[j-1]
+				current = unit.DirectAntecessors[j]
+				if current.HorizontalPosition-previous.HorizontalPosition < minimumDistance {
+					current.HorizontalPosition = previous.HorizontalPosition + minimumDistance
+				}
+			}
+		}
+	}
+	for i := len(g.Units) - 1; i >= 0; i-- {
+		unit := &g.Units[i]
+		if len(unit.DirectSuccessors) > 1 && len(unit.DirectSuccessors) < int(1/minimumDistance) {
+			var previous, current *Unit
+			for j := 1; j < len(unit.DirectSuccessors); j++ {
+				previous = unit.DirectSuccessors[j-1]
+				current = unit.DirectSuccessors[j]
+				if current.HorizontalPosition-previous.HorizontalPosition < minimumDistance {
+					current.HorizontalPosition = previous.HorizontalPosition + minimumDistance
+				}
+			}
 		}
 	}
 }
