@@ -372,7 +372,7 @@ func DeleteDependencyDeletion(changeID int64) error {
 	return nil
 }
 
-func GetProposedGraph(proposalID int64) logic.Graph {
+func GetApprovedGraph() logic.Graph {
 	units := GetUnits()
 	dependencies := GetAllDependencies()
 
@@ -386,14 +386,22 @@ func GetProposedGraph(proposalID int64) logic.Graph {
 		dependencies[i].Type = "Existing"
 	}
 
+	for i := range units {
+		units[i].Relevance = 1
+	}
+
+	return logic.Graph{
+		Units:        units,
+		Dependencies: dependencies,
+	}
+}
+
+func GetProposedGraph(proposalID int64) logic.Graph {
+
+	graph := GetApprovedGraph()
+
 	if proposalID == 0 {
-		for i := range units {
-			units[i].Relevance = 1
-		}
-		return logic.Graph{
-			Units:        units,
-			Dependencies: dependencies,
-		}
+		return graph
 	}
 
 	proposal := GetProposal(proposalID)
@@ -402,30 +410,29 @@ func GetProposedGraph(proposalID int64) logic.Graph {
 	for _, change := range proposal.Changes {
 		switch change := change.(type) {
 		case logic.UnitDeletion:
-			for i, unit := range units {
+			for _, unit := range graph.Units {
 				if unit.ID == change.UnitID {
 					unit.Type = "ProposedDeletion"
 					unit.ChangeID = change.ID
-					units[i] = unit
 				}
 			}
 		case logic.UnitCreation:
-			units = append(units, logic.Unit{
-				ChangeID: change.ID,
-				Name:     change.Name,
-				Type:     "ProposedCreation",
+			graph.Units = append(graph.Units, logic.Unit{
+				ChangeID:  change.ID,
+				Name:      change.Name,
+				Type:      "ProposedCreation",
+				Relevance: 1,
 			})
 		case logic.UnitRename:
-			for i, unit := range units {
+			for _, unit := range graph.Units {
 				if unit.ID == change.UnitID {
 					unit.Type = "ProposedRename"
 					unit.ChangeID = change.ID
 					unit.Name = change.Name
-					units[i] = unit
 				}
 			}
 		case logic.DependencyCreation:
-			dependencies = append(dependencies, logic.Dependency{
+			graph.Dependencies = append(graph.Dependencies, logic.Dependency{
 				ID:                  change.ID,
 				Type:                "ProposedCreation",
 				UnitIsProposed:      change.UnitIsProposed,
@@ -435,23 +442,15 @@ func GetProposedGraph(proposalID int64) logic.Graph {
 			})
 		case logic.DependencyDeletion:
 			changedDependency := GetDependency(change.DependencyID)
-			for i, dependency := range dependencies {
+			for _, dependency := range graph.Dependencies {
 				if dependency.UnitID == changedDependency.UnitID &&
 					dependency.DependsOnID == changedDependency.DependsOnID {
 					dependency.Type = "ProposedDeletion"
 					dependency.ChangeID = change.ID
-					dependencies[i] = dependency
 				}
 			}
 		}
 	}
 
-	for i := range units {
-		units[i].Relevance = 1
-	}
-
-	return logic.Graph{
-		Units:        units,
-		Dependencies: dependencies,
-	}
+	return graph
 }

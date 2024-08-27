@@ -34,7 +34,7 @@ func main() {
 	// TEACH
 	mux.HandleFunc("/teach", handlers.Teach)
 	mux.HandleFunc("/teach/set-active-proposal-ID", handlers.SetActiveProposalID)
-	mux.HandleFunc("PUT /teach/set-open-unit", handlers.SetOpenUnit)
+	mux.HandleFunc("PUT /set-open-unit", handlers.SetOpenUnit)
 
 	// Proposal
 	mux.HandleFunc("POST /teach/proposal/create", handlers.CreateProposal)

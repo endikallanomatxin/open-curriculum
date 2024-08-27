@@ -233,7 +233,11 @@ func SetOpenUnit(w http.ResponseWriter, r *http.Request) {
 	}
 	http.SetCookie(w, &idCookie)
 
-	http.Redirect(w, r, "/teach", http.StatusFound)
+	if isProposed == "none" {
+		http.Redirect(w, r, "/learn", http.StatusFound)
+	} else {
+		http.Redirect(w, r, "/teach", http.StatusFound)
+	}
 }
 
 func GetOpenUnit(r *http.Request) (bool, int64) {
@@ -247,12 +251,16 @@ func GetOpenUnit(r *http.Request) (bool, int64) {
 		openUnitIsProposed = true
 	} else if openUnitIsProposedStr == "false" {
 		openUnitIsProposed = false
+	} else if openUnitIsProposedStr == "none" {
+		openUnitIsProposed = false
 	} else {
-		fmt.Println("Error converting open_unit_is_proposed to bool:", err)
+		fmt.Println("Invalid open_unit_is_proposed value:", openUnitIsProposedStr)
 		return false, 0
 	}
+
 	openUnitIDCookie, err := r.Cookie("open_unit_id")
 	if err != nil {
+		fmt.Println("Error getting open_unit_id cookie:", err)
 		return false, 0
 	}
 	openUnitIDStr := openUnitIDCookie.Value
@@ -261,6 +269,5 @@ func GetOpenUnit(r *http.Request) (bool, int64) {
 		fmt.Println("Error converting open_unit_id to int:", err)
 		return false, 0
 	}
-
 	return openUnitIsProposed, openUnitID
 }

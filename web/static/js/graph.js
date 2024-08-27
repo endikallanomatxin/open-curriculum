@@ -7,13 +7,13 @@ function createArrow(from, to) {
     const rectTo = nodeTo.getBoundingClientRect();
 
     const pointFrom = {
-        x: rectFrom.left + rectFrom.width / 2,
-        y: rectFrom.top + rectFrom.height / 2
+        x: rectFrom.left + window.scrollX + rectFrom.width / 2,
+        y: rectFrom.top + window.scrollY + rectFrom.height / 2
     };
 
     const pointTo = {
-        x: rectTo.left + rectTo.width / 2,
-        y: rectTo.top + rectTo.height / 2
+        x: rectTo.left + window.scrollX + rectTo.width / 2,
+        y: rectTo.top + window.scrollY + rectTo.height / 2
     };
 
     const dx = pointTo.x - pointFrom.x;
@@ -87,6 +87,11 @@ if (typeof dependencies !== "undefined") {
 
 // Redraw the arrows when the window is resized
 window.addEventListener("resize", () => {
+    document.querySelectorAll("svg").forEach(svg => svg.remove())
+    dependencies.forEach(dep => createArrow(dep.from, dep.to))
+})
+
+window.addEventListener("htmx:afterSwap", () => {
     document.querySelectorAll("svg").forEach(svg => svg.remove())
     dependencies.forEach(dep => createArrow(dep.from, dep.to))
 })

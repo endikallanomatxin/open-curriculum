@@ -11,35 +11,37 @@
 <nav id="top_bar">
     <a href="/"><img id="logo" src="/static/media/logo.svg"></a>
 </nav>
-<main>
+<main {{ if eq .OpenUnit.ID 0}} class="no-open-unit" {{ end }}>
     <div id="graph">
-        {{ range $unit := .Units }}
-            <a hx-get="/unit/{{.ID}}/details" hx-target="#details">
-                <div class="unit" id="unit-{{ .ID }}" style="--horizontal-position: {{.HorizontalPosition}}">
+        {{ if .Graph.Units }}
+            {{ range .Graph.Units }}
+                <div class="unit existing" id="unit-{{ .ID }}" style="--horizontal-position: {{.HorizontalPosition}}" proposed="false" unit_id="{{.ID}}">
                     <div class="node" id="node-{{ .ID}}" ></div>
-                    <p>{{ .Name }}</p>
+                    <p hx-put="/set-open-unit?is_proposed=none&id={{ .ID }}"
+                       hx-target="body">{{ .Name }}</p>
                 </div>
-            </a>
+            {{ end }}
         {{ end }}
     </div>
     <div id="details">
     {{ block "unit_details" .}}
-        {{ if .Unit }}
-        {{ with .Unit}}
-            <h2>{{.Name}}</h2>
-            <p>{{.Content}}</p>
+        {{ if ne .OpenUnit.ID 0}}
+        <button class="red"
+                hx-put="/set-open-unit?is_proposed=none&id=0"
+                hx-target="body">Close Unit</button>
+        {{ with .OpenUnit }}
+            <h1>{{ .Name }}</h1>
+            <p>{{ .Content }}</p>
         {{ end }}
-        {{ else }}
-            <p>Select a unit to view its details</p>
         {{ end }}
     {{ end }}
     </div>
 </main>
 <script>
     // Pass the dependencies to a js array of objects
-    const dependencies = [
-    {{ range .Dependencies }}
-        { from: {{ .DependsOnID }}, to: {{ .UnitID }} },
-    {{ end }}];
+    dependencies = [
+        {{ range .Graph.Dependencies }}
+            { from: {{ .DependsOnID }}, to: {{ .UnitID }} },
+        {{ end }}];
 </script>
 {{ end }}

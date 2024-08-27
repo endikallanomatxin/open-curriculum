@@ -37,8 +37,8 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 	graph := db.GetProposedGraph(activeProposalID)
 	graph.SortAndPosition()
 
-	openUnit := logic.Unit{}
-	err := error(nil)
+	var openUnit logic.Unit
+	var err error
 
 	if openUnitID == 0 {
 		openUnit = logic.Unit{
@@ -66,12 +66,13 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 					Name:    "No open unit",
 					Content: "There are no open units",
 				}
-			}
-			openUnit = logic.Unit{
-				ID:      unitCreation.ID,
-				Name:    unitCreation.Name,
-				Content: "",
-				Type:    "ProposedCreation",
+			} else {
+				openUnit = logic.Unit{
+					ID:      unitCreation.ID,
+					Name:    unitCreation.Name,
+					Content: "",
+					Type:    "ProposedCreation",
+				}
 			}
 		}
 	}
