@@ -387,6 +387,9 @@ func GetProposedGraph(proposalID int64) logic.Graph {
 	}
 
 	if proposalID == 0 {
+		for i := range units {
+			units[i].Relevance = 1
+		}
 		return logic.Graph{
 			Units:        units,
 			Dependencies: dependencies,
@@ -441,6 +444,10 @@ func GetProposedGraph(proposalID int64) logic.Graph {
 				}
 			}
 		}
+	}
+
+	for i := range units {
+		units[i].Relevance = 1
 	}
 
 	return logic.Graph{

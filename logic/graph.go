@@ -18,7 +18,7 @@ type Unit struct {
 	IsProposed bool
 	ChangeID   int64
 
-	Relevance float32 `default:"0.5"`
+	Relevance float32
 
 	// Later calculated
 	AccumulatedRelevance float32
@@ -94,34 +94,25 @@ func (n Node) ID() int64 {
 func (g *Graph) ToGonumGraph() *simple.DirectedGraph {
 	directedGraph := simple.NewDirectedGraph()
 
-	for _, unit := range g.Units {
-		directedGraph.AddNode(Node{Unit: &unit})
+	for i := range g.Units {
+		directedGraph.AddNode(Node{Unit: &g.Units[i]}) // Aquí pasamos la referencia
 	}
 
 	for _, dependency := range g.Dependencies {
-		// Find the from and to nodes
-		fromNode := Node{}
-		toNode := Node{}
-		for _, unit := range g.Units {
-			if (!dependency.DependsOnIsProposed && unit.ID == dependency.DependsOnID) ||
-				(dependency.DependsOnIsProposed && unit.ChangeID == dependency.DependsOnID) {
-				fromNode = Node{Unit: &unit}
-				if toNode.Unit != nil {
-					break
-				}
+		var fromNode, toNode Node
+		for i := range g.Units {
+			if (!dependency.DependsOnIsProposed && g.Units[i].ID == dependency.DependsOnID) ||
+				(dependency.DependsOnIsProposed && g.Units[i].ChangeID == dependency.DependsOnID) {
+				fromNode = Node{Unit: &g.Units[i]}
 			}
-			if (!dependency.UnitIsProposed && unit.ID == dependency.UnitID) ||
-				(dependency.UnitIsProposed && unit.ChangeID == dependency.UnitID) {
-				toNode = Node{Unit: &unit}
-				if fromNode.Unit != nil {
-					break
-				}
+			if (!dependency.UnitIsProposed && g.Units[i].ID == dependency.UnitID) ||
+				(dependency.UnitIsProposed && g.Units[i].ChangeID == dependency.UnitID) {
+				toNode = Node{Unit: &g.Units[i]}
 			}
 		}
-		directedGraph.SetEdge(simple.Edge{
-			F: fromNode,
-			T: toNode,
-		})
+		if fromNode.Unit != nil && toNode.Unit != nil {
+			directedGraph.SetEdge(simple.Edge{F: fromNode, T: toNode})
+		}
 	}
 
 	return directedGraph
@@ -138,11 +129,12 @@ func (g *Graph) CalculateAccumulatedRelevances() {
 		panic(err)
 	}
 
+	var unit *Unit
 	for i := len(orderedUnits) - 1; i >= 0; i-- {
-		unit := orderedUnits[i].(Node).Unit
+		unit = orderedUnits[i].(Node).Unit
 		unit.AccumulatedRelevance = unit.Relevance
-		for _, antecessor := range unit.DirectAntecessors {
-			unit.AccumulatedRelevance += antecessor.AccumulatedRelevance
+		for _, successor := range unit.DirectSuccessors {
+			unit.AccumulatedRelevance += successor.AccumulatedRelevance
 		}
 	}
 }
@@ -159,6 +151,8 @@ func (g *Graph) Sort() {
 	// No se si usar SortStabilized es lo que busco,
 	// Primero agrupa las unidades por grupos conectados y luego hace lo que busco.
 	// Los distintos grupos no están ordenador de forma inambigua.
+
+	g.CalculateAccumulatedRelevances()
 
 	// Topological sort
 	gonumGraph := g.ToGonumGraph()
