@@ -177,10 +177,12 @@ func (g *Graph) Position() {
 	g.CalculateDirectAntecessorsAndSuccessors()
 	g.InitializeHorizontalPositions()
 	for i := 0; i < 10; i++ {
+		g.AverageHorizontalPositionsBySuccessorsAndAntecessors()
 		g.EnsureMinimumDistanceOnBifurcations()
 		g.AverageHorizontalPositionsBySuccessorsAndAntecessors()
-		g.NormalizeHorizontalPositions()
 		g.StraightenSingleConnections()
+		g.AverageHorizontalPositionsBySuccessorsAndAntecessors()
+		g.NormalizeHorizontalPositions()
 	}
 	g.PutLonelyUnitsToZero()
 }
@@ -195,17 +197,20 @@ func (g *Graph) InitializeHorizontalPositions() {
 
 func (g *Graph) AverageHorizontalPositionsBySuccessorsAndAntecessors() {
 	// Average horizontal positions by successors and antecessors
-	for j := range g.Units {
+	for j := len(g.Units) - 1; j >= 0; j-- {
 		unit := &g.Units[j]
 		if len(unit.DirectSuccessors) > 1 {
-			var average float64
+			var average float64 = 0
 			for _, successor := range unit.DirectSuccessors {
 				average += successor.HorizontalPosition
 			}
 			unit.HorizontalPosition = average / float64(len(unit.DirectSuccessors))
 		}
+	}
+	for j := 0; j < len(g.Units); j++ {
+		unit := &g.Units[j]
 		if len(unit.DirectAntecessors) > 1 {
-			var average float64
+			var average float64 = 0
 			for _, antecessor := range unit.DirectAntecessors {
 				average += antecessor.HorizontalPosition
 			}

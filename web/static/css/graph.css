@@ -14,7 +14,7 @@
         padding:0;
 
         border-radius: 2rem;
-        margin-left: calc(var(--horizontal-position)*4rem);
+        margin-left: calc(var(--horizontal-position)*10rem);
         transition: 0.2s;
 
         >.node{
@@ -37,6 +37,7 @@
             margin:0;
             font-weight: 600;
             font-size: 1.2em;
+            white-space: nowrap;
             text-overflow: ellipsis;
         }
         
