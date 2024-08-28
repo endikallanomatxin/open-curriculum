@@ -64,7 +64,7 @@ func Unit(w http.ResponseWriter, r *http.Request) {
 		}{
 			Title:        "Detalle de la Unidad",
 			Unit:         unit,
-			Dependencies: db.GetUnitDependencies(id),
+			Dependencies: db.GetUnitDirectAntecessors(id),
 			Units:        db.GetUnits(),
 		}
 

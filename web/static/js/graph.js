@@ -92,6 +92,8 @@ window.addEventListener("resize", () => {
 })
 
 window.addEventListener("htmx:afterSwap", () => {
-    document.querySelectorAll("svg").forEach(svg => svg.remove())
-    dependencies.forEach(dep => createArrow(dep.from, dep.to))
+    setTimeout(() => {
+        document.querySelectorAll("svg").forEach(svg => svg.remove())
+        dependencies.forEach(dep => createArrow(dep.from, dep.to))
+    }, 300)
 })

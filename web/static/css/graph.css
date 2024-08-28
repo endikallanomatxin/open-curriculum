@@ -75,6 +75,10 @@
                 background-color: var(--neutral-2);
                 color: var(--neutral-8);
             }
+            &.open{
+                background-color: var(--neutral-3);
+                color: var(--neutral-9);
+            }
             >.node{
                 border: 0.3em solid var(--neutral-4);
                 background-color: var(--neutral-2);

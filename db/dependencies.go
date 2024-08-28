@@ -39,7 +39,7 @@ func hasCycle(unitID, targetID int64, visited, path map[int64]bool) bool {
 	path[unitID] = true
 
 	// Obtener las dependencias de la unidad actual
-	dependencies := GetUnitDependencies(unitID)
+	dependencies := GetUnitDirectAntecessors(unitID)
 
 	// Iterar sobre las dependencias
 	for _, dep := range dependencies {
@@ -61,10 +61,29 @@ func hasCycle(unitID, targetID int64, visited, path map[int64]bool) bool {
 	return false
 }
 
-func GetUnitDependencies(unit_id int64) []logic.Unit {
+func GetUnitDirectAntecessors(unit_id int64) []logic.Unit {
 	rows, err := db.Query("SELECT units.id, units.name, units.content FROM dependencies JOIN units ON dependencies.depends_on_id = units.id WHERE dependencies.unit_id = $1", unit_id)
 	if err != nil {
-		log.Fatalf("Error querying dependencies: %q", err)
+		return nil
+	}
+	defer rows.Close()
+
+	units := []logic.Unit{}
+	for rows.Next() {
+		var u logic.Unit
+		err := rows.Scan(&u.ID, &u.Name, &u.Content)
+		if err != nil {
+			log.Fatalf("Error scanning dependencies: %q", err)
+		}
+		units = append(units, u)
+	}
+	return units
+}
+
+func GetUnitDirectSuccessors(unit_id int64) []logic.Unit {
+	rows, err := db.Query("SELECT units.id, units.name, units.content FROM dependencies JOIN units ON dependencies.unit_id = units.id WHERE dependencies.depends_on_id = $1", unit_id)
+	if err != nil {
+		return nil
 	}
 	defer rows.Close()
 

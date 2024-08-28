@@ -14,8 +14,9 @@
 <main {{ if eq .OpenUnit.ID 0}} class="no-open-unit" {{ end }}>
     <div id="graph">
         {{ if .Graph.Units }}
+            {{ $openUnitID := .OpenUnit.ID }}
             {{ range .Graph.Units }}
-                <div class="unit existing" id="unit-{{ .ID }}" style="--horizontal-position: {{.HorizontalPosition}}" proposed="false" unit_id="{{.ID}}">
+                <div class="unit existing {{ if eq .ID $openUnitID }}open{{ end }}" id="unit-{{ .ID }}" style="--horizontal-position: {{.HorizontalPosition}}" proposed="false" unit_id="{{.ID}}">
                     <div class="node" id="node-{{ .ID}}" ></div>
                     <p hx-put="/set-open-unit?is_proposed=none&id={{ .ID }}"
                        hx-target="body">{{ .Name }}</p>

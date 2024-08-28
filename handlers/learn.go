@@ -11,7 +11,12 @@ func renderLearnTemplate(w http.ResponseWriter, r *http.Request) {
 
 	_, openUnitID := GetOpenUnit(r)
 
-	graph := db.GetApprovedGraph()
+	var graph logic.Graph
+	if openUnitID == 0 {
+		graph = db.GetApprovedGraph()
+	} else {
+		graph = db.GetApprovedLocalGraph(openUnitID, 2, 2)
+	}
 	graph.SortAndPosition()
 
 	var openUnit logic.Unit
