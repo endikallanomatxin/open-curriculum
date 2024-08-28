@@ -25,13 +25,15 @@ func main() {
 	mux.HandleFunc("GET /unit/{id}/details", handlers.GetUnitDetails)
 
 	// ----------------
-
 	// LEARN
+	// ----------------
+
 	mux.HandleFunc("/learn", handlers.Learn)
 
 	// ----------------
-
 	// TEACH
+	// ----------------
+
 	mux.HandleFunc("/teach", handlers.Teach)
 	mux.HandleFunc("/teach/set-active-proposal-ID", handlers.SetActiveProposalID)
 	mux.HandleFunc("PUT /set-open-unit", handlers.SetOpenUnit)
@@ -62,10 +64,6 @@ func main() {
 	mux.HandleFunc("GET /teach/poll/{id}", handlers.Poll)
 	mux.HandleFunc("POST /teach/poll/{id}/yes", handlers.VoteYes)
 	mux.HandleFunc("POST /teach/poll/{id}/no", handlers.VoteNo)
-
-	mux.HandleFunc("/units", handlers.Units)
-	mux.HandleFunc("/unit/{id}", handlers.Unit)
-	mux.HandleFunc("/dependencies", handlers.Dependencies)
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 
