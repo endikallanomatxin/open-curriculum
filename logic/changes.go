@@ -38,25 +38,21 @@ type DependencyDeletion struct {
 	DependencyID int64
 }
 
-// Documents
+// Content
 
-type DocumentModification struct {
-	// Analogous to a diff
-	// They are run from the end of the document to the beginning (so that line numbers don't change)
-	ID         int64
-	ProposalID int64
-	UnitID     int64
-	FromLine   int
-	ToLine     int
-	Content    string // Can have multiple lines
-	// If it is a deletion, the content is an empty string
-	// If it is an addition, ToLine is same as FromLine (or maybe better: FromLine-1, pensarlo bien)
+type ContentModification struct {
+	ID             int64
+	ProposalID     int64
+	UnitIsProposed bool
+	UnitID         int64
+	Content        string
 }
 
-type DocumentFileUpload struct {
-	ID         int64
-	ProposalID int64
-	UnitID     int64
+type ContentFileUpload struct {
+	ID             int64
+	ProposalID     int64
+	UnitIsProposed bool
+	UnitID         int64
 	// TODO
 }
 

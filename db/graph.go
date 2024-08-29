@@ -163,6 +163,13 @@ func GetProposedGraph(proposalID int64) logic.Graph {
 					unit.Name = change.Name
 				}
 			}
+		case logic.ContentModification:
+			for i, unit := range graph.Units {
+				if (!change.UnitIsProposed && unit.Type == "Existing" && unit.ID == change.UnitID) ||
+					(change.UnitIsProposed && unit.Type == "ProposedCreation" && unit.ChangeID == change.UnitID) {
+					graph.Units[i].Content = change.Content
+				}
+			}
 		case logic.DependencyCreation:
 			graph.Dependencies = append(graph.Dependencies, logic.Dependency{
 				ID:                  change.ID,

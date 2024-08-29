@@ -38,7 +38,6 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 	graph.SortAndPosition()
 
 	var openUnit logic.Unit
-	var err error
 
 	if openUnitID == 0 {
 		openUnit = logic.Unit{
@@ -47,32 +46,11 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 			Content: "There are no open units",
 		}
 	} else {
-		if !openUnitIsProposed {
-			openUnit, err = db.GetUnit(openUnitID)
-			if err != nil {
-				fmt.Println(err)
-				openUnit = logic.Unit{
-					ID:      0,
-					Name:    "No open unit",
-					Content: "There are no open units",
-				}
-			}
-		} else {
-			unitCreation, err := db.GetUnitCreation(openUnitID)
-			if err != nil {
-				fmt.Println(err)
-				openUnit = logic.Unit{
-					ID:      0,
-					Name:    "No open unit",
-					Content: "There are no open units",
-				}
-			} else {
-				openUnit = logic.Unit{
-					ID:      unitCreation.ID,
-					Name:    unitCreation.Name,
-					Content: "",
-					Type:    "ProposedCreation",
-				}
+		for _, unit := range graph.Units {
+			if (!openUnitIsProposed && unit.ID == openUnitID) ||
+				(openUnitIsProposed && unit.ChangeID == openUnitID) {
+				openUnit = unit
+				break
 			}
 		}
 	}
@@ -232,6 +210,57 @@ func DeleteUnitRename(w http.ResponseWriter, r *http.Request) {
 	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_rename/%d", &proposal_id, &change_id)
 
 	db.DeleteUnitRename(change_id)
+
+	renderTeachTemplate(w, r)
+}
+
+func CreateContentModification(w http.ResponseWriter, r *http.Request) {
+	var proposalID int64
+	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/content_modification/", &proposalID)
+
+	unitIsProposed, err := strconv.ParseBool(r.URL.Query().Get("unit_is_proposed"))
+	if err != nil {
+		http.Error(w, "Invalid unit_is_proposed", http.StatusBadRequest)
+		fmt.Println("Invalid unit_is_proposed")
+		return
+	}
+
+	unitID, err := strconv.ParseInt(r.URL.Query().Get("unit_id"), 10, 64)
+	if err != nil {
+		http.Error(w, "Invalid unit ID", http.StatusBadRequest)
+		fmt.Println("Invalid unit ID")
+		return
+	}
+
+	// Check if there exists any content change in the proposal to that unit
+	existingContentModificationID := db.FindContentModification(proposalID, unitIsProposed, unitID)
+	if existingContentModificationID != 0 {
+		err := db.DeleteContentModification(existingContentModificationID)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+	r.ParseForm()
+	content := r.Form.Get("content")
+
+	err = db.CreateContentModification(proposalID, unitIsProposed, unitID, content)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	renderTeachTemplate(w, r)
+}
+
+func DeleteContentModification(w http.ResponseWriter, r *http.Request) {
+	var proposal_id int64
+	var change_id int64
+	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/content_modification/%d", &proposal_id, &change_id)
+
+	err := db.DeleteContentModification(change_id)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	renderTeachTemplate(w, r)
 }

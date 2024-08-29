@@ -67,12 +67,11 @@ func ChangesCreateTables() {
 	}
 
 	_, err = db.Exec(`
-		CREATE TABLE IF NOT EXISTS document_modifications (
+		CREATE TABLE IF NOT EXISTS content_modifications (
 			id BIGSERIAL PRIMARY KEY,
 			proposal_id BIGINT,
+			unit_is_proposed BOOLEAN,
 			unit_id BIGINT,
-			from_line INTEGER,
-			to_line INTEGER,
 			content TEXT
 		)
 	`)
@@ -81,10 +80,12 @@ func ChangesCreateTables() {
 	}
 
 	_, err = db.Exec(`
-		CREATE TABLE IF NOT EXISTS document_file_uploads (
+		CREATE TABLE IF NOT EXISTS content_file_uploads (
 			id BIGSERIAL PRIMARY KEY,
 			proposal_id BIGINT,
-			unit_id BIGINT
+			unit_id BIGINT,
+			file_name VARCHAR(255),
+			file_path VARCHAR(255)
 		)
 	`)
 	if err != nil {
@@ -170,6 +171,25 @@ func GetProposalChanges(proposalId int64) []logic.Change {
 	}
 
 	rows, err = db.Query(`
+		SELECT id, unit_is_proposed, unit_id, content
+		FROM content_modifications
+		WHERE proposal_id = $1
+	`, proposalId)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var c logic.ContentModification
+		err := rows.Scan(&c.ID, &c.UnitIsProposed, &c.UnitID, &c.Content)
+		if err != nil {
+			fmt.Println(err)
+		}
+		changes = append(changes, c)
+	}
+
+	rows, err = db.Query(`
 		SELECT id, unit_is_proposed, unit_id, depends_on_is_proposed, depends_on_id
 		FROM dependency_creations
 		WHERE proposal_id = $1
@@ -218,8 +238,8 @@ func GetProposalChanges(proposalId int64) []logic.Change {
 	defer rows.Close()
 
 	for rows.Next() {
-		var c logic.DocumentModification
-		err := rows.Scan(&c.ID, &c.UnitID, &c.FromLine, &c.ToLine, &c.Content)
+		var c logic.ContentModification
+		err := rows.Scan(&c.ID, &c.UnitID, &c.Content)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -324,6 +344,41 @@ func DeleteUnitRename(changeId int64) error {
 		return err
 	}
 	return nil
+}
+
+func CreateContentModification(proposalId int64, unitIsProposed bool, unitId int64, content string) error {
+	_, err := db.Exec(`
+		INSERT INTO content_modifications (proposal_id, unit_is_proposed, unit_id, content)
+		VALUES ($1, $2, $3, $4)
+	`, proposalId, unitIsProposed, unitId, content)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeleteContentModification(changeId int64) error {
+	_, err := db.Exec(`
+		DELETE FROM content_modifications
+		WHERE id = $1
+	`, changeId)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func FindContentModification(proposalId int64, unitIsProposed bool, unitId int64) int64 {
+	var id int64
+	err := db.QueryRow(`
+		SELECT id
+		FROM content_modifications
+		WHERE proposal_id = $1 AND unit_is_proposed = $2 AND unit_id = $3
+	`, proposalId, unitIsProposed, unitId).Scan(&id)
+	if err != nil {
+		return 0
+	}
+	return id
 }
 
 func CreateDependencyCreation(proposalID int64, unitIsProposed bool, unitID int64, dependsOnIsProposed bool, dependsOnID int64) (int64, error) {

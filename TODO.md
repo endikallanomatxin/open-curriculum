@@ -23,7 +23,7 @@
                 - [x] Unit creation
                 - [x] Unit deletion
                 - [x] Unit rename
-                - [ ] Unit content modification
+                - [x] Unit content modification
                 - [x] Dependency creation
                 - [x] Dependency deletion
                 - [ ] Transfer certifications and reads (it has to be done every time you delete something)

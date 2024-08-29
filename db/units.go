@@ -2,6 +2,7 @@ package db
 
 import (
 	"app/logic"
+	"fmt"
 	"log"
 )
 
@@ -84,6 +85,13 @@ func RenameUnit(id int64, name string) {
 	}
 }
 
+func ModifyUnitContent(id int64, content string) {
+	_, err := db.Exec("UPDATE units SET content = $1 WHERE id = $2", content, id)
+	if err != nil {
+		log.Fatalf("Error modifying unit content: %q", err)
+	}
+}
+
 func UpdateGraph() {
 	// This goes over all accepted polls and updates the graph with its proposals
 
@@ -109,6 +117,7 @@ func UpdateGraph() {
 
 	// Get all accepted polls
 	acceptedPolls := GetAcceptedPolls()
+	fmt.Println(acceptedPolls)
 	for _, poll := range acceptedPolls {
 		// Poll is an interface
 		// If it a SingleProposalPoll
@@ -124,6 +133,16 @@ func UpdateGraph() {
 					DeleteUnit(change.UnitID)
 				case logic.UnitRename:
 					RenameUnit(change.UnitID, change.Name)
+				case logic.ContentModification:
+					fmt.Println("ContentModification")
+					fmt.Println(change)
+					var UnitID int64
+					if change.UnitIsProposed {
+						UnitID = createdUnitMap[change.UnitID]
+					} else {
+						UnitID = change.UnitID
+					}
+					ModifyUnitContent(UnitID, change.Content)
 				case logic.DependencyCreation:
 					var UnitID, DependsOnID int64
 					if change.UnitIsProposed {

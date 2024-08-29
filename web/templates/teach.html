@@ -78,24 +78,26 @@
                 {{ $activeProposalID := .ActiveProposal.ID}}
                 {{ with .OpenUnit }}
                     {{ if eq .Type "ProposedCreation" }}
-                        <form id="rename-form" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .ID }}" hx-target="body" hx-swap="outerHTML">
+                        <form id="rename-form"
+                              hx-put="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .ID }}"
+                              hx-target="body" hx-swap="outerHTML">
                             <input type="text" id="name" name="name" value="{{ .Name }}">
                             <button type="submit">Rename</button>
-                        </form>
-                        <form id="edit-content-form" hx-put="/unit/{{ .ID }}/edit" hx-target="#details" hx-swap="outerHTML">
-                            <textarea id="new-content" name="new_content">{{ .Content }}</textarea>
-                            <button type="submit">Save</button>
                         </form>
                     {{ else }}
-                        <form id="rename-form" hx-put="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ .ID }}" hx-target="body" hx-swap="outerHTML">
+                        <form id="rename-form"
+                              hx-put="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ .ID }}"
+                              hx-target="body" hx-swap="outerHTML">
                             <input type="text" id="name" name="name" value="{{ .Name }}">
                             <button type="submit">Rename</button>
                         </form>
-                        <form id="edit-content-form" hx-put="/unit/{{ .ID }}/edit" hx-target="#details" hx-swap="outerHTML">
-                            <textarea id="new-content" name="new_content">{{ .Content }}</textarea>
-                            <button type="submit">Save</button>
-                        </form>
                     {{ end }}
+                        <form id="content-modification-form"
+                              hx-put="/teach/proposal/{{$activeProposalID}}/content_modification?unit_is_proposed={{.IsProposed}}&unit_id={{.ID}}"
+                              hx-target="body" hx-swap="outerHTML">
+                            <textarea name="content" placeholder="Enter content here">{{ .Content }}</textarea>
+                            <button type="submit">Update content</button>
+                        </form>
                 {{ end }}
             {{ else }}
                 <p>Select a unit to view its details</p>
@@ -190,6 +192,12 @@
                         <div class="type dependency_deletion">REMOVE DEPENDENCY</div>
                         <div>{{ $change.DependencyID }}</div>
                         <a class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/dependency_deletion/{{ $change.ID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">Undo</a>
+                    </div>
+                {{ else if (typeIs "logic.ContentModification" $change) }}
+                    <div class="change">
+                        <div class="type content_modification">MODIFY CONTENT</div>
+                        <div>{{ $change.UnitID }}</div>
+                        <a class="undo" hx-delete="/teach/proposal/{{ $activeProposalID }}/content_modification/{{ $change.ID }}" hx-target="#changes-list" hx-select="#changes-list" hx-swap="outerHTML">Undo</a>
                     </div>
                 {{ end }}
             {{ end }}
