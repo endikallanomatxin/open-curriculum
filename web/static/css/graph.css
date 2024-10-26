@@ -7,20 +7,22 @@
     >*{
         grid-column: 1/-1;
     }
-    
+
     >.unit{
         display: grid;
         grid-template-columns: subgrid;
+        align-items: center;
         padding:0;
-
         border-radius: 2rem;
         margin-left: calc(var(--horizontal-position)*25%);
         transition: 0.2s;
 
         >.node{
             content: '';
-            width: 1.8em;
-            height: 1.8em;
+            box-sizing: content-box;
+            width: 1em;
+            height: 1em;
+            margin: 0.2em;
             -moz-border-radius: 50%;
             -webkit-border-radius: 50%;
             border-radius: 50%;
@@ -35,8 +37,7 @@
         
         >p{
             margin:0;
-            font-weight: 600;
-            font-size: 1.2em;
+            font-weight: 500;
             white-space: nowrap;
             text-overflow: ellipsis;
         }
@@ -70,7 +71,7 @@
         
         &.existing{
             background-color: var(--neutral-1);
-            color: var(--neutral-7);
+            color: var(--neutral-8);
             &:hover{
                 background-color: var(--neutral-2);
                 color: var(--neutral-8);
@@ -78,10 +79,12 @@
             &.open{
                 background-color: var(--neutral-3);
                 color: var(--neutral-9);
+                >p{
+                    font-weight: 600;
+                }
             }
             >.node{
-                border: 0.3em solid var(--neutral-4);
-                background-color: var(--neutral-2);
+                border: 0.3em solid var(--neutral-9);
             }
         }
 

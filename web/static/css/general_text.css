@@ -3,13 +3,13 @@
 /* GENERAL */
 
 a {
-    color: var(--secondary-dark);
+    color: var(--orange-6);
     text-decoration: none;
     transition-duration: 0.2s;
 }
 
 a:hover {
-    color: var(--secondary-accent);
+    color: var(--orange-4);
 }
 
 p,ol,ul {

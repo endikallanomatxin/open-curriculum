@@ -7,16 +7,17 @@
 :root {
 
     /* Colors */
-    --neutral-0: hsl(35, 45%, 97%);
-    --neutral-1: hsl(35, 40%, 92%);
-    --neutral-2: hsl(35, 38%, 88%);
-    --neutral-3: hsl(34, 28%, 75%);
-    --neutral-4: hsl(35, 28%, 63%);
-    --neutral-5: hsl(31, 18%, 60%);
-    --neutral-6: hsl(35, 20%, 40%);
-    --neutral-7: hsl(35, 16%, 30%);
-    --neutral-8: hsl(35, 16%, 20%);
-    --neutral-9: hsl(35, 12%, 14%);
+    --neutral-0: hsl(0, 0%, 98%);
+    --neutral-1: hsl(0, 0%, 96%);
+    --neutral-2: hsl(0, 0%, 94%);
+    --neutral-3: hsl(0, 0%, 90%);
+    --neutral-4: hsl(0, 0%, 80%);
+    --neutral-5: hsl(0, 0%, 70%);
+    --neutral-6: hsl(0, 0%, 60%);
+    --neutral-7: hsl(0, 0%, 40%);
+    --neutral-8: hsl(0, 0%, 20%);
+    --neutral-9: hsl(0, 0%, 10%);
+    
 
     --green-0: hsl(160, 20%, 90%);
     --green-1: hsl(160, 22%, 80%);
@@ -74,27 +75,6 @@
     --purple-9: hsl(270, 45%, 9%);
     
 
-
-
-    /* Old colors */
-
-    --primary-dark: hsl(160, 40%, 20%);
-    --primary-accent: hsl(160, 40%, 35%);
-    --primary-light: hsl(160, 40%, 70%);
-    --primary-white: hsl(167, 20%, 90%);
-
-    --secondary-dark: hsl(20, 60%, 35%);
-    --secondary-accent: hsl(20, 60%, 50%);
-    --secondary-light: hsl(20, 40%, 70%);
-
-    --background: hsl(35, 45%, 97%);
-    --background-dark: hsl(35, 38%, 92%);
-    --background-darker: hsl(35, 30%, 85%);
-
-    --dark: hsl(340,5%,13%);
-    
-    --text-color: var(--dark);
-
     /*Font sharpening*/
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -103,8 +83,8 @@
 
 body{
     font-family: "Montserrat", sans-serif;
-    color: var(--text-color);
-    background-color: var(--background);
+    color: var(--neutral-8);
+    background-color: white;
     margin: 0;
 }
 
@@ -176,8 +156,8 @@ button:not(.close){
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 2rem;
-    background-color: var(--primary-dark);
-    color: var(--background);
+    background-color: var(--green-8);
+    color: var(--neutral-0);
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
 }
@@ -188,7 +168,7 @@ button.close{
     right: 1rem;
     background-color: transparent;
     border: none;
-    color: var(--secondary-dark);
+    color: var(--orange-6);
     font-size: 1.5em;
     font-weight: bold;
 
@@ -199,7 +179,7 @@ button.close{
 }
 
 button.red{
-    background-color: var(--secondary-dark);
+    background-color: var(--orange-6);
 }
 
 

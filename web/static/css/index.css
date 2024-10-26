@@ -19,7 +19,7 @@ header h1{
     text-align: left;
     font-weight: 800;
     line-height: 1;
-    background: linear-gradient(var(--primary-dark), var(--primary-accent));
+    background: linear-gradient(var(--green-8), var(--green-6));
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -68,7 +68,7 @@ main>section{
 /* MAIN>ABSTRACT */
 
 section#abstract{
-    background-color: var(--background-dark);
+    background-color: var(--neutral-1);
     margin-left: auto;
     margin-right: auto;
     text-align: left;
@@ -83,7 +83,7 @@ section#abstract p{
 }
 
 section#abstract>div{
-    background-color: var(--background);
+    background-color: var(--neutral-0);
     display: grid;
     grid-template-columns: 1.6em auto;
     padding: 0.4rem 1.2rem;
@@ -132,7 +132,7 @@ section#abstract>div>svg{
 /* MAIN>MANIFEST-FOUNDATION */
 
 section#manifest-foundation{
-    background-color: var(--background);
+    background-color: var(--neutral-0);
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 0;
@@ -173,7 +173,7 @@ div.card{
     padding: 2rem;
     margin: 3rem 0;
     border-radius: 1rem;
-    background-color: var(--background-dark);
+    background-color: var(--neutral-1);
 }
 
 @media screen and (min-width: 1200px){
@@ -210,7 +210,7 @@ div.card a{
 /* MAIN>FAQ */
 
 section#faq{
-    background-color: var(--background-dark);
+    background-color: var(--neutral-1);
     display: grid;
     grid-template-columns: 1fr;
 }
@@ -249,7 +249,7 @@ section#faq p{
 section#faq>div.qas>div.qa{
     padding: 1rem 0;
     margin: 4rem 0;
-    border-top: 2px solid var(--dark);
+    border-top: 2px solid var(--neutral-8);
 }
 
 section#faq>div.qas>div.qa>p.q{
@@ -263,8 +263,8 @@ section#faq>div.qas>div.qa>p.q{
 /* Footer */
 
 footer{
-    background-color: var(--primary-dark);
-    color: var(--primary-white);
+    background-color: var(--green-8);
+    color: var(--green-0);
     margin: 0;
     padding: 1rem;
     font-style: italic;

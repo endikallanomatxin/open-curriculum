@@ -15,7 +15,7 @@
 }
 
 #top_bar a:not(:first-child){
-    background-color: var(--background-dark);
+    background-color: var(--neutral-1);
     padding: 0.5rem 1rem;
     border-radius:100px;
     color: var(--neutral-6);
