@@ -57,6 +57,12 @@ https://www.fundaciones.org/es/inicio
 
     Aqui hay unos documentos con información sobre ayudas.
 
+- NLNet Foundation
+    We support organisations and people who contribute to an open internet for all. We fund projects that help fix the internet through open hardware, open software ...
+
+- Mirar programas de universidades
+
+
 
 ## Otros sitios donde acudir
 
