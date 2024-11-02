@@ -5,17 +5,28 @@
 root = "." 
 tmp_dir = "tmp"
 
+
 [build]
+# Path to output the built binary
+bin = "tmp/main"
+
+# Command to build the main application binary
+cmd = "go build -o tmp/main ./cmd/main.go"
+
 # Watch these filename extensions.
 include_ext = ["go", "yaml","css", "html", "js", "json", "xml", "yml", "toml", "sql", "sh", "md", "mod", "sum", "lock"]
+
 # Ignore these filename extensions or directories.
 exclude_dir = ["tmp"]
+
 # It's not necessary to trigger build each time file changes if it's too frequent.
 delay = 1000 # ms
+
 
 [log]
 # Show log time
 time = true
+
 
 [misc]
 # Delete tmp directory on exit

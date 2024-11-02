@@ -1,88 +1,77 @@
-/* HEADER */
-
-header{
-    padding: 4rem 2rem;
-    padding-top: 6rem;
-    background-color: var(--ll-green);
-    margin:0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-header h1{
-    font-size: 15vw;
-    width:fit-content;
-    width:100%;
-    max-width: 65rem;
-    margin:auto;
-    text-align: left;
-    font-weight: 800;
-    line-height: 1;
-    background: linear-gradient(var(--green-8), var(--green-6));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-@media screen and (min-width: 900px){
-    header {
-        padding: 10vh 2rem;
-    }
-
-    header h1{
-        font-size: 9em;
-    }
-}
-
-/* MAIN*/
-
-main{
+main {
     font-size: 1.15rem;
 }
 
-@media screen and (min-width: 900px){
-    main{
+@media screen and (min-width: 900px) {
+    main {
         font-size: 1.25rem;
     }
 }
 
-@media screen and (min-width: 1200px){
-    main{
+@media screen and (min-width: 1200px) {
+    main {
         font-size: 1.4rem;
     }
-    
+
 }
 
-main>section{
+main>section {
     padding: 8rem 4vw;
 }
 
-@media screen and (max-width: 1200px){
-    main>section{
+@media screen and (max-width: 1200px) {
+    main>section {
         padding: 4rem 4vw;
     }
 }
 
+/* TITLE */
+
+section#title {
+    padding: 4rem 2rem;
+    padding-top: 6rem;
+    background-color: var(--ll-green);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h1 {
+        font-size: 10vw;
+        width: fit-content;
+        width: 100%;
+        max-width: 65rem;
+        margin: auto;
+        text-align: left;
+        font-weight: 800;
+        line-height: 1;
+        background: linear-gradient(var(--green-8), var(--green-6));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+
+
 
 /* MAIN>ABSTRACT */
 
-section#abstract{
+section#abstract {
     background-color: var(--neutral-1);
     margin-left: auto;
     margin-right: auto;
     text-align: left;
 }
 
-section#abstract p{
+section#abstract p {
     width: 100%;
     max-width: 65rem;
     text-align: left;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-section#abstract>div{
+section#abstract>div {
     background-color: var(--neutral-0);
     display: grid;
     grid-template-columns: 1.6em auto;
@@ -95,17 +84,18 @@ section#abstract>div{
     margin-bottom: 1.5rem;
 }
 
-section#abstract>div>svg{
+section#abstract>div>svg {
     width: 100%;
     margin: auto;
     height: auto;
 }
 
-@media screen and (min-width: 900px){
-    section#abstract{
-        font-size:1.3em;
+@media screen and (min-width: 900px) {
+    section#abstract {
+        font-size: 1.3em;
     }
-    section#abstract>div{
+
+    section#abstract>div {
         grid-template-columns: 1.8em auto;
         padding: 1rem 2rem;
         grid-gap: 1.5rem;
@@ -114,11 +104,12 @@ section#abstract>div>svg{
     }
 }
 
-@media screen and (min-width: 1200px){
-    section#abstract{
-        font-size:1.5em;
+@media screen and (min-width: 1200px) {
+    section#abstract {
+        font-size: 1.5em;
     }
-    section#abstract>div{
+
+    section#abstract>div {
         grid-template-columns: 2em auto;
         padding: 1.8rem 2.8rem;
         grid-gap: 1.8rem;
@@ -131,77 +122,79 @@ section#abstract>div>svg{
 
 /* MAIN>MANIFEST-FOUNDATION */
 
-section#manifest-foundation{
+section#manifest-foundation {
     background-color: var(--neutral-0);
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 0;
 }
 
-section#manifest-foundation p{
+section#manifest-foundation p {
     text-align: left;
 }
 
-@media screen and (min-width: 1200px){
-    section#manifest-foundation{
+@media screen and (min-width: 1200px) {
+    section#manifest-foundation {
         grid-template-columns: 1fr 1fr;
         grid-template-areas: "paragraph cards";
         grid-gap: 5vw;
     }
 
-    section#manifest-foundation>div.cards{
+    section#manifest-foundation>div.cards {
         grid-area: cards;
         max-width: 45rem;
     }
 
-    section#manifest-foundation>div:first-of-type{
+    section#manifest-foundation>div:first-of-type {
         grid-area: paragraph;
     }
-    section#manifest-foundation>div:first-of-type *{
+
+    section#manifest-foundation>div:first-of-type * {
         /* position: sticky;
         top: 20vw; */
         max-width: 40rem;
         margin: 5rem 0;
-        margin-left:auto;
+        margin-left: auto;
     }
-    section#manifest-foundation>div:first-of-type>p{
-        margin-top:4rem;
+
+    section#manifest-foundation>div:first-of-type>p {
+        margin-top: 4rem;
     }
 }
 
-div.card{
+div.card {
     padding: 2rem;
     margin: 3rem 0;
     border-radius: 1rem;
     background-color: var(--neutral-1);
 }
 
-@media screen and (min-width: 1200px){
-    div.card{
+@media screen and (min-width: 1200px) {
+    div.card {
         padding: 3rem;
         margin: 4rem 0;
     }
 }
 
-div.card h2{
+div.card h2 {
     font-size: 1.4em;
     font-weight: 800;
-    margin:0;
+    margin: 0;
     margin-bottom: 0.8rem;
 }
 
-div.card p{
+div.card p {
     text-align: left;
 }
 
-div.card a{
+div.card a {
     font-weight: 700;
     display: block;
     margin-top: 0.8rem;
 }
 
-@media screen and (min-width: 1200px){
-    div.card a{
+@media screen and (min-width: 1200px) {
+    div.card a {
         margin-top: 1.2em;
     }
 }
@@ -209,50 +202,52 @@ div.card a{
 
 /* MAIN>FAQ */
 
-section#faq{
+section#faq {
     background-color: var(--neutral-1);
     display: grid;
     grid-template-columns: 1fr;
 }
 
-section#faq p{
+section#faq p {
     text-align: left;
 }
 
-@media screen and (min-width: 1200px){
-    section#faq{
+@media screen and (min-width: 1200px) {
+    section#faq {
         grid-template-columns: 1fr 1fr;
         grid-template-areas: "title qas";
         grid-gap: 5vw;
     }
 
-    section#faq>div.qas{
+    section#faq>div.qas {
         grid-area: qas;
         max-width: 50rem;
     }
 
-    section#faq>div:first-of-type{
+    section#faq>div:first-of-type {
         grid-area: title;
     }
-    section#faq>div:first-of-type *{
+
+    section#faq>div:first-of-type * {
         position: sticky;
         top: 20vw;
         max-width: 50rem;
         margin: 5rem 0;
-        margin-left:auto;
+        margin-left: auto;
     }
-    section#faq>div:first-of-type>p{
-        margin-top:4rem;
+
+    section#faq>div:first-of-type>p {
+        margin-top: 4rem;
     }
 }
 
-section#faq>div.qas>div.qa{
+section#faq>div.qas>div.qa {
     padding: 1rem 0;
     margin: 4rem 0;
     border-top: 2px solid var(--neutral-8);
 }
 
-section#faq>div.qas>div.qa>p.q{
+section#faq>div.qas>div.qa>p.q {
     font-size: 1.2em;
     font-weight: 700;
     margin: 1rem 0;
@@ -262,7 +257,7 @@ section#faq>div.qas>div.qa>p.q{
 
 /* Footer */
 
-footer{
+footer {
     background-color: var(--green-8);
     color: var(--green-0);
     margin: 0;
@@ -270,6 +265,6 @@ footer{
     font-style: italic;
 }
 
-footer p{
+footer p {
     margin: 0.5rem 0;
 }

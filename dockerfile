@@ -34,7 +34,7 @@ ARG DINAHOSTING_PASSWORD
 ENV DINAHOSTING_PASSWORD=$DINAHOSTING_PASSWORD
 
 # Build the Go app
-RUN go build -o main .
+RUN go build -o main ./cmd/main.go
 
 # Expose port 80 to the outside world
 EXPOSE 80

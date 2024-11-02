@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="/static/media/favicon.png" type="image/x-icon">
+        <script src="/static/js/htmx.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="/static/js/viewport-checker.js"></script>
+        <link rel="stylesheet" href="/static/css/base.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+              rel="stylesheet">
+        {{ block "head" . }}{{ end }}
+    </head>
+    <body>
+        <header>
+            <div id="left">
+                <a href="/">
+                    <img id="logo" src="/static/media/logo.svg" alt="logo">
+                </a>
+                <nav id="mode">
+                    <a href="/learn">Learn</a>
+                    <a href="/teach">Teach</a>
+                </nav>
+                {{ block "header" . }}{{ end }}
+            </div>
+            <div id="right">
+                <nav>
+                    {{ if eq .User nil }}
+                    <a href="/login">Login</a>
+                    <a href="/register">Register</a>
+                {{ else }}
+                    <a href="/logout">Logout</a>
+                    {{ end }}
+                </nav>
+                <nav id="language">
+                    <a href="/set-language?lang=en&redirect={{.URL | urlquery}}">EN</a>
+                    &nbsp;|&nbsp;
+                    <a href="/set-language?lang=es&redirect={{.URL | urlquery}}">ES</a>
+                    &nbsp;|&nbsp;
+                    <a href="/set-language?lang=eu&redirect={{.URL | urlquery}}">EU</a>
+                </nav>
+            </div>
+        </header>
+        {{ block "body" . }}{{ end }}
+    </body>
+</html>

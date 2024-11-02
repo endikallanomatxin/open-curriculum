@@ -1,7 +1,7 @@
 @import "general_text.css";
 
-*{
-    box-sizing:border-box;
+* {
+    box-sizing: border-box;
 }
 
 :root {
@@ -17,7 +17,7 @@
     --neutral-7: hsl(0, 0%, 40%);
     --neutral-8: hsl(0, 0%, 20%);
     --neutral-9: hsl(0, 0%, 10%);
-    
+
 
     --green-0: hsl(160, 20%, 90%);
     --green-1: hsl(160, 22%, 80%);
@@ -52,7 +52,7 @@
     --orange-8: hsl(29, 83%, 23%);
     --orange-9: hsl(29, 90%, 16%);
 
-    --blue-0: hsl(200, 20%, 90%);   
+    --blue-0: hsl(200, 20%, 90%);
     --blue-1: hsl(200, 22%, 80%);
     --blue-2: hsl(200, 24%, 70%);
     --blue-3: hsl(200, 26%, 60%);
@@ -73,7 +73,7 @@
     --purple-7: hsl(270, 37%, 24%);
     --purple-8: hsl(270, 43%, 19%);
     --purple-9: hsl(270, 45%, 9%);
-    
+
 
     /*Font sharpening*/
     -webkit-font-smoothing: antialiased;
@@ -81,7 +81,7 @@
     font-smooth: never;
 }
 
-body{
+body {
     font-family: "Montserrat", sans-serif;
     color: var(--neutral-8);
     background-color: white;
@@ -98,28 +98,86 @@ body{
     }
 }
 
-.animated
-{
-    opacity:1;
+.animated {
+    opacity: 1;
     transform: translateY(0);
     transition: opacity 0.5s ease-in-out, transform 0.7s ease-in-out;
     animation: entrance 0.6s ease-in-out;
 }
 
-.animated.over-viewport{
-    opacity:0;
+.animated.over-viewport {
+    opacity: 0;
     transform: translateY(-2rem);
 }
 
-.animated.under-viewport{
-    opacity:0;
+.animated.under-viewport {
+    opacity: 0;
     transform: translateY(2rem);
 }
 
 
 /* Nav */
 
-nav#back{
+header {
+    width: 100%;
+    z-index: 100;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1rem 2rem;
+    background-color: var(--neutral-0);
+
+    div#left,
+    div#right {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    img#logo {
+        display: block;
+        height: 2rem;
+    }
+
+    nav#mode {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.8em;
+        gap: 0.4em;
+        padding: 0.4em 1em;
+        border-radius: 0.5em;
+        border: 1px solid var(--neutral-2);
+
+        a {
+            margin: 0;
+        }
+    }
+
+    nav#sections a {
+        background-color: var(--neutral-1);
+        padding: 0.5rem 1rem;
+        border-radius: 100px;
+        color: var(--neutral-6);
+    }
+
+    nav#language {
+        font-size: 0.8em;
+        padding: 1em 1.5em;
+        background-color: var(--neutral-1);
+        z-index: 100;
+        border-radius: 2rem;
+        color: var(--neutral-3);
+
+        a {
+            font-weight: bold;
+            color: var(--neutral-5);
+        }
+    }
+}
+
+nav#back {
     padding: 1rem 1.5rem;
     position: fixed;
     top: 1rem;
@@ -127,31 +185,16 @@ nav#back{
     background-color: var(--neutral-1);
     z-index: 100;
     border-radius: 2rem;
+
     a {
         color: var(--neutral-7);
-    }
-}
-
-nav#language{
-    font-size: 0.8em;
-    padding: 1em 1.5em;
-    position: fixed;
-    top: 2rem;
-    right: 2rem;
-    background-color: var(--neutral-1);
-    z-index: 100;
-    border-radius: 2rem;
-    color: var(--neutral-3);
-    a {
-        font-weight: bold;
-        color:var(--neutral-5);
     }
 }
 
 
 /* Buttons */
 
-button:not(.close){
+button:not(.close) {
     font-size: 1em;
     padding: 0.5rem 1rem;
     border: none;
@@ -162,7 +205,7 @@ button:not(.close){
     transition: background-color 0.3s ease-in-out;
 }
 
-button.close{
+button.close {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -178,7 +221,7 @@ button.close{
     }
 }
 
-button.red{
+button.red {
     background-color: var(--orange-6);
 }
 
@@ -186,9 +229,12 @@ button.red{
 /* Inputs */
 
 select {
-    appearance: none; /* Para eliminar el estilo predeterminado del navegador */
-    -webkit-appearance: none; /* Para navegadores WebKit */
-    -moz-appearance: none; /* Para navegadores Mozilla */
+    appearance: none;
+    /* Para eliminar el estilo predeterminado del navegador */
+    -webkit-appearance: none;
+    /* Para navegadores WebKit */
+    -moz-appearance: none;
+    /* Para navegadores Mozilla */
 
     border: none;
     outline: none;
@@ -197,12 +243,12 @@ select {
     font-size: 1em;
     border-radius: 2rem;
     color: var(--neutral-8);
-    
+
     background: var(--neutral-2);
     background-repeat: no-repeat;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><polyline points='8,12,15,8,22,12' fill='none' style='stroke:grey;stroke-width:2'/><polyline points='8,18,15,22,22,18' fill='none' style='stroke:grey;stroke-width:2'/></svg>");
     background-position: right 0.2rem top 50%;
-    background-blend-mode:luminosity;
+    background-blend-mode: luminosity;
 }
 
 select:hover {
@@ -210,10 +256,13 @@ select:hover {
     background-repeat: no-repeat;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><polyline points='8,12,15,8,22,12' fill='none' style='stroke:grey;stroke-width:2'/><polyline points='8,18,15,22,22,18' fill='none' style='stroke:grey;stroke-width:2'/></svg>");
     background-position: right 0.2rem top 50%;
-    background-blend-mode:luminosity;
+    background-blend-mode: luminosity;
 }
 
-input[type="text"], input[type="email"], input[type="password"], textarea{
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
     width: 100%;
     font-size: 1em;
     padding: 0.5rem 1rem;
@@ -225,14 +274,17 @@ input[type="text"], input[type="email"], input[type="password"], textarea{
     margin: 0.5rem 0;
 }
 
-input[type="text"]:hover, input[type="email"]:hover, input[type="password"]:hover, textarea:hover{
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="password"]:hover,
+textarea:hover {
     background-color: var(--neutral-2);
 }
 
 
 /* Dialogs */
 
-dialog{
+dialog {
     width: 80%;
     max-width: 40em;
     background-color: var(--neutral-0);

@@ -1,0 +1,647 @@
+{{ define "head" }}
+<title>Manifiesto del currículo abierto</title>
+<script src="/static/js/notes.js" defer></script>
+<script src="/static/js/menu.js" defer></script>
+<link rel="stylesheet" href="/static/css/menu.css">
+<link rel="stylesheet" href="/static/css/manifest.css">
+{{ end }}
+{{ define "body" }}
+<nav id="back">
+    <a href="/">&lt; Atzera bueltatu</a>
+</nav>
+<main>
+    <section id="intro">
+        <p>
+            Euskarazko bertsioa itzultze prozesuan dago oraindik.
+            <br>
+            Itzulpenaren azken bertsioa erakusten da. Barkatu eragozpenak.
+            <br>
+            <br>
+            <br>
+            Manifestua bi atal nagusitan banatuta dago:
+        </p>
+        <div>
+            <a href="#current-situation">Egungo hezkuntzaren <b>egoeraren azterketa</b></a>
+        </div>
+        <div>
+            <a href="#proposed-solution"><b>Proposamenaren azalpena</b></a>
+        </div>
+    </section>
+    <section id="current-situation">
+        <h2>Egungo hezkuntzaren egoera</h2>
+        <p>
+            Unibertsitateak izan dira beti ikaskuntza-zentro nagusiak, eta funtsezko zeregina izan dute gizartearen aurrerapen teknologikoan eta intelektualean.
+        </p>
+        <p>
+            Hala ere, Internetek informazioa eskuratzeko modua aldatu du, prozesua erosoagoa eta eskuragarriagoa eginez, askotan unibertsitateak gaindituz kalitatezko hezkuntza-edukia ematean. Gainera, adimen artifizialean egindako azken aurrerapenek balizko hobekuntzen aukera berri bat irekitzen dute, eta potentzial handia dute hezkuntza pertsonalizatua kostu txikian emateko.
+        </p>
+        <p>
+            Azken hogei urteetan, nabarmen handitu da teknologiak hezkuntzan izan dezakeen eraginaren eta benetako eraginaren arteko aldea.
+        </p>
+        <br>
+        <p>
+            Edozein proposamen baino lehen, interesgarria iruditzen zait Interneteko hezkuntza tradizionalaren eta autodidaktaren gabeziak aipatzea.
+        </p>
+        <h3>Hezkuntza tradizionalaren arazoak</h3>
+        <h4>Ikuspegi okerra ikaskuntza-erritmoari dagokionez</h4>
+        <p>
+            Sal Khan-en TED hitzaldi bikain bat dago. Bertan, berak "maisutzarako irakaskuntza" zer deitzen duen azaltzen du eta problema hau ezin hobeto ilustratzen du <span id="expand-khan" onclick="toggleExpand('khan')">egin klik ikusteko</span>.
+        </p>
+        <div id="expand-khan">
+            <center><iframe width="560"
+        height="315"
+        src="https://www.youtube.com/embed/-MTRxRO5SRA"
+        title="Reproductor de video de YouTube"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; compartir en la web"
+        allowfullscreen></iframe></center>
+        </div>
+        <p>Bere hitzetan</p>
+        <blockquote>
+            <p>
+                Eredu akademiko tradizionalean, ikasleak adinaren arabera taldekatzen dira, eta denak batera eramaten ditugu erritmo berean.
+            </p>
+            <p>[...]</p>
+            <p>
+                Klaseen eta zereginen ziklotik denbora finko bat igaro ondoren, azterketa bat duzu. Bertan, bakoitzak emaitza bat lortzen du ezagutzan arrakalak identifikatzeko helburuarekin, eta azterketak bere ezagutzan arrakala horiek identifikatu bazituen ere, klase osoa hurrengo gaira pasatzen da, ziurrenik arrakala horietan oinarritzen den gai aurreratuago batera.
+            </p>
+            <p>[...]</p>
+            <p>
+                Honek jarraituko du uneren batean ikaslea izutu arte. Ez gaia bereziki zaila delako edo ikaslea distiratsua ez delako; baizik eta ez zekizkien gauza horiek agertzen ari direlako, ulertzen ez duelako eta deskonektatzen hasten delako.
+            </p>
+            <p>[...]</p>
+            <p>Zulo horiek aztertu eta identifikatzeko lana hartu genuen, baina gero justu haien gainean eraiki genuen.</p>
+        </blockquote>
+        <p>
+            Azaldu du hezkuntza-sistema tradizionaletan finkoa dena zerbait ikasteko denbora dela, eta aldagarria dena lortutako ulermena dela.
+        </p>
+        <blockquote>
+            <p>
+                Maisutzan oinarritutako ikaskuntzaren ideia guztiz kontrakoa egitea da. Aldakorrak izan behar du zenbat denbora duen ikasle batek zerbaitetan lan egiteko, eta finkoa da materiala benetan menderatzea.
+            </p>
+            <p>[...]</p>
+            <p>
+                Ikasleak hobeto ikas dezan ez ezik, pentsamolde zuzena indartuko du. Konturatzen dira oker bazaude, ez duela esan nahi emaitza txarrak zure DNAn nolabait markatuta dituzunik, horretan lanean jarraitu behar duzula baino ez du esan nahi.
+            </p>
+        </blockquote>
+        <p style="text-align: center;">
+            <span id="expand-khan-additional" onclick="toggleExpand('khan-additional')">Ikusi hitzaldiaren aipamen gehigarri batzuk</span>
+        </p>
+        <div id="expand-khan-additional">
+            <p>
+                Abordando a los escépticos que cuestionan la viabilidad de escalar el aprendizaje personalizado basado en la maestría, Khan argumenta que los avances tecnológicos han hecho que ya no sea impracticable:
+            </p>
+            <blockquote>
+                <p>
+                    <i>¿Quieres que los estudiantes vean una explicación a su propio tiempo y ritmo? Bueno, hay un video bajo demanda para eso. ¿Necesitan práctica? ¿Necesitan feedback? Hay ejercicios adaptativos disponibles para los estudiantes.</i>
+                </p>
+            </blockquote>
+            <p>
+                <br>
+                Khan continúa presentando un maravilloso experimento mental para destacar el potencial sin explotar en la educación.
+            </p>
+            <blockquote>
+                <p>
+                    Para apreciar de lo que estamos hablando y la tragedia del potencial perdido aquí. Me gustaría hacer un pequeño experimento mental:
+                    <br>
+                    <br>
+                    Si pudiéramos ir 400 años atrás en el tiempo al oeste de Europa, que incluso entonces, era una de las partes del planeta más alfabetizadas, verías que alrededor del 15 por ciento de la población sabía leer.
+                    <br>
+                    <br>
+                    Y sospecho que si le preguntaras a alguien que sí sabía leer, digamos un miembro del clero, "¿Qué porcentaje de la población crees que es capaz de leer?" Podrían decir, "Bueno, con un gran sistema educativo, quizás 20 o 30 por ciento." Si avanzas hasta hoy, sabemos que esa predicción habría sido tremendamente pesimista, que cerca del 100% de la población es capaz de leer.
+                    <br>
+                    <br>
+                    Si te hiciera una pregunta similar: "¿Qué porcentaje de la población crees que es capaz de dominar verdaderamente el cálculo, o entender la química orgánica, o ser capaz de contribuir a la investigación del cáncer?" Muchos de ustedes podrían decir, "Bueno, con un gran sistema educativo, quizás 20, 30 por ciento."
+                </p>
+            </blockquote>
+            <p>
+                En su opinión, el desenganche es causado principalmente por la educación deficiente, no orientada a la maestría; y con un sistema educativo adecuado, esa estimación se demostrará tan pesimista como la anterior:
+            </p>
+            <blockquote>
+                <p>
+                    Ese número, el porcentaje que realmente podría dominar el cálculo o entender la química orgánica, es en realidad mucho más cercano al 100 por ciento.
+                </p>
+            </blockquote>
+        </div>
+        <p>
+            DEtorkizunari begira, Khanek maisutzan oinarritutako irakaskuntza aukera desiragarri gisa ez ezik, informazioaren iraultzaren garaiko gizarte-agindu gisa ere ikusten du; izan ere, teknologian izandako aurrerapenek, hala nola eskariaren araberako bideoek eta egokitze-ariketek, maisutzan oinarritutako ikaskuntza pertsonalizatua inoiz baino egingarriagoa izatea eragin dute.
+        </p>
+        <h4>Oharrak hartzean oinarritutako klaseak</h4>
+        <p>
+            Notak kopiatzea eskatzen duen klase-formatu tradizionala zaharkituta dago aro digitalean. Hala ere, unibertsitate gehienetan araua izaten jarraitzen du. Sixty Symbols-en YouTube-ko kanalean bideo bikain bat dago gai honi buruz. Egin klik, <span id="expand-video-sixty" onclick="toggleExpand('video-sixty')">egin klik ikusteko</span> nondik ekarri nahiko nuke:
+        </p>
+        <div id="expand-video-sixty">
+            <center>
+                <iframe width="560"
+                        height="315"
+                        src="https://www.youtube.com/embed/vv1134PLylU?si=T-EABmDQfY1pIEZo"
+                        title="Reproductor de video de YouTube"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; compartir en la web"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen></iframe>
+            </center>
+        </div>
+        <ul>
+            <li>Virginia Wolfen aipu bat:</li>
+        </ul>
+        <blockquote>
+            <p>Unibertsitateko klaseak Erdi Arotik jasotako praktika zaharkituak dira, liburuak ondasun urria zirenean.</p>
+        </blockquote>
+        <ul>
+            <li>eta autoritate zalantzagarriko beste bat:</li>
+        </ul>
+        <blockquote>
+            <p>
+                Klase tradizionalak irakaslearen koadernoko oharrak ikasleen koadernoetara transferitzea eskatzen du, bietako baten burmuinetik pasatu gabe.
+            </p>
+        </blockquote>
+        <p>Ezin ninteke gehiago ados egon.</p>
+        <p>
+            Oharrak hartzeak memorizazioarekin zertxobait lagun dezakeen arren, ez da ikasleen denbora eta ahalegina eraginkortasunez erabiltzea. Arreta osoz entzuteak aise gainditzen ditu kopiatzearen onurak. Edukia ahalik eta formatu erosoenean eman behar zaie ikasleei, eta kopiatu beharrean ulertu egin behar dute. Hori konpontzeko tresnak ditugu, kasu askotan borondatearen kontua baino ez da. <span id="expand-notes" onclick="toggleExpand('notes')">oharra ikusi</span>.
+        </p>
+        <div id="expand-notes">
+            <p class="comment">
+                Es muy común que los profesores guarden algunos ejemplos resueltos o ejercicios de examen para las clases, negándose a incluirlos en el material proporcionado. Siempre he odiado esto. Supongo que algunos profesores piensan que es la única manera de alentar la asistencia. A mi me parece mejor práctica asegurarse de que las clases proporcionen valor.
+            </p>
+        </div>
+        <h4>Gehiegizko ikuspegia ziurtapenean</h4>
+        <p>
+            Askotan, irakasten duten pertsonak azterketak prestatzen eta zuzentzen dituzten pertsona berak dira. Mundu ideal batean, hori ondo legoke, baina praktikan, interes-gatazka sortzen du, askotan azterketara bideratutako irakaskuntza batera eramanez, eta benetako ikaskuntza, berriz, deskuidatu egiten da.
+        </p>
+        <p>
+            Ziurtagiria garrantzitsua izan daitekeen arren, ezin da helburua izan. Ikaskuntzak lehena izan behar du, ziurtapenak mugatu gabe, eta ondoren bakarrik etorri behar du ziurtagiriak; beharrezkoa bada. <span id="expand-cert" onclick="toggleExpand('cert')">oharra ikusi</span>.
+        </p>
+        <div id="expand-cert">
+            <p class="comment">
+                Esto es más una opinión personal, pero la mayoría de veces está lejos de ser necesaria y es incluso contraproducente.
+            </p>
+            <p class="comment">
+                La gente dirá: <i>"Pero, ¿qué significará tener un título si cada paso realizado no está certificado?"</i> ¿Qué significa ahora? Lamentablemente, casi nada. En el sistema actual, muchos estudiantes simplemente memorizan información para aprobar los exámenes, y olvidarla poco después. Como resultado, la certificación misma pierde su significado y no refleja ni conocimiento y comprensión genuinos.
+            </p>
+            <p class="comment">
+                La prevalencia de pruebas en entrevistas de trabajo en algunos sectores evidencia aún más este punto. ¿Cuál es el propósito de tanta certificación si de todos modos se te somete a evaluaciones durante el proceso de solicitud de empleo?
+            </p>
+        </div>
+        <h4>Irakasleen ahalegina eta talentua gaizki kudeatzea</h4>
+        <h5>Beharrezkoa ez den errepikapena</h5>
+        <p>
+            Urtero eta irakasgai bakoitzerako, milaka irakaslek gai berari buruzko irakasgaiak ematen dituzte aldi berean. Munduko pertsona distiratsuenetako batzuen denbora eta ahalegina alferrik galtzea da hori. Gaur egun ditugun tresnekin, kostuak murrizteko potentziala izugarria da.
+        </p>
+        <h5>Hobekuntzak ez aprobetxatzea</h5>
+        <p>
+            Ikasleen parte-hartzea eta ulermena azalpenen kalitatearen araberakoa da neurri handi batean. Irakasle batzuk azalpen argiak eta erabilgarriak ematean nabarmentzen diren bitartean, gai konplexuak erraz ulertarazten dituzte; gaitasun honen banaketa nahiko heterogeneoa da.
+        </p>
+        <p>
+            Hezkuntza, ezagutzen dugun bezala, ez da hobetzen norbaitek orain arte gai jakin bati buruzko azalpenik onena aurkitzen duenean. Salbuespenezko azalpenak ez dira metatzen, ez dira curriculum konbentzionaletan sartzen, eta hezkuntzari ez diote ahalik eta mesederik egiten. (Okerrenak ere ez dira iragazten, hezkuntza-erakunde gehienetan ez baitago kontrol-sistema eraginkorrik, baina zentra gaitezen positiboan:) Nola liteke 3Blue1Brownekoak bezalako bideo argigarriak mundu mailako Aljebra edo Kalkulu ikastaro guztietan sartuta ez egotea, edo gutxienez gomendatuta?
+        </p>
+        <p>
+            Gizarte gisa, lehentasuna eman beharko genioke irakasleen koordinazioa eta lankidetza ahalbidetuko duten tresnen garapenari, gaur egun erredundantzian alferrik galtzen den ahalegin guztia uztartzeko.
+        </p>
+        <p>
+            Hitzaldi bikain bat grabatzen denean, adibidez, Walter Lewinen fisikako klase sinestezinak, ez du zentzurik jendeak azalpen berberen bertsio baxuagoak ematea. Balioa emateaz gain, ikasleen ikaskuntza-prozesua degradatzen du. Eskura dagoen kalitate handieneko edukia estandar bihurtu beharko litzateke, harik eta zerbait hobexeagoa den arte.<span id="expand-single-path" onclick="toggleExpand('single-path')">oharra ikusi</span>.
+        </p>
+        <div id="expand-single-path">
+            <p class="comment">
+                Con esto no niego que exista más de una manera de explicar algo, o que todas las personas aprendan de la misma manera. Aun así, me parece bastante razonable pensar que si la primera explicación que uno se encuentra es una que mucha gente ha considerado útil el aprendizaje será mejor que si se recibe una explicación aleatoria.
+            </p>
+        </div>
+        <h4>Inertzia</h4>
+        <p>
+            Unibertsitateen beste ahulgune bat ingurune aldakorrari erantzuteko geldotasuna da. Horrek azken aurrerapen teknologikoei eragiten die bereziki, askotan ez baitira kontuan hartzen ahal bezainbat denboran, eta atzerapen bat sortzen da gizarteak jendeak jakin behar duenaren eta ikasleek ikasten dutenaren artean.
+        </p>
+        <p>
+            Irakasleen gaitasunik ezaren edo apatiaren seinale bat baino gehiago, atzerapen hori sistemari datxekio, eta hain inertzia handia duenez, berbideratzeak ahalegin titanikoa eskatzen du.
+        </p>
+        <h4>Unibertsitateak ez daude beti eskuragarri</h4>
+        <p>Kexa horiek guztiak gorabehera, hezkuntza suboptimo batek bat ere ez baino hobea izaten jarraitzen du.</p>
+        <p>
+            Our World in Data-ren hurrengo grafikoak hirugarren mailako hezkuntza herrialde bakoitzean osatu duten biztanleen proportzioa erakusten du.
+        </p>
+        <center>
+            <iframe src="https://ourworldindata.org/grapher/share-of-the-population-with-completed-tertiary-education?time=2010"
+                    loading="lazy"
+                    style="width: 100%;
+                           height: 600px;
+                           border: 0px none"></iframe>
+        </center>
+        <p>
+            Kezkagarria da % 0tik % 10era bitarteko taldean dagoen globoaren proportzioa. Iturrian adierazten den bezala, munduko herrialde pobreenetako askotan, % 1ek baino gutxiagok amaitu dute hirugarren mailako hezkuntza. Erraza izan daiteke alde batera uztea, baina horrek esan nahi du herrialde osoan ez dagoela medikurik edo ingeniaririk.
+        </p>
+        <p>
+            Herrialde batek epe luzera independentzia teknologikoa lortzeko eta garapen arrakastatsua izateko, ezinbestekoa da goi-mailako hezkuntzan oinarri sendoa izatea. Horrek tokiko komunitateak ahalduntzen ditu beren arazoei irtenbide berritzaileak sortzeko, herrialde garatuagoen mende egon beharrean.
+        </p>
+        <h3>Interneten egituratu gabeko informazio librean oinarritutako hezkuntzaren arazoak</h3>
+        <p>
+            Lehen esan bezala, Internet da, beharbada, ikastun arin eta "autodidakta" baten ezagutza-iturririk onena. Hala ere, ez da konponbide perfektua eta hainbat desabantaila garrantzitsu ditu.
+        </p>
+        <h4>Desordena</h4>
+        <p>
+            Interneteko informazioaren ugaritasuna bi ahoko arma da. Interneteko autoikaskuntza prozesua ez da beti argia, batez ere gai aurreratuak direnean. Gaia aldez aurretik ulertu gabe, zaila izan daiteke jakitea zer den garrantzitsua ikastea eta zer ez.
+        </p>
+        <p>Hezkuntza tradizionalean ez bezala, ez dago ikasketa-planik ezarrita, ezta gaien progresio argirik ere.</p>
+        <p>
+            Helbide-falta horren ondoriozko eraginkortasunik ezak kalitate handiko informazioa eskuratzearen onurak gaindi ditzake.
+        </p>
+        <h4>Fidagarritasunik eza</h4>
+        <p>
+            Beste desabantaila garrantzitsu bat da edukiaren fidagarritasuna ez dagoela inola ere ziurtatuta. Desinformazioa, perspektiba lerratuak eta material deseguneratua erraz sar daitezke online baliabideetan, eta ikasleentzat funtsezkoa da aurkitzen dituzten iturriak kritikoki ebaluatzea.
+        </p>
+        <h4>Ziurtagiriarekiko bateraezintasuna</h4>
+        <p>
+            Interneten informazio librean eta desegituratuan oinarritutako hezkuntza berez bateraezina da ziurtagiriarekin, askotan enplegurako baldintza baita.
+        </p>
+        <p>
+            Gainera, ez dago modu errazik zer edo zenbat ikasi duzun jakinarazteko. Unibertsitateetan, informazio hori diploma bakar batean konprimatzen da. Horri esker, beste batzuek, ia berehala, gai zarenaren gutxi gorabeherako ideia bat egin dezakete.
+        </p>
+        <h3>Online ikastaroei kritika</h3>
+        <p>Ohiko hezkuntza-sistematik kanpo diharduten online ordainketa-ikastaroetan gorakada bat ikusten ari gara.</p>
+        <p>
+            Pertsona batzuek esan dezakete online ikastaroen merkatuak izateak hezkuntza ireki eta deszentralizatuko duela; baina, nire ustez, hori errealitatetik nahiko urrun dago. Hauek ez dituzte hain laudatuak diren merkatu-indarrak jarraitzen. Ikasleek ezin dituzte ikastaroak alderatu, normalean pertsonak ez baitira gai berari buruzko ikastaro askotan inskribatzen konparazio informatuak egiteko. Aldiz, erabakiak hartzeko prozesua askotan autoritate-falazian eta marketin-taktiketan oinarritzen da. Horrela, sortzaile txikiei bizimodua ateratzen utzi beharrean, gertatzen ari dena da unibertsitateak ordezten ari direla ospedunek emandako online masterclassen joera baten ondorioz (ez dira nahitaez irakasle onak).
+        </p>
+        <p>
+            Ziurtapenari dagokionez, ia ezinezkoa da jakitea nola hartuko den kontuan ikastaro bat, estandarizazioaren aurkakoak baitira praktikan.
+        </p>
+        <p>
+            Zer ekarriko du hezkuntzarako etorkizunak? Unibertsitateak desagertuko al dira, hezkuntza Udemy edo Masterclass bezalako plataformetan eskainitako ikastaro askotan soilik oinarrituta utzita? Egia esan, ez du axola edukia zein bikaina den, ez dut uste plataforma horiek unibertsitateen parekoak izan daitezkeenik pertsonen hezkuntza-garapena gidatzeko.
+        </p>
+        <p>
+            Ez dut esaten ikastaro komertzial horiek baliagarriak ez direnik edo baliorik ematen ez dutenik, ezta sortzaileek beren ahaleginagatik ekonomikoki saririk jaso behar ez dutenik ere. Ez dira nire ustez hezkuntzak funtzionatu beharko lukeen bezalakoak. Unibertsitateen eraginkortasunik ezak konpentsatzeko horietan oinarritzea dirudiena baino arriskutsuagoa izan liteke.
+        </p>
+    </section>
+    <section id="proposed-solution">
+        <h2>Proposatutako irtenbidea</h2>
+        <h3>Ikuspegi orokorra</h3>
+        <p>Kalitate handiko curriculuma elkarlanean garatzeko plataforma bat da proposamena.</p>
+        <p>Ateratzen den ikasketa-plana libreki eskuratu ahal izango da Interneten.</p>
+        <p>
+            Ziurtapenerako estandar gisa ere balioko du plataformak, unibertsitateek eta beste erakunde batzuek erabili ahal izango dutena.
+        </p>
+        <br>
+        <p>
+            Unibertsitateko irakasleek plataformaren edukia erabili ahal izango dute beren eskoletarako erreferentzia gisa, bai eta haren garapenean lagundu ere.
+        </p>
+        <p>
+            Irakasleek ahaleginak batu eta lankidetzan aritzeko tresna izango da, lan guztia modu independente eta erredundantean egin beharrean. Ikasketa-prozesu hoberenerako optimizatutako curriculum bakarra egongo da.
+        </p>
+        <p>
+            Irakasleek sortu eta adostuta dagoenez, diseinu bakoitzeko peer-reviewed egongo da. Horrek kalitate-kontrolerako mekanismo gisa balioko du, gardentasuna hobetuko du eta alborapenak eta doktrinazioa ezabatuko ditu, ikasketa-plan fidagarri eta zorrotz bat eskainiz.
+        </p>
+        <br>
+        <p>
+            Unibertsitateak izango dira ziurtapen-organo nagusia. Ziurtapen-lanak diseinatu ahal izango dituzte, hala nola azterketak edo proiektuak, ikasleak eskatutako ezagutzak dituela egiaztatzeko. Emaitza ona izan ondoren, plataforman erregistratu ahal izango dute.
+        </p>
+        <p>
+            Gainera, sistemak unibertsitate-hezkuntza ahalbidetuko du, ziurtagiritik pasatzeko derrigortasunik gabe, eta unibertsitate batetik ziurtagiri bat lortzeko aukerari eutsiko dio ikasleak beharrezkotzat jotzen badu. Hori abantaila handia da online ikastaro independenteen aldean, ez baitira estandar bakar batera mugatzen.
+        </p>
+        <br>
+        <p>
+            Ahalik eta ikastaro onenen bilduma hori Interneten eskuragarri egongo da, eta horrek esan nahi du munduko pertsona guztiek izango dutela unibertsitaterik onenen hezkuntza bezain ona izateko aukera. Horrek eragin positibo handia izango du hirugarren mailako hezkuntza eskuragarri ez dagoen edo eskuragarria ez den herrialdeetan. Desberdintasuna murriztuko du, eta aurrerapen eta garapen globala sustatuko ditu.
+        </p>
+        <br>
+        <p>Sistemaren beste onura batzuk:</p>
+        <ul>
+            <li>
+                Hezkuntza asinkronoa ahalbidetzea. Ikasle independenteentzat, plangintza ez da adinaren arabera zehaztuko, eta ez da eperik egongo. Beren erritmoan ikasiko dute, "maisutzarako irakaskuntza" hori ahalbidetuz.
+            </li>
+            <li>
+                Ikaskuntza-prozesua ziurtapenera bideratuta egotea saihestea. Curriculuma sortzearen eta ziurtatzearen arteko desakoplamenduari esker lortuko da hori.
+            </li>
+            <li>
+                Hezkuntza-sistemaren malgutasuna eta aurrerapen teknologikoekiko iragazkortasuna hobetzea. Sortzen ari den gai bateko adituek ikastaro bat sortu ahal izango dute harentzat, edo lehendik dauden ikastaroekin integratu. Ez da beharrezkoa izango irakasle guztiak ikasgai batean hezi arte itxarotea ezagutza hori zabaldu ahal izateko. Askoz ere konponbide bizkorragoa da.
+            </li>
+            <li>
+                Mugikortasun akademiko handiagoa sinplifikatzea eta sustatzea. Curriculum estandarizatu batekin, ikasleek erraz ikasi ahal izango dute hainbat unibertsitatetan, beren kredituak edo programa akademikoak baliozkotzeko zailtasunez arduratu gabe.
+            </li>
+        </ul>
+        <br>
+        <p>
+            Laburbilduz, proposamenaren helburua Internet ahalik eta gehien aprobetxatzea da, unibertsitate-hezkuntza ahalik eta onena izan dadin.
+        </p>
+        <h3>Zertan bereizten da dauden beste soluzioetatik?</h3>
+        <p>
+            Hau ez da lineako lehen plataforma irekia eta doakoa. Hainbat plataforma arrakastatsuk, hala nola MIT OpenCourseWare, Khan Academy, OpenLearn eta edX, ikastaro bikainen katalogo zabala eskaintzen dute dagoeneko.
+        </p>
+        <p>Hala ere,</p>
+        <ul>
+            <li>
+                <p>
+                    <b>Ez dute lankidetzazko ikastaroak sortzeko tresnarik.</b>
+                </p>
+            </li>
+            <li>
+                <p>
+                    Plataforma horietako askotan, ikastaroek erakunde independente gisa funtzionatzen dute askotan, eta mendekotasun argiak eta ikasteko bide koherentea falta dira. Gehiago dira ikastaroen katalogo bat, unibertsitate-curriculum oso bat baino.
+                </p>
+            </li>
+            <li>
+                <p>
+                    Horietako batzuetan, ikastaroak errepikatzea eta gainjartzea baimentzen da. Ikasleen ikuspegitik, desafiatzaile bihurtzen da denboraren inbertsio baliotsuagoa zer maila den zehaztea. Eboluzioan dagoen ikastaro bakarra izatea onuragarriagoa izango litzateke.
+                </p>
+            </li>
+            <li>
+                <p>
+                    Ez daude unibertsitateekin integratzeko pentsatuta. Irakasleek ikasgeletan plataforma horien edukia material osagarri gisa sar dezaketen bitartean, ez dira curriculum integralak.
+                </p>
+            </li>
+        </ul>
+        <p>
+            Wikiversity izan daiteke proposamen honen antz handiena duen adibidea. Wikipedia bezalakoa da, baina ikastaroetarako. Hala ere, ez dirudi nahiko pertsonak pizgarririk duenik erabiltzeko, eta, beraz, edukia ez da garatu unibertsitateen pareko kalitate-maila bateraino. Helburu horretarako plataforma bat diseinatzea ez da lan erraza, eta hausnarketa handiagoa eskatzen du.
+        </p>
+        <h3>Sistemaren arkitektura</h3>
+        <p class="comment">Erakutsitako adibideak erakusteko baino ez dira, eta ez curriculum-proposamen baterako.</p>
+        <h4>Curriculumaren egitura – Grafoa</h4>
+        <p>Curriculuma grafo zuzendu batean aurkezten da:</p>
+        <ul>
+            <li>
+                <p>
+                    nodoak <b>unitateak</b> dira
+                </p>
+            </li>
+            <li>
+                <p>
+                    beren arteko estekek <b>dependentziak</b> adierazten dituzte
+                </p>
+            </li>
+        </ul>
+        <figure>
+            <img src="/static/media/graph_example.png" />
+        </figure>
+        <br>
+        <p>
+            <b>Taldeak</b> unitate multzoak dira.
+        </p>
+        <figure style="max-width:130rem;">
+            <img src="/static/media/graph_example_groups.png" />
+        </figure>
+        <p>Testuingurua ematen diote grafoari, eta mendekotasun-definizio sinpleagoak ahalbidetzen dituzte.</p>
+        <br>
+        <br>
+        <h5>Gida-sistema</h5>
+        <p>Hurrengo urratsen kopuru handiak ikasleak har ez ditzan, gida-sistema batek berebiziko garrantzia du.</p>
+        <p>
+            Estrategiarik errazena ikasleak trebetasun objektiboak hautatzea litzateke, sistemak bere mendekotasunak aurki ditzan eta horietara daraman bidea nabarmendu ahal izan dadin ikasleak jarrai diezaion.
+        </p>
+        <p>
+            Beste ikuspegi bat sisteman lan-eskaintzak inplementatzea izan daiteke. Gomendioek mesede handia egingo liokete bidearen amaieran lan-merkatua sartzeari. Enplegu-emaileek lan-eskaintzak argitaratzeko aukera izango lukete, haien betekizunak zehaztuta. Informazio hori ikasleentzako gomendio pertsonalizatuak sortzeko erabil liteke, bi modutan:
+        </p>
+        <ul>
+            <li>
+                <p>Ikasleek aktiboki aukeratzen dute lan-eskaintza bat, eta dependentzia guztiak nabarmentzen dira.</p>
+            </li>
+            <li>
+                <p>
+                    Ikasleek lan-eskaintza espezifikorik gabe jarraitzen dituzte beren interesak, baina lehentasuna ematen zaie lan-aukera gehiago eskaintzen dituzten unitateei. Horrek bermatzen du ikasleek lan-merkatuan bilatzen diren trebetasunak eskuratzea, enplegagarritasuna handituz.
+                </p>
+            </li>
+        </ul>
+        <p>
+            Tradizioz, gizarteak gizabanakoak esleitu izan ditu unibertsitate-plaza mugatuetan oinarritutako lanetarako; horien lehentasuna azterketen kalifikazioen edo hezkuntzagatik ordaintzeko gaitasunaren arabera zehazten da. Hala ere, horrek lan-merkatuaren etorkizuneko beharrak aurreikustea eskatzen du, eta hori nahiko zaila da ondo egiteko. Lan-eskaintzak ikastaroen gomendioen motorrean txertatzean, arazo horri irtenbide naturalagoa ematea lor daiteke, trebetasunak lan-merkatuaren beharrekin modu dinamiko eta malguan lerrokatzeko aukera ematen baitu.
+        </p>
+        <p>
+            Enpresek mesede handia egingo liekete ikastaroak sortzeari, enplegatuak behar diren trebetasunekin prestatuta irits daitezen ahalbidetuz. Horrek enpresen ezagutzak hezkuntza-sistemara transferitzea erraztuko luke.
+        </p>
+        <h4>Unitateen edukia</h4>
+        <p>Unitateetan honako hauek izango dira:</p>
+        <ul>
+            <li>
+                <p>
+                    Testuliburu tradizionalaren antzekoak diren <b>oharrak</b>
+                </p>
+            </li>
+            <li>
+                <p>
+                    Oharretan oinarritutako <b>azalpen-bideo</b> bat
+                </p>
+            </li>
+            <li>
+                <p>
+                    <b>Ariketa bilduma</b> bat, ikasleek unitatea behar bezala ulertu zuten egiazta dezaten.
+                </p>
+            </li>
+        </ul>
+        <h5>Hizkuntzaren kudeaketa</h5>
+        <p>Curriculuma ingelesez garatuko da, eta itzulpena automatikoki egingo da machine learning eredu baten bidez.</p>
+        <p>
+            Itzulpena egokia ez den egoeretan, itzulpen automatikoa zuzendu ahal izango da oharren artxiboan etiketa espezializatu batzuk erabiliz.
+        </p>
+        <p>
+            Noizean behin, eredua desadostasunekin entrenatuko da, etorkizunekoak saihesteko. Horrek ere antzinako zuzenketa batzuk alferrikakoak egingo lituzke, eta horiek ezabatzea ahalbidetuko luke.
+        </p>
+        <h4>Kode irekiko curriculuma garatzeko proposamenen sistema</h4>
+        <p>
+            Lankidetza-sistema proposamenetan eta inkestetan oinarritzen da. Denek egin ditzakete proposamenak eta inkestetan bozkatu.
+        </p>
+        <p>
+            Garapen guztia ikasleei ezkutatuta egongo da, eta azken bertsioa bakarrik ikusten dute gaindituta ikasketa moduan dauden bitartean.
+        </p>
+        <h5>Proposamenak</h5>
+        <p>Proposamen bat aldaketa-bilduma bat da.</p>
+        <p>
+            Proposamenek aldaketak izan ditzakete, bai unitateen edukian, bai haien geletan, grafoaren topologia aldatu ahal izateko.
+        </p>
+        <p>Proposamen bat prest dagoenean, bozketara bidaltzen da.</p>
+        <h5>Bozketak</h5>
+        <p>Proposamen bakarreko bozketa galdera bat baino ez da, bai ala ez.</p>
+        <p>Edozeinek eman dezake botoa.</p>
+        <p>Proposamenaz eta bozketaz gain, iruzkinen atal bat ere badu, upvote/downvote funtzioarekin, reddit estiloan.</p>
+        <figure style="max-width:80rem; margin-top:4rem; margin-bottom:4rem;">
+            <img src="static/media/single_proposal_poll.png"
+                 style="border-radius: 2rem;
+                        border: 12px black solid;
+                        opacity:0.9" />
+        </figure>
+        <h6>Gelditzeko irizpideak</h6>
+        <p>
+            Inkestak geldituko dira "gizartearen benetako iritzia" balio jakin baten gainetik egoteko probabilitate minimo jakin bat dagoenean; adibidez, % 99ko probabilitatea badago gizartearen % 50 baino gehiago proposamenarekin ados egoteko. Hori T-student proba baten bidez zehaztuko da.
+        </p>
+        <p>
+            Bi balio horiek doitu egin daitezke erabakiak hartzeko abiadura moteltzeko, eta egiten ari den aldaketaren tamainaren araberakoak ere izan daitezke.
+        </p>
+        <p>
+            Ikuspegi horrekin, hobekuntza txiki eta bistakoak (adibidez, akats tipografikoen zuzenketak) azkar gertatuko dira, boto gehienak ados egongo direlako eta adierazgarritasun estatistikoa azkar lortuko delako. Aitzitik, aldaketa luze eta garrantzitsuek denbora gehiago hartuko dute inkestetako eztabaida dela eta.
+        </p>
+        <p>
+            Sistema koordinatutako pertsona-talde txikiek manipulatzea saihesteko, adierazgarritasun estatistikoa lortzeaz gain, gutxieneko denbora-tarte bat eta gutxieneko boto-kopuru bat behar dira inkestak amaitzeko. Zenbat eta pertsona gehiagok erabili plataforma, orduan eta seguruagoa izango da horrelako erasoen aurrean.
+        </p>
+        <h6>Hainbat proposamenen inkestak</h6>
+        <p>
+            Abian diren hainbat proposamenek zati bera aldatu nahi dutenean, proposamenen arteko talkatzat hartzen da, eta proposamen askoren inkesta bat hasten da.
+        </p>
+        <figure style="max-width:80rem; margin-top:4rem; margin-bottom:4rem;">
+            <img src="static/media/multiple_proposal_poll.png"
+                 style="border-radius: 2rem;
+                        border: 12px black solid;
+                        opacity:0.9" />
+        </figure>
+        <p>
+            Pertsonek konbinazio guztien artean gustukoen duten aukeraren alde bozka dezakete. Horri esker, proposamen guztiak jatorrizkoaren aurka bozkatzen dira, baita gatazkan dauden proposamenen artean ere. Inkesta guztiek proposamen bakarreko inkesten arau berak jarraitzen dituzte hemen.
+        </p>
+        <p>
+            Hobekuntza argi eta garbi duen proposamen batean aldaketa txiki bat egiten bada, berrikusitako bertsioak erraz eta nahiko azkar ordezka dezake jatorrizko proposamena, bere botoak metatuta mantentzen dituen bitartean. Ikuspegi horrek aukera ematen du proposamen bat elkarlanean hobetzeko, inkesta berrabiarazi beharrik gabe.
+        </p>
+        <h6>Botoen ponderazioa</h6>
+        <p>
+            Beharrezkoa bada, botoak gizabanakoek eztabaidatutako gaiari buruz duten ezagutzaren arabera haztatu ahal izango dira. Horrek iritzirik eskarmentudun eta jakintsuenak zabaltzen lagun lezake.
+        </p>
+        <p>Ponderazioak honako hauek har ditzake kontuan:</p>
+        <ul>
+            <li>
+                <p>Gizabanakoak irakurri edo ziurtatu zuen proposamenaren mende dauden unitateen kopurua.</p>
+            </li>
+            <li>
+                <p>Gizabanakoak irakurri edo ziurtatu zituen unitateen guztizko kopurua.</p>
+            </li>
+            <li>
+                <p>
+                    Sistemari egindako ekarpenetatik erator litezkeen beste ospe metrika batzuk (hala nola onartutako proposamenen kopurua, edo ebazpenarekin lerrokatu ziren botoen proportzioa, adibidez).
+                </p>
+            </li>
+        </ul>
+        <h6>Botetatik babestea</h6>
+        <p>
+            Plataforma horretan garatutako curriculumak eragin orokor esanguratsua izango du, eta horrek eragin lezake inkesten emaitzak manipulatzeko diseinatutako botak sortzea.
+        </p>
+        <p>
+            Arrisku horrek egiaztapen-metodo sendo bat inplementatzera behartzen du, hala nola erabiltzaileek beren nortasuna egiaztatzera, identifikazio-agiri nazional ofizialak erabiliz.
+        </p>
+        <h4>Ariketak</h4>
+        <p>
+            Plataformako jardueren helburua ikasleek edukia behar bezala ulertu ote zuten egiaztatzea da. Ez dira lotesleak, eta ez dira ziurtapenerako.
+        </p>
+        <p>Ez dago eperik, dena denboraren mende dago.</p>
+        <p>Irakasle baten gainbegiratze-beharraren arabera, zereginak gainbegiratu daitezke edo ez.</p>
+        <h5>Ikuskatu gabeko zereginak</h5>
+        <p>
+            Gainbegiratu gabeko atazak zalantzarik gabe konpon daitezkeenak dira, soluzioa eta soluzio zuzena konparatuz, hala nola prozesua oso garrantzitsua ez den ariketa edo kalkulu errazak.
+        </p>
+        <p>
+            Automatizatu daitekeen guztia gainbegiratu gabeko ataza gisa automatizatu beharko litzateke, plataformarako askoz ere kostu txikiagoa dutelako eta baliabideak modu eraginkorragoan esleitzea ahalbidetzen dutelako.
+        </p>
+        <p>
+            Prozesua garrantzitsua den jarduera konplexuagoekin, irakasle baten gainbegiratzea saihesteko, adibide ebatzien bilduma bat egon liteke. Batzuk irakur zenitzake, eta gero pare bat egiten eta konponbidearen aurka zeure kabuz egiaztatzen saiatu. Hori ondo dago modu bakar batean ebazteko eta askatasuna nabarmen mugatua izateko helburua duten zereginetarako.
+        </p>
+        <h5>Gainbegiratutako zereginak</h5>
+        <p>
+            Sormena eskatzen duten edo metodo zuzen bati jarraitzen ez dioten zereginek, idazlanek bezala, irakasle baten gainbegiratzea behar dute.
+        </p>
+        <p>
+            Garrantzitsua da adieraztea ataza mota horiek direla plataformarako baliabideetan intentsiboenak. Beraz, beharrezkoa denean bakarrik erabili behar dira. Plataformaren lehen etapetan, litekeena da zeregin horiek eskaintzea bideragarria ez izatea, irakasle boluntarioen konpromisoa edo barne-irakasleei laguntzeko finantzaketa nahikoa egon ezean.
+        </p>
+        <p>
+            Zaila izan daiteke irakasleak jarduera horiek ebaluatzeko eta zuzenketak emateko antolatzea eta koordinatzea. Ondo diseinatutako sistema bat behar du, prozesua ahalik eta eraginkorrena izan dadin, kostua desarratu gabe.
+        </p>
+        <h6>Zuzenketak kontrolatzeko sistema</h6>
+        <p>
+            Edonork irakasle gisa saioa has dezakeenez, kontrol-sistema bat inplementatu behar da, nahi den sendotasuna izateko eta zuzenketa zehatzak bermatzeko.
+        </p>
+        <p>
+            Kontrol-sistema zuzenketen ebaluatzailea izango da, eta irakasleek beste irakasle batzuek egindako zuzenketak berrikusteko eta kalifikatzeko aukera izango dute. Irakasle batek beste irakasle baten zuzenketari kalifikazio bat esleitzen dionean, bere zuzenketa bidaltzeko aukera ere badute. Zuzenketa hori zuzenketa-taldeari gehituko zaio, beste irakasle batzuek ebaluatzeko.
+        </p>
+        <p>
+            Kalifikazio nahiko ona duten hainbat zuzenketa prest daudenean, zuzenketa-prozesua gelditu egingo da eta ikasleari onenen konbinazio bat erakutsiko zaio (irakasle asko zuzenketarekin ados daudela, eta ez ebaluazioaren emaitza ikaslearentzat mesedegarriagoa dela, noski).
+        </p>
+        <p>
+            Komunitatearen adostasunarekin bat datozen zuzenketak emateko irakaslearen historia errendimendu-metrika batzuk kalkulatzeko erabil daiteke. Irakasleek zuzenketa-prozesuan aktiboki parte hartzeko motibazio gisa balio dezakete, eta, beharrezkoa bada, irakasleen parte-hartzea sustatzea, beren lanagatik ordainsari egokia zehazteko erabil liteke. Horrek irakasleak beren zuzenketetan doitasun eta fidagarritasun estandar altuari eustera bultzatuko lituzke.
+        </p>
+        <p>
+            Kontrol-sistema sendo batekin, baliteke ikasleek ere zuzenketa-sisteman parte hartzea zuzenketen kalitatea sakrifikatu gabe. Zereginak ulertzeko seguru sentitzen direnean, azterketetarako prestatzeko aukera izango dute, ikaskideek bidalitako ariketak berrikusiz eta zuzenduz, eta, horrela, sistemaren funtzionamenduan lagunduko dute.
+        </p>
+        <p>
+            Nahiz eta ez den ideala, irakasle batek hala nahi badu, plataformak zuzenketa-talde itxien aukera eskain dezake. Horrek esan nahi du ikasleek talde horretan egindako zereginak irakasle horrek bakarrik zuzenduko dituela, eta irakasleak ez duela zereginen talde orokorraren zuzenketan parte hartuko.
+        </p>
+        <p>
+            Ikuspegi hori plataformaren lankidetza-balioetatik aldentzen da; hala ere, irakaslearen eta ikaslearen arteko harreman sendoen garrantzia onartzen du, laguntza pertsonalizatua emanez; eta plataformari irakaskuntza-metodo tradizionalagoak egokitzeko malgutasun nahikoa ematen dio.
+        </p>
+        <h6>AI zuzentzailea</h6>
+        <p>
+            Sistema hori inplementatuko balitz, zuzenketei buruzko datu-multzo zabal bat sortuko litzateke, haren kalitatearen ebaluazioekin batera. Horrek aukera bikaina ematen du hizkuntza-eredu bat entrenatzeko RLHF erabiliz (giza atzeraelikaduratik abiatuta errefortzuzko ikaskuntza).<span id="expand-RLHF" onclick="toggleExpand('RLHF')">oharra ikusi</span>.
+        </p>
+        <div id="expand-RLHF">
+            <p class="comment">
+                Se necesita una mayor exploración de los detalles, pero podría entrenarse un modelo para predecir las puntuaciones de las correcciones y luego usarlo como función de pérdida para entrenar otro modelo que sea capaz de generar sus propias correcciones. Es una estrategia muy similar a la seguida para el fine-tuning de chatgpt.
+            </p>
+        </div>
+        <p>
+            Plataformaren diseinuak aukera ematen du IA hori pixkanaka inplementatzeko, zuzenketa-ebaluazio automatizatuekin hasita eta gero IAk berak sortutako zuzenketak poliki-poliki txertatuta. Horrela, inplementazioarekin modu seguruan esperimentatu ahal izango litzateke.
+        </p>
+        <p>
+            Sistema hori arrakastatsua bada, kalitate handiko ariketen zuzenketaren kostua nabarmen murriztea eragin dezake.<span id="expand-jobs" onclick="toggleExpand('jobs')">oharra ikusi</span>.
+        </p>
+        <div id="expand-jobs">
+            <p class="comment">
+                La introducción de esta plataforma puede reducir la necesidad de profesores tradicionales, lo que podría llevar al desplazamiento de empleos. Sin embargo, debido a la apertura de la plataforma, los beneficios derivados de ella se comparten para el beneficio de toda la humanidad. El objetivo no es quitarles el trabajo a los profesores, sino aprovechar la tecnología para mejorar la educación y hacerla más accesible.
+            </p>
+        </div>
+        <h3>Egungo hezkuntza-sisteman inplementatzea eta integratzea</h3>
+        <p>
+            Lehen aipatu bezala, proposatutako sistema egungo hirugarren mailako hezkuntza-erakundeekin batera lan egitera bideratuta dago.
+        </p>
+        <p>
+            Etorkizuneko egoera desiragarria da unibertsitateek curriculum irekiari atxikitzea, curriculumean laguntzea, edukia eskoletan erabiltzea eta ikasleen ziurtagiriak plataforman erregistratzea.
+        </p>
+        <p>
+            Sistemak adopzio arrakastatsua izan dezan, unibertsitateek eta irakasleek pizgarriak izan behar dituzte curriculuma jarraitzeko eta plataformak emandako tresnak erabiltzeko. Jarraian, hainbat erabilera-kasu hartzen dira kontuan.
+        </p>
+        <h4>Ikasgeletan curriculuma material lagungarri gisa erabiltzen duten irakasleak</h4>
+        <p>
+            Irakasleek beren eskoletan plataforma integratzea aukera dezakete, beren unibertsitatearen onespena edo plataformarekiko koordinazioa behar izan gabe.
+        </p>
+        <p>Haientzako pizgarri nagusia curriculum irekiak ematen duen kalitatea eta fidagarritasuna da.</p>
+        <p>
+            Bestelako inplikaziorik gabe, irakasleek curriculuma erabil lezakete beren eskolak prestatzeko, edo ikasleei gomendatu ikasgaiaren material nagusi edo gehigarri gisa.
+        </p>
+        <p>
+            Era berean, ikasleek plataformako ariketak erabil ditzakete, bai gelan irakaslearen gidaritzapean, bai eskolatik kanpo ikasteko.
+        </p>
+        <p>
+            Irakasleek ariketak zuzendu nahi badituzte edo ikasleen emaitzak eskuratu nahi badituzte, ikasleen talde itxi bat sor dezakete eta plataformak emandako tresnak erabili.
+        </p>
+        <h4>Curriculumari atxiki eta plataformarekin koordinatzen diren unibertsitateak</h4>
+        <p>
+            Plataformaren inplementazioa harago joan liteke unibertsitatearekin, eskainitako irakasgai batean, gehiagotan edo guztietan irekitako curriculumari ofizialki atxikiz.
+        </p>
+        <p>
+            Unibertsitatea plataformarekin ere koordina liteke, ikasle batek irakasgai bat arrakastaz osatzen duenean ziurtagiria ikaslearen profilean erregistratu ahal izateko.
+        </p>
+        <h5>Kanpoko ikasleei ziurtapen-zerbitzua eskaintzen dieten unibertsitateak</h5>
+        <p>
+            Unitate bat amaitu ondoren, ikasle independenteei eskuragarri dauden ziurtapen-erakundeen zerrenda bat erakutsi ahal izango zaie.
+        </p>
+        <p>
+            Horrek lagundu egingo lieke bai ikasleei, nahiago baitute hain zurruna ez den hezkuntza, bai unibertsitateei, diru-iturri gehigarri bat lortuko bailukete.
+        </p>
+        <h5>Proiektuetara bideratutako ikaskuntza</h5>
+        <p>
+            Hain curriculum atomizatua izatearen ustekabeko emaitza da hezkuntzarako proiektuetan oinarritutako ikuspegia ahalbidetzen duela.
+        </p>
+        <p>
+            Unibertsitateek irakasgai espezifiko bat proiektuetara bidera dezakete, ikasleei beren interesekin bat datozen proiektuak aukeratzeko aukera eskainiz.
+        </p>
+        <p>
+            Ikasleak proiekturako garrantzitsua den plataformaren edukira sar daitezke. Irakasleak ebaluatu ondoren, eskuratutako ezagutza eta trebetasunak arrakastaz aplikatzea dagozkion ziurtagiriak lortzean lortuko litzateke.
+        </p>
+        <p>
+            Proiektuetan oinarritutako ikuspegi horrek ikaskuntza aktiboa, pentsamendu kritikoa eta mundu errealeko arazoak konpontzeko trebetasunen garapena sustatzen ditu, ziurtapen-sistema egoki batekin bateragarria izaten jarraitzen duen bitartean.
+        </p>
+        <h4>Plataforma bigarren hezkuntzara hedatzea</h4>
+        <p>
+            Plataforma hirugarren mailako hezkuntzara bideratuta dago, ingurune horretara egokitzen baita ondoen, batez ere edukira eta ikasleengandik espero daitekeen autonomia-mailara bideratuta dagoelako. Hala ere, adin txikiagoko irakaskuntzak edukia baino askoz gehiago inplikatzen badu ere, onuragarria izan daiteke bigarren hezkuntzan ere.
+        </p>
+        <p>
+            Curriculum irekia bigarren hezkuntzara hedatuko da, berez, irakasle gehiagok erabilgarri ikusten duten heinean eta ikasgeletan plataforma integratzen duten heinean.
+        </p>
+    </section>
+    <section>
+        <p>Eskerrik asko testua irakurtzen eman duzun denboragatik :)</p>
+    </section>
+    <script>
+        // Aplica la animación a las preguntas y respuestas
+        const elements = document.querySelectorAll('section>*');
+        elements.forEach((element) => {
+            // añade la clase animated al elemento
+            element.classList.add('animated');
+        });
+    </script>
+</main>
+{{ end }}

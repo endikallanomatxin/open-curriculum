@@ -1,0 +1,370 @@
+{{ define "head" }}
+<title>Units</title>
+<link rel="stylesheet" href="/static/css/graph.css">
+<link rel="stylesheet" href="/static/css/teach_and_learn.css">
+<link rel="stylesheet" href="/static/css/teach.css">
+<script src="/static/js/graph.js" defer></script>
+{{ end }}
+{{ define "header" }}
+<nav id="sections">
+    <a href="/teach/proposals">Curriculum design</a>
+    <a href="/teach/tasks">Tasks</a>
+    <a href="/teach/certifications">Certifications</a>
+</nav>
+{{ end }}
+{{ define "body" }}
+{{ block "main" . }}
+<main>
+    <div id="graph">
+        {{ if .Graph.Units }}
+        {{ $activeProposalID := .ActiveProposal.ID}}
+        {{ range .Graph.Units }}
+        {{ if eq .Type "ProposedCreation" }}
+        <div class="unit proposed-creation"
+             id="unit-{{ .ChangeID }}"
+             style="--horizontal-position: {{.HorizontalPosition}}"
+             proposed="true"
+             unit_id="{{.ChangeID}}">
+            <div class="node" id="node-{{ .ChangeID}}"></div>
+            <p hx-put="/set-open-unit?is_proposed=true&id={{ .ChangeID }}"
+               hx-target="body">{{ .Name }}</p>
+            <div class="controls">
+                <button class="deps" onclick="editDependency(true, {{.ChangeID}})">Edit deps</button>
+                <button class="undo"
+                        hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .ChangeID }}?active_proposal_id={{ $activeProposalID }}"
+                        hx-target="body"
+                        hx-swap="outerHTML">Undo</button>
+            </div>
+        </div>
+        {{ else if eq .Type "ProposedDeletion" }}
+        <div class="unit proposed-deletion"
+             id="unit-{{ .ID }}"
+             style="--horizontal-position: {{.HorizontalPosition}}">
+            <div class="node" id="node-{{ .ID}}"></div>
+            <p hx-put="/set-open-unit?is_proposed=false&id={{ .ID }}"
+               hx-target="body">{{ .Name }}</p>
+            <div class="controls">
+                <button class="undo"
+                        hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .ChangeID }}?active_proposal_id={{ $activeProposalID }}"
+                        hx-target="body"
+                        hx-swap="outerHTML">Undo</button>
+            </div>
+        </div>
+        {{ else if eq .Type "ProposedRename" }}
+        <div class="unit proposed-rename"
+             id="unit-{{ .ID }}"
+             style="--horizontal-position: {{.HorizontalPosition}}"
+             proposed="false"
+             unit_id="{{.ID}}">
+            <div class="node" id="node-{{ .ID}}"></div>
+            <p>{{ .Name }}</p>
+            <div class="controls">
+                <button class="deps" onclick="editDependency(false, {{.ID}})">Edit deps</button>
+                <button class="undo"
+                        hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ .ChangeID }}?active_proposal_id={{ $activeProposalID }}"
+                        hx-target="body"
+                        hx-swap="outerHTML">Undo</button>
+            </div>
+        </div>
+    {{ else }}
+        <div class="unit existing"
+             id="unit-{{ .ID }}"
+             style="--horizontal-position: {{.HorizontalPosition}}"
+             proposed="false"
+             unit_id="{{.ID}}">
+            <div class="node" id="node-{{ .ID}}"></div>
+            <p hx-put="/set-open-unit?is_proposed=false&id={{ .ID }}"
+               hx-target="body">{{ .Name }}</p>
+            {{ if not ( eq $activeProposalID 0 ) }}
+            <div class="controls">
+                <button class="deps" onclick="editDependency(false, {{.ID}})">Edit deps</button>
+                <button class="delete"
+                        hx-put="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .ID }}?active_proposal_id={{ $activeProposalID }}"
+                        hx-target="body"
+                        hx-swap="outerHTML">Delete</button>
+            </div>
+            {{ end }}
+        </div>
+        {{ end }}
+        {{ end }}
+        {{ end }}
+        {{ if not (eq .ActiveProposal.ID 0) }}
+        <form hx-post="/teach/proposal/{{.ActiveProposal.ID}}/unit_creation"
+              hx-target="body">
+            <input type="text" name="name" placeholder="Unit name">
+            <button type="submit">Create unit</button>
+        </form>
+    {{ else }}
+        <p>Activate a proposal to see curriculum modification tools</p>
+        {{ end }}
+    </div>
+    <div id="details">
+        {{ block "unit_details" . }}
+        {{ if .OpenUnit }}
+        {{ $activeProposalID := .ActiveProposal.ID}}
+        {{ with .OpenUnit }}
+        {{ if eq .Type "ProposedCreation" }}
+        <form id="rename-form"
+              hx-put="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .ID }}"
+              hx-target="body"
+              hx-swap="outerHTML">
+            <input type="text" id="name" name="name" value="{{ .Name }}">
+            <button type="submit">Rename</button>
+        </form>
+    {{ else }}
+        <form id="rename-form"
+              hx-put="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ .ID }}"
+              hx-target="body"
+              hx-swap="outerHTML">
+            <input type="text" id="name" name="name" value="{{ .Name }}">
+            <button type="submit">Rename</button>
+        </form>
+        {{ end }}
+        <form id="content-modification-form"
+              hx-put="/teach/proposal/{{$activeProposalID}}/content_modification?unit_is_proposed={{.IsProposed}}&unit_id={{.ID}}"
+              hx-target="body"
+              hx-swap="outerHTML">
+            <textarea name="content" placeholder="Enter content here">{{ .Content }}</textarea>
+            <button type="submit">Update content</button>
+        </form>
+        {{ end }}
+    {{ else }}
+        <p>Select a unit to view its details</p>
+        {{ end }}
+        {{ end }}
+    </div>
+    <div id="bottom-bar">
+        {{ block "proposals-bar" . }}
+        <div id="proposals-bar">
+            {{ if .Proposals }}
+            Active proposal
+            <select hx-get="/teach/set-active-proposal-ID"
+                    hx-target="body"
+                    hx-trigger="change"
+                    hx-include="#active-proposal"
+                    id="active-proposal"
+                    name="active_proposal_id"
+                    hx-replace-url="true">
+                {{ if eq .ActiveProposal.ID 0 }}
+                <option value="0" selected>None</option>
+            {{ else }}
+                <option value="0">None</option>
+                {{ end }}
+                {{ range .Proposals }}
+                {{ if eq .ID $.ActiveProposal.ID }}
+                <option value="{{ .ID }}" selected>{{ .Title }}</option>
+            {{ else }}
+                <option value="{{ .ID }}">{{ .Title }}</option>
+                {{ end }}
+                {{ end }}
+            </select>
+            {{ if not (eq .ActiveProposal.ID 0) }}
+            <button id="proposal-details-button">Details</button>
+            {{ end }}
+            <button id="create-proposal-button">+</button>
+        {{ else }}
+            <button id="create-proposal-button">Create new proposal</button>
+            {{ end }}
+        </div>
+        {{ end }}
+        <div id="polls">
+            <a href="/teach/polls">See polls</a>
+        </div>
+    </div>
+    <dialog id="create-proposal-dialog">
+        <button id="create-proposal-close" class="close">✕</button>
+        <form hx-post="/teach/proposal/create" hx-target="main" hx-swap="outerHTML">
+            <input type="text" name="title" placeholder="Proposal title">
+            <input type="text" name="description" placeholder="Proposal description">
+            <button type="submit">Create proposal</button>
+        </form>
+    </dialog>
+    <dialog id="proposal-details-dialog">
+        <button id="proposal-details-close" class="close">✕</button>
+        <form hx-put="/teach/proposal/{{ .ActiveProposal.ID }}/update"
+              hx-target="main"
+              hx-swap="outerHTML">
+            <label for="proposal-title">Title</label>
+            <input type="text"
+                   id="proposal-title"
+                   name="title"
+                   value="{{ .ActiveProposal.Title }}"
+                   required>
+            <br>
+            <label for="proposal-description">Description</label>
+            <textarea id="proposal-description" name="description" required>{{ .ActiveProposal.Description }}</textarea>
+            <br>
+            <button type="submit">Save Changes</button>
+        </form>
+        <div id="changes-list">
+            <h3>Changes</h3>
+            {{ $activeProposalID := .ActiveProposal.ID }}
+            {{ range .ActiveProposal.Changes }}
+            {{ $change := . }}
+            {{ if (typeIs "logic.UnitCreation" $change) }}
+            <div class="change">
+                <div class="type create">CREATE UNIT</div>
+                <div>{{ $change.Name }}</div>
+                <a class="undo"
+                   hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ $change.ID }}"
+                   hx-target="#changes-list"
+                   hx-select="#changes-list"
+                   hx-swap="outerHTML">Undo</a>
+            </div>
+            {{ else if (typeIs "logic.UnitDeletion" $change) }}
+            <div class="change">
+                <div class="type delete">DELETE UNIT</div>
+                <div>{{ $change.UnitID }}</div>
+                <a class="undo"
+                   hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ $change.ID }}"
+                   hx-target="#changes-list"
+                   hx-select="#changes-list"
+                   hx-swap="outerHTML">Undo</a>
+            </div>
+            {{ else if (typeIs "logic.UnitRename" $change) }}
+            <div class="change">
+                <div class="type rename">RENAME UNIT</div>
+                <div>{{ $change.Name }}</div>
+                <a class="undo"
+                   hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ $change.ID }}"
+                   hx-target="#changes-list"
+                   hx-select="#changes-list"
+                   hx-swap="outerHTML">Undo</a>
+            </div>
+            {{ else if (typeIs "logic.DependencyCreation" $change) }}
+            <div class="change">
+                <div class="type dependency_creation">ADD DEPENDENCY</div>
+                <div>{{ $change.DependsOnID }} > {{ $change.UnitID }}</div>
+                <a class="undo"
+                   hx-delete="/teach/proposal/{{ $activeProposalID }}/dependency_creation/{{ $change.ID }}"
+                   hx-target="#changes-list"
+                   hx-select="#changes-list"
+                   hx-swap="outerHTML">Undo</a>
+            </div>
+            {{ else if (typeIs "logic.DependencyDeletion" $change) }}
+            <div class="change">
+                <div class="type dependency_deletion">REMOVE DEPENDENCY</div>
+                <div>{{ $change.DependencyID }}</div>
+                <a class="undo"
+                   hx-delete="/teach/proposal/{{ $activeProposalID }}/dependency_deletion/{{ $change.ID }}"
+                   hx-target="#changes-list"
+                   hx-select="#changes-list"
+                   hx-swap="outerHTML">Undo</a>
+            </div>
+            {{ else if (typeIs "logic.ContentModification" $change) }}
+            <div class="change">
+                <div class="type content_modification">MODIFY CONTENT</div>
+                <div>{{ $change.UnitID }}</div>
+                <a class="undo"
+                   hx-delete="/teach/proposal/{{ $activeProposalID }}/content_modification/{{ $change.ID }}"
+                   hx-target="#changes-list"
+                   hx-select="#changes-list"
+                   hx-swap="outerHTML">Undo</a>
+            </div>
+            {{ end }}
+            {{ end }}
+        </div>
+        <button hx-delete="teach/proposal/{{ .ActiveProposal.ID }}"
+                hx-target="main"
+                hx-swap="outerHTML"
+                class="red">Delete</button>
+        <button hx-put="teach/proposal/{{ .ActiveProposal.ID }}/submit"
+                hx-target="body"
+                hx-replace-url="true">Submit</button>
+    </dialog>
+    <script>
+        var dependencies = [
+            {{range .Graph.Dependencies}}
+        {from: {{.DependsOnID}}, to: {{.UnitID}} },
+        {{end}}
+            ];
+    </script>
+    <script>
+        function initializeCreateProposalDialog() {
+            var createProposalDialog = document.getElementById('create-proposal-dialog');
+            var createProposalButton = document.getElementById('create-proposal-button');
+            var createProposalClose = document.getElementById('create-proposal-close');
+            var createProposalSubmit = document.querySelector('#create-proposal-dialog form button[type="submit"]');
+
+            createProposalButton.addEventListener('click', () => {
+                createProposalDialog.showModal();
+            });
+
+            createProposalClose.addEventListener('click', () => {
+                createProposalDialog.close();
+            });
+
+            createProposalSubmit.addEventListener('click', () => {
+                createProposalDialog.close();
+            });
+        }
+
+        function initializeProposalDetailsDialog() {
+            var proposalDetailsDialog = document.getElementById('proposal-details-dialog');
+            var proposalDetailsButton = document.getElementById('proposal-details-button');
+            if (!proposalDetailsButton) {
+                return;
+            }
+            var proposalDetailsClose = document.getElementById('proposal-details-close');
+            var proposalDetailsDelete = document.querySelector('#proposal-details-dialog button[hx-delete]');
+
+            proposalDetailsButton.addEventListener('click', () => {
+                proposalDetailsDialog.showModal();
+            });
+
+            proposalDetailsClose.addEventListener('click', () => {
+                proposalDetailsDialog.close();
+            });
+
+            proposalDetailsDelete.addEventListener('click', () => {
+                proposalDetailsDialog.close();
+            });
+
+            console.log('Properly run again');
+        }
+
+        initializeCreateProposalDialog();
+        initializeProposalDetailsDialog();
+    </script>
+    <script>
+        function editDependency(UnitIsProposed, UnitID) {
+            // When this function is called, all the units get an onclick='editDependencyContinue()' attribute
+            // That contains the unit's table and ID
+
+            // Get all the unit divs
+            var units = document.querySelectorAll('.unit');
+
+            setTimeout(() => {
+                // Add the onclick attribute to all the units
+                for (var i = 0; i < units.length; i++) {
+                    dependsOnIsProposed = units[i].getAttribute('proposed');
+                    dependsOnID = units[i].getAttribute('unit_id');
+                    units[i].setAttribute('onclick', `editDependencyContinue('${UnitIsProposed}', ${UnitID}, '${dependsOnIsProposed}', ${dependsOnID})`);
+                }
+            }, 100);
+
+        }
+
+        function editDependencyContinue(UnitIsProposed, UnitID, DependsOnIsProposed, DependsOnID) {
+            // When a unit is clicked, this function is called
+            // It sends a request to the server to create a dependency between the two units
+
+            // Remove all the onclick attributes
+            var units = document.querySelectorAll('.unit');
+            for (var i = 0; i < units.length; i++) {
+                units[i].removeAttribute('onclick');
+            }
+
+            // Send the request
+            fetch(`/teach/proposal/{{ .ActiveProposal.ID }}/toggle_dependency?unit_is_proposed=${UnitIsProposed}&unit_id=${UnitID}&depends_on_is_proposed=${DependsOnIsProposed}&depends_on_id=${DependsOnID}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        }
+
+    </script>
+</main>
+{{ end }}
+{{ end }}

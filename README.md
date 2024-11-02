@@ -2,6 +2,17 @@
 
 Made with go and postgresql.
 
+## Code organizaton
+
+- `cmd/` contains the main.go file.
+- `internal/` contains the main logic of the app.
+    - `internal/models/` contains the models of the app.
+    - `internal/db/` contains the database logic.
+    - `internal/services/` contains the services of the app.
+    - `internal/handlers/` contains the handlers of the app.
+- `web/` contains the website files.
+
+
 ## Manual
 
 To run it:

@@ -13,6 +13,9 @@
 - Create an explainer video
 
 - Platform demo:
+
+    - Restructure project.
+
     - Users
     - Teach:
         - Proposals

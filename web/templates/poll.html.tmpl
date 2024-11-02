@@ -1,0 +1,51 @@
+{{ define "head" }}
+<title>Units</title>
+<link rel="stylesheet" href="/static/css/teach_and_learn.css">
+<link rel="stylesheet" href="/static/css/teach.css">
+<script src="/static/js/graph.js" defer></script>
+{{ end }}
+{{ define "body" }}
+<nav id="top_bar">
+    <a href="/">
+        <img id="logo" src="/static/media/logo.svg">
+    </a>
+    <a href="/teach/proposals">Curriculum design</a>
+    <a href="/teach/tasks">Tasks</a>
+    <a href="/teach/certifications">certifications</a>
+</nav>
+<main>
+    <div id="poll">
+        <h2>{{ .Poll.Proposal.Title }}</h2>
+        <p>{{ .Poll.Proposal.Description }}</p>
+        <p>Yes votes: {{ .Poll.YesVotes }}</p>
+        <p>No votes: {{ .Poll.NoVotes }}</p>
+        <button hx-post="/teach/poll/{{ .Poll.ID }}/yes"
+                hx-target="main"
+                hx-swap="outerHTML">Yes</button>
+        <button class="red"
+                hx-post="/teach/poll/{{ .Poll.ID }}/no"
+                hx-target="main"
+                hx-swap="outerHTML">No</button>
+    </div>
+    <div>
+        <h3>Comments</h3>
+        <ul>
+            {{ range .Comments }}
+            <li>{{ .Content }}</li>
+            {{ end }}
+        </ul>
+        <form hx-post="/teach/poll/{{ .Poll.ID }}/comment"
+              hx-target="main"
+              hx-swap="outerHTML">
+            <input type="text" name="content" placeholder="Comment">
+            <button type="submit">Comment</button>
+        </form>
+    </div>
+    <div id="bottom-bar">
+        <div id="polls">
+            <a href="/teach/polls">Back to polls</a>
+        </div>
+    </div>
+</main>
+{{ end }}
+
