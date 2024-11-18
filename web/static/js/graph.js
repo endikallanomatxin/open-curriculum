@@ -45,6 +45,8 @@ function createArrow(from, to) {
 
     // Create the svg element with adjusted size and position
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.classList.add("dependency-arrow");
+
     svg.setAttribute("width", svgWidth + "px");
     svg.setAttribute("height", svgHeight + "px");
     svg.style.position = "absolute";
@@ -79,21 +81,26 @@ function createArrow(from, to) {
     document.body.appendChild(svg);
 }
 
-
-// Now iterate over the dependencies array and create the arrows
-if (typeof dependencies !== "undefined") {
-    dependencies.forEach(dep => createArrow(dep.from, dep.to));
+function drawArrows() {
+    if (typeof dependencies !== "undefined") {
+        dependencies.forEach(dep => createArrow(dep.from, dep.to));
+    }
 }
 
-// Redraw the arrows when the window is resized
-window.addEventListener("resize", () => {
-    document.querySelectorAll("svg").forEach(svg => svg.remove())
+drawArrows();
+
+
+// Redraw the arrows
+
+function redrawArrows() {
+    document.querySelectorAll("svg.dependency-arrow").forEach(svg => svg.remove())
     dependencies.forEach(dep => createArrow(dep.from, dep.to))
-})
+}
+
+window.addEventListener("resize", () => {redrawArrows()})
 
 window.addEventListener("htmx:afterSwap", () => {
-    setTimeout(() => {
-        document.querySelectorAll("svg").forEach(svg => svg.remove())
-        dependencies.forEach(dep => createArrow(dep.from, dep.to))
-    }, 300)
+    setTimeout(() => {redrawArrows()}, 300)
 })
+
+

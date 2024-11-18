@@ -1,46 +1,18 @@
-main {
-    font-size: 1.15rem;
-}
-
-@media screen and (min-width: 900px) {
-    main {
-        font-size: 1.25rem;
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    main {
-        font-size: 1.4rem;
-    }
-
-}
-
-main>section {
-    padding: 8rem 4vw;
-}
-
-@media screen and (max-width: 1200px) {
-    main>section {
-        padding: 4rem 4vw;
-    }
-}
-
 /* TITLE */
 
-section#title {
-    padding: 4rem 2rem;
-    padding-top: 6rem;
-    background-color: var(--ll-green);
+div#title {
+    padding: 3rem 1rem;
+    padding-top: 10vh;
     margin: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
 
     h1 {
-        font-size: 10vw;
+        font-size: clamp(1.5rem, 8vw, 8rem);
         width: fit-content;
         width: 100%;
-        max-width: 65rem;
+        max-width: 50rem;
         margin: auto;
         text-align: left;
         font-weight: 800;
@@ -56,65 +28,60 @@ section#title {
 
 /* MAIN>ABSTRACT */
 
-section#abstract {
-    background-color: var(--neutral-1);
+div#abstract {
+    max-width: 50rem;
     margin-left: auto;
     margin-right: auto;
     text-align: left;
-}
 
-section#abstract p {
-    width: 100%;
-    max-width: 65rem;
-    text-align: left;
-    margin-left: auto;
-    margin-right: auto;
-}
+    >div {
+        background-color: white;
+        display: grid;
+        grid-template-columns: 1.2em auto;
+        padding: 0.8em 1.5em;
+        border-radius: 1rem;
+        grid-gap: 1em;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
 
-section#abstract>div {
-    background-color: var(--neutral-0);
-    display: grid;
-    grid-template-columns: 1.6em auto;
-    padding: 0.4rem 1.2rem;
-    border-radius: 2rem;
-    grid-gap: 1rem;
-    max-width: 65rem;
-    margin: auto;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-}
+        >svg {
+            width: 100%;
+            margin: auto;
+            height: auto;
+        }
 
-section#abstract>div>svg {
-    width: 100%;
-    margin: auto;
-    height: auto;
+        >p {
+            margin: 0;
+            text-align: left;
+        }
+    }
 }
 
 @media screen and (min-width: 900px) {
-    section#abstract {
-        font-size: 1.3em;
-    }
+    div#abstract {
+        font-size: 1.2em;
 
-    section#abstract>div {
-        grid-template-columns: 1.8em auto;
-        padding: 1rem 2rem;
-        grid-gap: 1.5rem;
-        margin-top: 1.5rem;
-        margin-bottom: 1.5rem;
+        >div {
+            grid-template-columns: 1.8em auto;
+            padding: 1rem 2rem;
+            grid-gap: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
     }
 }
 
 @media screen and (min-width: 1200px) {
-    section#abstract {
-        font-size: 1.5em;
-    }
+    div#abstract {
+        font-size: 1.3em;
 
-    section#abstract>div {
-        grid-template-columns: 2em auto;
-        padding: 1.8rem 2.8rem;
-        grid-gap: 1.8rem;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
+        >div {
+            grid-template-columns: 2em auto;
+            padding: 1.8rem 2.8rem;
+            grid-gap: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
     }
 }
 
@@ -122,34 +89,33 @@ section#abstract>div>svg {
 
 /* MAIN>MANIFEST-FOUNDATION */
 
-section#manifest-foundation {
-    background-color: var(--neutral-0);
+div#manifest-foundation {
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 0;
 }
 
-section#manifest-foundation p {
+div#manifest-foundation p {
     text-align: left;
 }
 
 @media screen and (min-width: 1200px) {
-    section#manifest-foundation {
+    div#manifest-foundation {
         grid-template-columns: 1fr 1fr;
         grid-template-areas: "paragraph cards";
         grid-gap: 5vw;
     }
 
-    section#manifest-foundation>div.cards {
+    div#manifest-foundation>div.cards {
         grid-area: cards;
         max-width: 45rem;
     }
 
-    section#manifest-foundation>div:first-of-type {
+    div#manifest-foundation>div:first-of-type {
         grid-area: paragraph;
     }
 
-    section#manifest-foundation>div:first-of-type * {
+    div#manifest-foundation>div:first-of-type * {
         /* position: sticky;
         top: 20vw; */
         max-width: 40rem;
@@ -157,7 +123,7 @@ section#manifest-foundation p {
         margin-left: auto;
     }
 
-    section#manifest-foundation>div:first-of-type>p {
+    div#manifest-foundation>div:first-of-type>p {
         margin-top: 4rem;
     }
 }
@@ -166,7 +132,7 @@ div.card {
     padding: 2rem;
     margin: 3rem 0;
     border-radius: 1rem;
-    background-color: var(--neutral-1);
+    background-color: white;
 }
 
 @media screen and (min-width: 1200px) {
@@ -177,7 +143,7 @@ div.card {
 }
 
 div.card h2 {
-    font-size: 1.4em;
+    font-size: 1.3em;
     font-weight: 800;
     margin: 0;
     margin-bottom: 0.8rem;
@@ -202,33 +168,32 @@ div.card a {
 
 /* MAIN>FAQ */
 
-section#faq {
-    background-color: var(--neutral-1);
+div#faq {
     display: grid;
     grid-template-columns: 1fr;
 }
 
-section#faq p {
+div#faq p {
     text-align: left;
 }
 
 @media screen and (min-width: 1200px) {
-    section#faq {
+    div#faq {
         grid-template-columns: 1fr 1fr;
         grid-template-areas: "title qas";
         grid-gap: 5vw;
     }
 
-    section#faq>div.qas {
+    div#faq>div.qas {
         grid-area: qas;
         max-width: 50rem;
     }
 
-    section#faq>div:first-of-type {
+    div#faq>div:first-of-type {
         grid-area: title;
     }
 
-    section#faq>div:first-of-type * {
+    div#faq>div:first-of-type * {
         position: sticky;
         top: 20vw;
         max-width: 50rem;
@@ -236,19 +201,19 @@ section#faq p {
         margin-left: auto;
     }
 
-    section#faq>div:first-of-type>p {
+    div#faq>div:first-of-type>p {
         margin-top: 4rem;
     }
 }
 
-section#faq>div.qas>div.qa {
+div#faq>div.qas>div.qa {
     padding: 1rem 0;
     margin: 4rem 0;
     border-top: 2px solid var(--neutral-8);
 }
 
-section#faq>div.qas>div.qa>p.q {
-    font-size: 1.2em;
+div#faq>div.qas>div.qa>p.q {
+    font-size: 1.1em;
     font-weight: 700;
     margin: 1rem 0;
     line-height: 1.35em;
@@ -257,14 +222,12 @@ section#faq>div.qas>div.qa>p.q {
 
 /* Footer */
 
-footer {
-    background-color: var(--green-8);
-    color: var(--green-0);
+div#footer {
     margin: 0;
     padding: 1rem;
     font-style: italic;
-}
 
-footer p {
-    margin: 0.5rem 0;
+    p {
+        margin: 0.5rem 0;
+    }
 }

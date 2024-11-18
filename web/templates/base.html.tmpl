@@ -7,43 +7,106 @@
         <script src="/static/js/htmx.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="/static/js/viewport-checker.js"></script>
+        <script src="/static/js/header.js"></script>
         <link rel="stylesheet" href="/static/css/base.css">
+        <link rel="stylesheet" href="/static/css/graph.css">
+        <link rel="stylesheet" href="/static/css/learn.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
               rel="stylesheet">
+        <script src="/static/js/graph.js" defer></script>
         {{ block "head" . }}{{ end }}
     </head>
     <body>
         <header>
-            <div id="left">
-                <a href="/">
-                    <img id="logo" src="/static/media/logo.svg" alt="logo">
+            <a id="logo"
+               hx-get="/"
+               hx-target="#header-content"
+               hx-swap="outerhtml"
+               hx-select="#header-content"
+               hx-replace-url="true"
+               hx-on::after-request="expandHeader()">
+                <svg width="1245"
+                     height="150"
+                     viewBox="0 0 329.40626 39.687498"
+                     version="1.1"
+                     id="svg1"
+                     xmlns="http://www.w3.org/2000/svg"
+                     xmlns:svg="http://www.w3.org/2000/svg">
+                    <defs id="defs1">
+                    /* First, let's create a mask that will hide the intersection */
+                    <mask id="intersectionMask">
+                    <rect x="-20" y="70" width="370" height="60" fill="white" />
+                    <!-- The rectangle that will create the "hole" where we want to hide the 'o' -->
+                    <rect id="rect" x="-0.32979676" y="99.625938" width="7.9375" height="2.6458333" fill="black" />
+                    </mask>
+                    </defs>
+                    <g id="layer1" transform="translate(8.4893565,-80.05945)">
+                    <!-- The following paths are the letters of "open curriculum" -->
+                    <path id="oc1o" style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1" d="m 3.6387835,90.365501 a 10.583358,10.583358 0 0 0 -10.58319,10.583179 10.583358,10.583358 0 0 0 10.58319,10.58353 A 10.583358,10.583358 0 0 0 14.222313,100.94868 10.583358,10.583358 0 0 0 3.6387835,90.365501 Z m 0,5.29159 a 5.2916787,5.2916787 0 0 1 5.29159,5.291589 5.2916787,5.2916787 0 0 1 -5.29159,5.29193 5.2916787,5.2916787 0 0 1 -5.29159,-5.29193 5.2916787,5.2916787 0 0 1 5.29159,-5.291589 z" mask="url(#intersectionMask)" />
+                    <path id="oc2p" style="fill:#000000;fill-opacity:1;stroke-width:6.10995;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke" d="m 30.980533,111.4795 q -2.58519,0 -4.52408,-1.14052 -1.93889,-1.14052 -3.0414,-3.45958 -1.06449,-2.35708 -1.06449,-5.93072 0,-3.611659 1.02647,-5.930729 1.02648,-2.31907 2.96537,-3.45957 1.93889,-1.14054 4.63813,-1.14054 2.889321,0 5.170371,1.3306 2.31907,1.2926 3.64968,3.64967 1.36863,2.357111 1.36863,5.550569 0,3.23147 -1.36863,5.58855 -1.33061,2.35709 -3.649681,3.64968 -2.28105,1.29259 -5.17037,1.29259 z m -12.08956,7.07126 V 90.721981 h 5.66461 v 4.181921 l -0.114049,6.082798 0.38017,6.04477 v 11.51929 z m 11.06308,-11.93749 q 1.48268,0 2.62321,-0.68431 1.17854,-0.68433 1.862851,-1.9389 0.722339,-1.29259 0.722339,-3.04138 0,-1.786819 -0.722339,-3.041399 -0.684311,-1.2546 -1.862851,-1.9389 -1.14053,-0.68431 -2.62321,-0.68431 -1.48268,0 -2.66122,0.68431 -1.17854,0.6843 -1.86285,1.9389 -0.68432,1.25458 -0.68432,3.041399 0,1.74879 0.68432,3.04138 0.68431,1.25457 1.86285,1.9389 1.17854,0.68431 2.66122,0.68431 z" />
+                    <path id="oc3e" style="fill:#000000;fill-opacity:1;stroke-width:6.10995;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke" d="m 55.273713,111.4795 q -3.49761,0 -6.158839,-1.36861 -2.6232,-1.36863 -4.06786,-3.72573 -1.44467,-2.3951 -1.44467,-5.43648 0,-3.079419 1.40665,-5.436499 1.44466,-2.39509 3.915799,-3.725719 2.471131,-1.36862 5.58856,-1.36862 3.00338,0 5.398491,1.2926 2.43312,1.25458 3.83976,3.64969 1.406649,2.35707 1.406649,5.664578 0,0.34215 -0.038,0.79838 -0.038,0.41819 -0.0761,0.79836 h -16.61363 v -3.459588 h 13.49621 l -2.28106,1.026468 q 0,-1.596728 -0.646299,-2.775268 -0.64629,-1.17856 -1.78682,-1.82484 -1.14052,-0.68432 -2.66122,-0.68432 -1.5207,0 -2.69924,0.68432 -1.140521,0.64628 -1.78682,1.86285 -0.6463,1.17854 -0.6463,2.813298 v 0.9124 q 0,1.67277 0.72233,2.96536 0.76036,1.25457 2.09097,1.93889 1.36862,0.6463 3.19346,0.6463 1.63476,0 2.85132,-0.49423 1.25457,-0.49423 2.28105,-1.48267 l 3.15545,3.42157 q -1.40665,1.59673 -3.53562,2.47112 -2.12898,0.83639 -4.90427,0.83639 z" />
+                    <path id="oc4n" style="fill:#000000;fill-opacity:1;stroke-width:6.10995;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke" d="m 81.543803,90.417841 q 2.43312,0 4.33399,0.98845 1.93889,0.95044 3.0414,2.96537 1.1025,1.97692 1.1025,5.09432 v 11.709389 h -5.930719 v -10.79695 q 0,-2.471139 -1.102501,-3.649679 -1.064499,-1.17855 -3.041399,-1.17855 -1.40665,0 -2.54718,0.60828 -1.102501,0.57027 -1.7488,1.78682 -0.60828,1.21657 -0.60828,3.117429 v 10.11265 H 69.112083 V 90.721981 h 5.664611 v 5.664591 l -1.064491,-1.710791 q 1.10251,-2.05293 3.15544,-3.15542 2.05296,-1.10252 4.67616,-1.10252 z" />
+                    <g id="curriculum">
+                    <path id="oc5c" style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1" d="m 115.47207,111.53226 a 10.583358,10.583358 0 0 0 9.44801,-5.85959 l -4.73615,-2.36781 a 5.2916787,5.2916787 0 0 1 -4.71186,2.93574 5.2916787,5.2916787 0 0 1 -5.29166,-5.29167 5.2916787,5.2916787 0 0 1 5.29166,-5.292179 5.2916787,5.2916787 0 0 1 4.71186,2.93625 l 4.73615,-2.36833 a 10.583358,10.583358 0 0 0 -9.44801,-5.85959 10.583358,10.583358 0 0 0 -10.58385,10.583849 10.583358,10.583358 0 0 0 10.58385,10.58333 z" />
+                    <path id="oc6u" style="fill:#000000;fill-opacity:1;stroke-width:6.10995;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke" d="m 137.23939,111.4795 q -2.54717,0 -4.56209,-0.98845 -1.97692,-0.98845 -3.07942,-3.00339 -1.1025,-2.05293 -1.1025,-5.2084 V 90.721981 h 5.93071 v 10.682909 q 0,2.54717 1.0645,3.76372 1.1025,1.17854 3.07941,1.17854 1.36863,0 2.43312,-0.57025 1.06449,-0.60829 1.67277,-1.82484 0.60827,-1.25459 0.60827,-3.11744 V 90.721982 h 5.93073 v 20.453388 h -5.62659 v -5.62659 l 1.02647,1.63476 q -1.02647,2.12899 -3.04139,3.23148 -1.97691,1.06448 -4.33399,1.06448 z" />
+                    <path id="oc7r" style="fill:#000000;fill-opacity:1;stroke-width:6.10995;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke" d="M 154.72744,111.17537 V 90.721981 h 5.6646 v 5.77864 l -0.79837,-1.67277 q 0.91241,-2.16697 2.92734,-3.26947 2.01492,-1.14054 4.90427,-1.14054 v 5.47451 q -0.38019,-0.0381 -0.68433,-0.0381 -0.30414,-0.0381 -0.6463,-0.0381 -2.43311,0 -3.95382,1.40665 -1.48267,1.36864 -1.48267,4.295979 v 9.65644 z" />
+                    <path id="oc8r" style="fill:#000000;fill-opacity:1;stroke-width:6.10995;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke" d="M 170.97531,111.17537 V 90.721981 h 5.6646 v 5.77864 l -0.79837,-1.67277 q 0.91242,-2.16697 2.92735,-3.26947 2.01494,-1.14054 4.90426,-1.14054 v 5.47451 q -0.38019,-0.0381 -0.68431,-0.0381 -0.30415,-0.0381 -0.64631,-0.0381 -2.43311,0 -3.95381,1.40665 -1.48268,1.36864 -1.48268,4.295979 v 9.65644 z" />
+                    <path id="oc9i" style="fill:#000000;fill-opacity:1;stroke-width:6.10995;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke" d="M 187.22322,111.17537 V 90.721981 h 5.93072 v 20.453389 z" />
+                    <path id="oc9i_dot" style="fill:#000000;fill-opacity:1;stroke-width:6.10995;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke" d="m 190.18858,87.870671 q -1.63476,0 -2.66123,-0.950429 -1.02647,-0.950451 -1.02647,-2.35709 0,-1.40664 1.02647,-2.35708 1.02647,-0.95043 2.66123,-0.95043 1.63474,0 2.66122,0.9124 1.02647,0.8744 1.02647,2.28106 0,1.48269 -1.02647,2.47114 -0.98845,0.95043 -2.66122,0.950429 z" />
+                    <path id="oc10c" style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1" d="m 207.99743,111.53226 a 10.583358,10.583358 0 0 0 9.44801,-5.85959 l -4.73615,-2.36781 a 5.2916787,5.2916787 0 0 1 -4.71186,2.93574 5.2916787,5.2916787 0 0 1 -5.29166,-5.29167 5.2916787,5.2916787 0 0 1 5.29166,-5.292179 5.2916787,5.2916787 0 0 1 4.71186,2.93625 l 4.73615,-2.36833 a 10.583358,10.583358 0 0 0 -9.44801,-5.85959 10.583358,10.583358 0 0 0 -10.58385,10.583849 10.583358,10.583358 0 0 0 10.58385,10.58333 z" />
+                    <path id="oc11u" style="fill:#000000;fill-opacity:1;stroke-width:6.10995;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke" d="m 229.76475,111.4795 q -2.54717,0 -4.56211,-0.98845 -1.97689,-0.98845 -3.0794,-3.00339 -1.1025,-2.05293 -1.1025,-5.2084 V 90.721981 h 5.93072 v 10.682909 q 0,2.54717 1.06449,3.76372 1.1025,1.17854 3.07941,1.17854 1.36864,0 2.43311,-0.57025 1.06449,-0.60829 1.67277,-1.82484 0.60828,-1.25459 0.60828,-3.11744 V 90.721982 h 5.93073 v 20.453388 h -5.62659 v -5.62659 l 1.02648,1.63476 q -1.02648,2.12899 -3.04142,3.23148 -1.97689,1.06448 -4.33397,1.06448 z" />
+                    <path id="oc12l" style="fill:#000000;fill-opacity:1;stroke-width:6.10995;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke" d="M 247.2528,111.17537 V 82.966421 h 5.93072 v 28.208949 z" />
+                    <path id="oc13u" style="fill:#000000;fill-opacity:1;stroke-width:6.10995;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke" d="m 267.32603,111.4795 q -2.54717,0 -4.56209,-0.98845 -1.97691,-0.98845 -3.07941,-3.00339 -1.10252,-2.05293 -1.10252,-5.2084 V 90.721981 h 5.93072 v 10.682909 q 0,2.54717 1.06451,3.76372 1.10249,1.17854 3.0794,1.17854 1.36864,0 2.43311,-0.57025 1.0645,-0.60829 1.67279,-1.82484 0.60826,-1.25459 0.60826,-3.11744 V 90.721982 h 5.93073 v 20.453388 h -5.62659 v -5.62659 l 1.02647,1.63476 q -1.02647,2.12899 -3.04139,3.23148 -1.9769,1.06448 -4.33399,1.06448 z" />
+                    <path id="oc14m" style="fill:#000000;fill-opacity:1;stroke-width:6.10995;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke" d="m 311.00809,90.417841 q 2.43312,0 4.29598,0.98845 1.90087,0.95044 2.96536,2.96537 1.10251,1.97692 1.10251,5.09432 v 11.709389 h -5.93073 v -10.79695 q 0,-2.471139 -1.02648,-3.649679 -1.02647,-1.17855 -2.88931,-1.17855 -1.29262,0 -2.31907,0.60828 -1.02648,0.57027 -1.59674,1.74881 -0.57025,1.17853 -0.57025,3.003379 v 10.26471 h -5.93074 v -10.79695 q 0,-2.471139 -1.02647,-3.649679 -0.98845,-1.17855 -2.85131,-1.17855 -1.29259,0 -2.31905,0.60828 -1.02648,0.57027 -1.59674,1.74881 -0.57027,1.17853 -0.57027,3.003379 v 10.26471 h -5.93071 V 90.721981 h 5.6646 v 5.58856 l -1.06448,-1.63476 q 1.06448,-2.09095 3.00336,-3.15542 1.97691,-1.10252 4.48607,-1.10252 2.81328,0 4.90424,1.44465 2.12898,1.40665 2.8133,4.334 l -2.09096,-0.57026 q 1.02647,-2.39509 3.2695,-3.80174 2.28104,-1.40665 5.20839,-1.40665 z" />
+                    </g>
+                    </g>
+                </svg>
+            </a>
+            <nav id="menu">
+                {{ if eq .User nil }}
+                <a hx-get="/login"
+                   hx-target="#header-content"
+                   hx-swap="outerhtml"
+                   hx-select="#header-content"
+                   hx-replace-url="true">
+                    <img src="/static/media/logging.svg" alt="logging">
+                    <p>Log in</p>
                 </a>
-                <nav id="mode">
-                    <a href="/learn">Learn</a>
-                    <a href="/teach">Teach</a>
-                </nav>
-                {{ block "header" . }}{{ end }}
-            </div>
-            <div id="right">
-                <nav>
-                    {{ if eq .User nil }}
-                    <a href="/login">Login</a>
-                    <a href="/register">Register</a>
-                {{ else }}
-                    <a href="/logout">Logout</a>
-                    {{ end }}
-                </nav>
-                <nav id="language">
-                    <a href="/set-language?lang=en&redirect={{.URL | urlquery}}">EN</a>
-                    &nbsp;|&nbsp;
-                    <a href="/set-language?lang=es&redirect={{.URL | urlquery}}">ES</a>
-                    &nbsp;|&nbsp;
-                    <a href="/set-language?lang=eu&redirect={{.URL | urlquery}}">EU</a>
-                </nav>
-            </div>
+            {{ else }}
+                <a hx-get="/learn"
+                   hx-target="main"
+                   hx-swap="innerHTML"
+                   hx-select="main"
+                   hx-replace-url="true"
+                   hx-on::after-request="collapseHeader()">
+                    <img src="/static/media/learn.svg" alt="learn">
+                    <p>Learn</p>
+                </a>
+                <a href="/curriculum-modification">
+                    <img src="/static/media/curriculum_modification.svg"
+                         alt="curriculum modification">
+                    <p>
+                        Curriculum
+                        <br>
+                        modification
+                    </p>
+                </a>
+                <a href="/logout">
+                    <img src="/static/media/logging.svg" alt="logging">
+                    <p>Log out</p>
+                </a>
+                {{ end }}
+                <a href="/settings">
+                    <img src="/static/media/settings.svg" alt="settings">
+                    <p>Settings</p>
+                </a>
+            </nav>
+            <div id="header-content">{{ block "header" . }}{{ end }}</div>
         </header>
-        {{ block "body" . }}{{ end }}
+        <main>
+            {{ block "main" . }}{{ end }}
+        </main>
     </body>
 </html>

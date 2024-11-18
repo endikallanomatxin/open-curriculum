@@ -1,7 +1,7 @@
 {{ define "head" }}
-<title>Register</title>
+<title>Log in</title>
 {{ end }}
-{{ define "body" }}
+{{ define "header" }}
 <form id="login-form" action="/login" method="post">
     <label for="email">Email:</label>
     <input type="email" name="email" id="email" required>
@@ -9,5 +9,10 @@
     <input type="password" name="password" id="password" required>
     <button type="submit">Login</button>
 </form>
+<p>
+    Don't have an account? <a href="/register">Register</a>
+</p>
+{{ if .Message }}
 <div id="message"></div>
+{{ end }}
 {{ end }}

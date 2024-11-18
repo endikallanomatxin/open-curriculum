@@ -3,16 +3,18 @@
 /* GENERAL */
 
 a {
-    color: var(--orange-6);
+    color: black;
     text-decoration: none;
     transition-duration: 0.2s;
 }
 
 a:hover {
-    color: var(--orange-4);
+    color: gray;
 }
 
-p,ol,ul {
+p,
+ol,
+ul {
     text-align: justify;
     line-height: 1.5em;
     margin: 1rem 0;

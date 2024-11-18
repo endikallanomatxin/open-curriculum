@@ -4,20 +4,25 @@
     grid-auto-rows: min-content;
     gap: 0.6em;
 
-    >*{
+    >* {
         grid-column: 1/-1;
     }
 
-    >.unit{
+    >.unit {
         display: grid;
         grid-template-columns: subgrid;
         align-items: center;
-        padding:0;
+        padding: 0;
         border-radius: 2rem;
         margin-left: calc(var(--horizontal-position)*25%);
         transition: 0.2s;
+        background-color: white;
 
-        >.node{
+        &:hover {
+            background-color: var(--neutral-1);
+        }
+
+        >.node {
             content: '';
             box-sizing: content-box;
             width: 1em;
@@ -28,103 +33,101 @@
             border-radius: 50%;
         }
 
-        >a{
+        >a {
             text-decoration: none;
             color: inherit;
-            margin:0;
-            padding:0;
+            margin: 0;
+            padding: 0;
         }
-        
-        >p{
-            margin:0;
+
+        >p {
+            margin: 0;
             font-weight: 500;
             white-space: nowrap;
             text-overflow: ellipsis;
         }
-        
+
         >.controls {
             display: flex;
             gap: 0.5em;
             align-items: center;
-            margin-right:0.5em;
+            margin-right: 0.5em;
 
-            >button{
+            >button {
                 font-size: 0.6em;
-                color:white;
+                color: white;
                 padding: 0.4em 0.8em;
                 white-space: nowrap;
 
-                &.deps{
+                &.deps {
                     background-color: var(--purple-4);
                 }
 
-                &.delete{
+                &.delete {
                     background-color: var(--red-4);
                 }
 
-                &.undo{
+                &.undo {
                     background-color: var(--neutral-4);
                 }
             }
         }
 
-        
-        &.existing{
-            background-color: var(--neutral-1);
+
+        &.existing {
             color: var(--neutral-8);
-            &:hover{
-                background-color: var(--neutral-2);
+
+            &:hover {
                 color: var(--neutral-8);
             }
-            &.open{
-                background-color: var(--neutral-3);
+
+            &.open {
                 color: var(--neutral-9);
-                >p{
+
+                >p {
                     font-weight: 600;
                 }
             }
-            >.node{
+
+            >.node {
                 border: 0.3em solid var(--neutral-9);
             }
         }
 
-        &.proposed-creation{
-            background-color: var(--green-0);
+        &.proposed-creation {
             color: var(--green-7);
-            &:hover{
-                background-color: var(--green-1);
+
+            &:hover {
                 color: var(--green-8);
             }
-            >.node{
+
+            >.node {
                 border: 0.3em solid var(--green-7);
-                background-color: var(--green-1);
             }
         }
 
-        &.proposed-deletion{
-            background-color: var(--red-0);
+        &.proposed-deletion {
             color: var(--red-7);
-            &:hover{
-                background-color: var(--red-1);
+
+            &:hover {
                 color: var(--red-8);
             }
-            >.node{
+
+            >.node {
                 border: 0.3em solid var(--red-7);
-                background-color: var(--red-1);
             }
         }
 
 
-        &.proposed-rename{
-            background-color: var(--orange-0);
+        &.proposed-rename {
             color: var(--orange-7);
-            &:hover{
-                background-color: var(--orange-1);
+
+            &:hover {
                 color: var(--orange-8);
             }
-            >.node{
+
+            >.node {
                 border: 0.3em solid var(--orange-7);
-                background-color: var(--orange-1);
             }
         }
 

@@ -1,34 +1,16 @@
-main{
-    font-size: 0.9em;
+main {
+    font-size: clamp(0.9em, 1.5vw, 1.2em);
 }
 
-@media screen and (min-width: 900px){
-    main{
-        font-size: 1em;
-    }
-}
-
-@media screen and (min-width: 1200px){
-    main{
-        font-size: 1.1em;
-    }
-}
-
-@media screen and (min-width: 1400px){
-    main{
-        font-size: 1.2em;
-    }
-}
-
-main>section{
+main>section {
     padding: 15vh 1rem;
 }
 
 
-main>section>*{
-    max-width: 46rem;
-    margin-left:auto;
-    margin-right:auto;
+main>section>* {
+    max-width: clamp(40rem, 60vw, 60rem);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
@@ -93,8 +75,8 @@ iframe {
     opacity: 0.5;
     font-size: 0.8em;
     max-width: 35em;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* For blocquotes */
@@ -137,7 +119,7 @@ blockquote span {
     margin-top: 1em;
 }
 
-@media screen and (max-width: 900px){
+@media screen and (max-width: 900px) {
     blockquote::before {
         font-size: 3em;
     }
@@ -145,6 +127,7 @@ blockquote span {
     blockquote::after {
         font-size: 3em;
     }
+
     blockquote {
         border-left: 4px solid var(--orange-6);
         padding: 0.9em 1.2em;
@@ -157,37 +140,37 @@ blockquote span {
 span[id^="expand"] {
     font-style: italic;
     font-size: 0.6em;
-    vertical-align:middle;
-    padding:0.2em 0.5em;
+    vertical-align: middle;
+    padding: 0.2em 0.5em;
     background-color: var(--neutral-2);
     border-radius: 0.5em;
     opacity: 0.6;
-    white-space:nowrap;
+    white-space: nowrap;
 }
 
-span[id^="expand"]:hover{
+span[id^="expand"]:hover {
     opacity: 1;
 }
 
 div[id^="expand"] {
-    overflow:hidden;
+    overflow: hidden;
     transition: max-height 2s ease;
     width: 100%;
     opacity: 0.9;
 }
 
 div[id^="expand"]:not(.expanded) {
-    max-height:0;
+    max-height: 0;
 }
 
-div[id^="expand"].expanded{
+div[id^="expand"].expanded {
     max-height: 200vh;
 }
 
 
 /* Intro */
 
-section#intro{
+section#intro {
     font-size: 1.4em;
     height: 100vh;
     display: flex;
@@ -196,40 +179,40 @@ section#intro{
     gap: 1em;
 }
 
-section#intro *{
+section#intro * {
     width: 100%;
     text-align: left;
 }
 
-section#intro p{
+section#intro p {
     margin: 0 auto;
 }
 
-section#intro div p{
-    margin:0;
+section#intro div p {
+    margin: 0;
 }
 
-section#intro div{
+section#intro div {
     padding: 1em;
     border-radius: 0.5em;
 }
 
 
-section#intro div:nth-child(2){
+section#intro div:nth-child(2) {
     color: var(--orange-6);
     border: 3px solid var(--orange-6);
 }
 
-section#intro div:nth-child(3){
+section#intro div:nth-child(3) {
     color: var(--green-8);
     border: 3px solid var(--green-8);
 }
 
-section#intro div:nth-child(3) a{
+section#intro div:nth-child(3) a {
     color: var(--green-8);
 }
 
-section#intro div:nth-child(3) a:hover{
+section#intro div:nth-child(3) a:hover {
     color: var(--green-6);
 }
 
@@ -241,7 +224,7 @@ section#current-situation h2,
 section#current-situation h3,
 section#current-situation h4,
 section#current-situation h5,
-section#current-situation h6{
+section#current-situation h6 {
     color: var(--orange-6);
 }
 
@@ -251,10 +234,10 @@ section#proposed-solution h2,
 section#proposed-solution h3,
 section#proposed-solution h4,
 section#proposed-solution h5,
-section#proposed-solution h6{
+section#proposed-solution h6 {
     color: var(--green-8);
 }
 
-div#menu a:nth-child(n+16){
+div#menu a:nth-child(n+16) {
     color: var(--green-8)
 }
