@@ -6,7 +6,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 1rem 2rem;
+    padding: 1rem 6rem;
     z-index: 1000;
 }
 
@@ -36,61 +36,61 @@
     margin: 2em 0;
 }
 
-div.change{
+div.change {
     display: flex;
     align-items: center;
     gap: 0.5em;
     margin: 0.5em 0;
 
-    >.type{
-        font-size:0.5em;
+    >.type {
+        font-size: 0.5em;
         font-weight: 700;
-        padding:0.5em;
-        border-radius:0.5em;
-        
-        &.create{
+        padding: 0.5em;
+        border-radius: 0.5em;
+
+        &.create {
             background-color: var(--green-1);
-            color:var(--green-8);
+            color: var(--green-8);
         }
 
-        &.delete{
+        &.delete {
             background-color: var(--red-1);
-            color:var(--red-8);
+            color: var(--red-8);
         }
 
-        &.rename{
+        &.rename {
             background-color: var(--orange-1);
-            color:var(--orange-8);
+            color: var(--orange-8);
         }
 
-        &.content_modification{
+        &.content_modification {
             background-color: var(--blue-1);
-            color:var(--blue-8);
+            color: var(--blue-8);
         }
 
-        &.dependency_creation{
+        &.dependency_creation {
             background-color: var(--purple-1);
-            color:var(--purple-8);
+            color: var(--purple-8);
         }
 
-        &.dependency_deletion{
+        &.dependency_deletion {
             background-color: var(--purple-1);
-            color:var(--purple-8);
+            color: var(--purple-8);
         }
     }
 
-    >a.undo{
+    >a.undo {
         opacity: 0;
         transition: opacity 0.3s;
     }
 
-    &:hover>a.undo{
+    &:hover>a.undo {
         opacity: 1;
     }
 }
 
 
-.controls button{
+.controls button {
     font-size: 0.7em;
     padding: 0.4em 0.8em;
 }

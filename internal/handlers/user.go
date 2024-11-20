@@ -69,7 +69,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Create a session for the user (we'll assume a session package or library is used here)
-		sessionIDToken, err := db.CreateSession(user.ID, 24*time.Hour)
+		sessionIDToken, err := db.CreateSession(user.ID, 30*24*time.Hour)
 		if err != nil {
 			http.Error(w, "Failed to create session", http.StatusInternalServerError)
 			return

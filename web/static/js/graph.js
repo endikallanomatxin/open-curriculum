@@ -99,6 +99,14 @@ function redrawArrows() {
 
 window.addEventListener("resize", () => {redrawArrows()})
 
+window.addEventListener("scroll", () => {redrawArrows()})
+
+const sections = document.querySelectorAll("section")
+
+sections.forEach(section => {
+    section.addEventListener("scroll", () => {redrawArrows()});
+})
+
 window.addEventListener("htmx:afterSwap", () => {
     setTimeout(() => {redrawArrows()}, 300)
 })

@@ -41,42 +41,43 @@ func main() {
 	mux.HandleFunc("/learn", handlers.Learn)
 
 	// ----------------
-	// TEACH
+	// CURRICULUM MODIFICATION
 	// ----------------
 
-	mux.HandleFunc("/teach", handlers.Teach)
-	mux.HandleFunc("/teach/set-active-proposal-ID", handlers.SetActiveProposalID)
+	mux.HandleFunc("/curriculum-modification", handlers.CurriculumModification)
+
+	mux.HandleFunc("/curriculum-modification/set-active-proposal-ID", handlers.SetActiveProposalID)
 	mux.HandleFunc("PUT /set-open-unit", handlers.SetOpenUnit)
 
 	// Proposal
-	mux.HandleFunc("POST /teach/proposal/create", handlers.CreateProposal)
-	mux.HandleFunc("PUT /teach/proposal/{id}/update", handlers.UpdateProposal)
-	mux.HandleFunc("DELETE /teach/proposal/{id}", handlers.DeleteProposal)
-	mux.HandleFunc("PUT /teach/proposal/{id}/submit", handlers.SubmitProposal)
+	mux.HandleFunc("POST /curriculum-modification/proposal/create", handlers.CreateProposal)
+	mux.HandleFunc("PUT /curriculum-modification/proposal/{id}/update", handlers.UpdateProposal)
+	mux.HandleFunc("DELETE /curriculum-modification/proposal/{id}", handlers.DeleteProposal)
+	mux.HandleFunc("PUT /curriculum-modification/proposal/{id}/submit", handlers.SubmitProposal)
 
 	// Changes
-	mux.HandleFunc("POST /teach/proposal/{id}/unit_creation", handlers.CreateUnitCreation)
-	mux.HandleFunc("PUT /teach/proposal/{id}/unit_creation/{change_id}", handlers.UpdateUnitCreation)
-	mux.HandleFunc("DELETE /teach/proposal/{id}/unit_creation/{change_id}", handlers.DeleteUnitCreation)
+	mux.HandleFunc("POST /curriculum-modification/proposal/{id}/unit_creation", handlers.CreateUnitCreation)
+	mux.HandleFunc("PUT /curriculum-modification/proposal/{id}/unit_creation/{change_id}", handlers.UpdateUnitCreation)
+	mux.HandleFunc("DELETE /curriculum-modification/proposal/{id}/unit_creation/{change_id}", handlers.DeleteUnitCreation)
 
-	mux.HandleFunc("PUT /teach/proposal/{id}/unit_deletion/{unit_id}", handlers.CreateUnitDeletion)
-	mux.HandleFunc("DELETE /teach/proposal/{id}/unit_deletion/{change_id}", handlers.DeleteUnitDeletion)
+	mux.HandleFunc("PUT /curriculum-modification/proposal/{id}/unit_deletion/{unit_id}", handlers.CreateUnitDeletion)
+	mux.HandleFunc("DELETE /curriculum-modification/proposal/{id}/unit_deletion/{change_id}", handlers.DeleteUnitDeletion)
 
-	mux.HandleFunc("PUT /teach/proposal/{id}/unit_rename/{unit_id}", handlers.CreateUnitRename)
-	mux.HandleFunc("DELETE /teach/proposal/{id}/unit_rename/{change_id}", handlers.DeleteUnitRename)
+	mux.HandleFunc("PUT /curriculum-modification/proposal/{id}/unit_rename/{unit_id}", handlers.CreateUnitRename)
+	mux.HandleFunc("DELETE /curriculum-modification/proposal/{id}/unit_rename/{change_id}", handlers.DeleteUnitRename)
 
-	mux.HandleFunc("PUT /teach/proposal/{id}/content_modification/", handlers.CreateContentModification)
-	mux.HandleFunc("DELETE /teach/proposal/{id}/content_modification/{change_id}", handlers.DeleteContentModification)
+	mux.HandleFunc("PUT /curriculum-modification/proposal/{id}/content_modification/", handlers.CreateContentModification)
+	mux.HandleFunc("DELETE /curriculum-modification/proposal/{id}/content_modification/{change_id}", handlers.DeleteContentModification)
 
-	mux.HandleFunc("POST /teach/proposal/{id}/toggle_dependency", handlers.ToggleDependency)
-	mux.HandleFunc("DELETE /teach/proposal/{id}/dependency_creation/{change_id}", handlers.DeleteDependencyCreation)
-	mux.HandleFunc("DELETE /teach/proposal/{id}/dependency_deletion/{change_id}", handlers.DeleteDependencyDeletion)
+	mux.HandleFunc("POST /curriculum-modification/proposal/{id}/toggle_dependency", handlers.ToggleDependency)
+	mux.HandleFunc("DELETE /curriculum-modification/proposal/{id}/dependency_creation/{change_id}", handlers.DeleteDependencyCreation)
+	mux.HandleFunc("DELETE /curriculum-modification/proposal/{id}/dependency_deletion/{change_id}", handlers.DeleteDependencyDeletion)
 
 	// Polls
-	mux.HandleFunc("GET /teach/polls", handlers.Polls)
-	mux.HandleFunc("GET /teach/poll/{id}", handlers.Poll)
-	mux.HandleFunc("POST /teach/poll/{id}/yes", handlers.VoteYes)
-	mux.HandleFunc("POST /teach/poll/{id}/no", handlers.VoteNo)
+	mux.HandleFunc("GET /curriculum-modification/polls", handlers.Polls)
+	mux.HandleFunc("GET /curriculum-modification/poll/{id}", handlers.Poll)
+	mux.HandleFunc("POST /curriculum-modification/poll/{id}/yes", handlers.VoteYes)
+	mux.HandleFunc("POST /curriculum-modification/poll/{id}/no", handlers.VoteNo)
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 

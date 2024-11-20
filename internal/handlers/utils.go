@@ -210,7 +210,7 @@ func SetActiveProposalID(w http.ResponseWriter, r *http.Request) {
 
 	http.SetCookie(w, &cookie)
 
-	http.Redirect(w, r, "/teach", http.StatusFound)
+	http.Redirect(w, r, "/curriculum-modification", http.StatusFound)
 }
 
 func GetActiveProposalID(r *http.Request) int64 {
@@ -257,7 +257,7 @@ func SetOpenUnit(w http.ResponseWriter, r *http.Request) {
 	if isProposed == "none" {
 		http.Redirect(w, r, "/learn", http.StatusFound)
 	} else {
-		http.Redirect(w, r, "/teach", http.StatusFound)
+		http.Redirect(w, r, "/curriculum-modification", http.StatusFound)
 	}
 }
 

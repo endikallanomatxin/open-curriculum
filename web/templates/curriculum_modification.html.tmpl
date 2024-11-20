@@ -1,21 +1,6 @@
-{{ define "head" }}
-<title>Units</title>
-<link rel="stylesheet" href="/static/css/graph.css">
-<link rel="stylesheet" href="/static/css/teach_and_learn.css">
-<link rel="stylesheet" href="/static/css/teach.css">
-<script src="/static/js/graph.js" defer></script>
-{{ end }}
-{{ define "header" }}
-<nav id="sections">
-    <a href="/teach/proposals">Curriculum design</a>
-    <a href="/teach/tasks">Tasks</a>
-    <a href="/teach/certifications">Certifications</a>
-</nav>
-{{ end }}
-{{ define "body" }}
-{{ block "main" . }}
-<main>
-    <div id="graph">
+{{ define "main" }}
+<script>collapseHeader();</script>
+    <section id="graph">
         {{ if .Graph.Units }}
         {{ $activeProposalID := .ActiveProposal.ID}}
         {{ range .Graph.Units }}
@@ -31,7 +16,7 @@
             <div class="controls">
                 <button class="deps" onclick="editDependency(true, {{.ChangeID}})">Edit deps</button>
                 <button class="undo"
-                        hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .ChangeID }}?active_proposal_id={{ $activeProposalID }}"
+                        hx-delete="/curriculum-modification/proposal/{{ $activeProposalID }}/unit_creation/{{ .ChangeID }}?active_proposal_id={{ $activeProposalID }}"
                         hx-target="body"
                         hx-swap="outerHTML">Undo</button>
             </div>
@@ -45,7 +30,7 @@
                hx-target="body">{{ .Name }}</p>
             <div class="controls">
                 <button class="undo"
-                        hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .ChangeID }}?active_proposal_id={{ $activeProposalID }}"
+                        hx-delete="/curriculum-modification/proposal/{{ $activeProposalID }}/unit_deletion/{{ .ChangeID }}?active_proposal_id={{ $activeProposalID }}"
                         hx-target="body"
                         hx-swap="outerHTML">Undo</button>
             </div>
@@ -61,7 +46,7 @@
             <div class="controls">
                 <button class="deps" onclick="editDependency(false, {{.ID}})">Edit deps</button>
                 <button class="undo"
-                        hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ .ChangeID }}?active_proposal_id={{ $activeProposalID }}"
+                        hx-delete="/curriculum-modification/proposal/{{ $activeProposalID }}/unit_rename/{{ .ChangeID }}?active_proposal_id={{ $activeProposalID }}"
                         hx-target="body"
                         hx-swap="outerHTML">Undo</button>
             </div>
@@ -79,7 +64,7 @@
             <div class="controls">
                 <button class="deps" onclick="editDependency(false, {{.ID}})">Edit deps</button>
                 <button class="delete"
-                        hx-put="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ .ID }}?active_proposal_id={{ $activeProposalID }}"
+                        hx-put="/curriculum-modification/proposal/{{ $activeProposalID }}/unit_deletion/{{ .ID }}?active_proposal_id={{ $activeProposalID }}"
                         hx-target="body"
                         hx-swap="outerHTML">Delete</button>
             </div>
@@ -89,7 +74,7 @@
         {{ end }}
         {{ end }}
         {{ if not (eq .ActiveProposal.ID 0) }}
-        <form hx-post="/teach/proposal/{{.ActiveProposal.ID}}/unit_creation"
+        <form hx-post="/curriculum-modification/proposal/{{.ActiveProposal.ID}}/unit_creation"
               hx-target="body">
             <input type="text" name="name" placeholder="Unit name">
             <button type="submit">Create unit</button>
@@ -97,15 +82,15 @@
     {{ else }}
         <p>Activate a proposal to see curriculum modification tools</p>
         {{ end }}
-    </div>
-    <div id="details">
+    </section>
+    <section id="details">
         {{ block "unit_details" . }}
         {{ if .OpenUnit }}
         {{ $activeProposalID := .ActiveProposal.ID}}
         {{ with .OpenUnit }}
         {{ if eq .Type "ProposedCreation" }}
         <form id="rename-form"
-              hx-put="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ .ID }}"
+              hx-put="/curriculum-modification/proposal/{{ $activeProposalID }}/unit_creation/{{ .ID }}"
               hx-target="body"
               hx-swap="outerHTML">
             <input type="text" id="name" name="name" value="{{ .Name }}">
@@ -113,7 +98,7 @@
         </form>
     {{ else }}
         <form id="rename-form"
-              hx-put="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ .ID }}"
+              hx-put="/curriculum-modification/proposal/{{ $activeProposalID }}/unit_rename/{{ .ID }}"
               hx-target="body"
               hx-swap="outerHTML">
             <input type="text" id="name" name="name" value="{{ .Name }}">
@@ -121,7 +106,7 @@
         </form>
         {{ end }}
         <form id="content-modification-form"
-              hx-put="/teach/proposal/{{$activeProposalID}}/content_modification?unit_is_proposed={{.IsProposed}}&unit_id={{.ID}}"
+              hx-put="/curriculum-modification/proposal/{{$activeProposalID}}/content_modification?unit_is_proposed={{.IsProposed}}&unit_id={{.ID}}"
               hx-target="body"
               hx-swap="outerHTML">
             <textarea name="content" placeholder="Enter content here">{{ .Content }}</textarea>
@@ -132,13 +117,13 @@
         <p>Select a unit to view its details</p>
         {{ end }}
         {{ end }}
-    </div>
+    </section>
     <div id="bottom-bar">
         {{ block "proposals-bar" . }}
         <div id="proposals-bar">
             {{ if .Proposals }}
             Active proposal
-            <select hx-get="/teach/set-active-proposal-ID"
+            <select hx-get="/curriculum-modification/set-active-proposal-ID"
                     hx-target="body"
                     hx-trigger="change"
                     hx-include="#active-proposal"
@@ -168,12 +153,12 @@
         </div>
         {{ end }}
         <div id="polls">
-            <a href="/teach/polls">See polls</a>
+            <a href="/curriculum-modification/polls">See polls</a>
         </div>
     </div>
     <dialog id="create-proposal-dialog">
         <button id="create-proposal-close" class="close">✕</button>
-        <form hx-post="/teach/proposal/create" hx-target="main" hx-swap="outerHTML">
+        <form hx-post="/curriculum-modification/proposal/create" hx-target="main" hx-swap="outerHTML">
             <input type="text" name="title" placeholder="Proposal title">
             <input type="text" name="description" placeholder="Proposal description">
             <button type="submit">Create proposal</button>
@@ -181,7 +166,7 @@
     </dialog>
     <dialog id="proposal-details-dialog">
         <button id="proposal-details-close" class="close">✕</button>
-        <form hx-put="/teach/proposal/{{ .ActiveProposal.ID }}/update"
+        <form hx-put="/curriculum-modification/proposal/{{ .ActiveProposal.ID }}/update"
               hx-target="main"
               hx-swap="outerHTML">
             <label for="proposal-title">Title</label>
@@ -206,7 +191,7 @@
                 <div class="type create">CREATE UNIT</div>
                 <div>{{ $change.Name }}</div>
                 <a class="undo"
-                   hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_creation/{{ $change.ID }}"
+                   hx-delete="/curriculum-modification/proposal/{{ $activeProposalID }}/unit_creation/{{ $change.ID }}"
                    hx-target="#changes-list"
                    hx-select="#changes-list"
                    hx-swap="outerHTML">Undo</a>
@@ -216,7 +201,7 @@
                 <div class="type delete">DELETE UNIT</div>
                 <div>{{ $change.UnitID }}</div>
                 <a class="undo"
-                   hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_deletion/{{ $change.ID }}"
+                   hx-delete="/curriculum-modification/proposal/{{ $activeProposalID }}/unit_deletion/{{ $change.ID }}"
                    hx-target="#changes-list"
                    hx-select="#changes-list"
                    hx-swap="outerHTML">Undo</a>
@@ -226,7 +211,7 @@
                 <div class="type rename">RENAME UNIT</div>
                 <div>{{ $change.Name }}</div>
                 <a class="undo"
-                   hx-delete="/teach/proposal/{{ $activeProposalID }}/unit_rename/{{ $change.ID }}"
+                   hx-delete="/curriculum-modification/proposal/{{ $activeProposalID }}/unit_rename/{{ $change.ID }}"
                    hx-target="#changes-list"
                    hx-select="#changes-list"
                    hx-swap="outerHTML">Undo</a>
@@ -236,7 +221,7 @@
                 <div class="type dependency_creation">ADD DEPENDENCY</div>
                 <div>{{ $change.DependsOnID }} > {{ $change.UnitID }}</div>
                 <a class="undo"
-                   hx-delete="/teach/proposal/{{ $activeProposalID }}/dependency_creation/{{ $change.ID }}"
+                   hx-delete="/curriculum-modification/proposal/{{ $activeProposalID }}/dependency_creation/{{ $change.ID }}"
                    hx-target="#changes-list"
                    hx-select="#changes-list"
                    hx-swap="outerHTML">Undo</a>
@@ -246,7 +231,7 @@
                 <div class="type dependency_deletion">REMOVE DEPENDENCY</div>
                 <div>{{ $change.DependencyID }}</div>
                 <a class="undo"
-                   hx-delete="/teach/proposal/{{ $activeProposalID }}/dependency_deletion/{{ $change.ID }}"
+                   hx-delete="/curriculum-modification/proposal/{{ $activeProposalID }}/dependency_deletion/{{ $change.ID }}"
                    hx-target="#changes-list"
                    hx-select="#changes-list"
                    hx-swap="outerHTML">Undo</a>
@@ -256,7 +241,7 @@
                 <div class="type content_modification">MODIFY CONTENT</div>
                 <div>{{ $change.UnitID }}</div>
                 <a class="undo"
-                   hx-delete="/teach/proposal/{{ $activeProposalID }}/content_modification/{{ $change.ID }}"
+                   hx-delete="/curriculum-modification/proposal/{{ $activeProposalID }}/content_modification/{{ $change.ID }}"
                    hx-target="#changes-list"
                    hx-select="#changes-list"
                    hx-swap="outerHTML">Undo</a>
@@ -264,11 +249,11 @@
             {{ end }}
             {{ end }}
         </div>
-        <button hx-delete="teach/proposal/{{ .ActiveProposal.ID }}"
+        <button hx-delete="curriculum-modification/proposal/{{ .ActiveProposal.ID }}"
                 hx-target="main"
                 hx-swap="outerHTML"
                 class="red">Delete</button>
-        <button hx-put="teach/proposal/{{ .ActiveProposal.ID }}/submit"
+        <button hx-put="curriculum-modification/proposal/{{ .ActiveProposal.ID }}/submit"
                 hx-target="body"
                 hx-replace-url="true">Submit</button>
     </dialog>
@@ -356,7 +341,7 @@
             }
 
             // Send the request
-            fetch(`/teach/proposal/{{ .ActiveProposal.ID }}/toggle_dependency?unit_is_proposed=${UnitIsProposed}&unit_id=${UnitID}&depends_on_is_proposed=${DependsOnIsProposed}&depends_on_id=${DependsOnID}`, {
+            fetch(`/curriculum-modification/proposal/{{ .ActiveProposal.ID }}/toggle_dependency?unit_is_proposed=${UnitIsProposed}&unit_id=${UnitID}&depends_on_is_proposed=${DependsOnIsProposed}&depends_on_id=${DependsOnID}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -365,6 +350,5 @@
         }
 
     </script>
-</main>
-{{ end }}
+</section>
 {{ end }}

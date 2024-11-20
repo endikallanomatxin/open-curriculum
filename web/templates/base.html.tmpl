@@ -9,8 +9,10 @@
         <script src="/static/js/viewport-checker.js"></script>
         <script src="/static/js/header.js"></script>
         <link rel="stylesheet" href="/static/css/base.css">
+        <link rel="stylesheet" href="/static/css/index.css">
         <link rel="stylesheet" href="/static/css/graph.css">
         <link rel="stylesheet" href="/static/css/learn.css">
+        <link rel="stylesheet" href="/static/css/curriculum_modification.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
@@ -84,7 +86,12 @@
                     <img src="/static/media/learn.svg" alt="learn">
                     <p>Learn</p>
                 </a>
-                <a href="/curriculum-modification">
+                <a hx-get="/curriculum-modification"
+                   hx-target="main"
+                   hx-swap="innerHTML"
+                   hx-select="main"
+                   hx-replace-url="true"
+                   hx-on::after-request="collapseHeader()">
                     <img src="/static/media/curriculum_modification.svg"
                          alt="curriculum modification">
                     <p>

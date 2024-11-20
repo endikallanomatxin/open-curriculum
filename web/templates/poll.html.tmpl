@@ -1,7 +1,6 @@
 {{ define "head" }}
 <title>Units</title>
-<link rel="stylesheet" href="/static/css/teach_and_learn.css">
-<link rel="stylesheet" href="/static/css/teach.css">
+<link rel="stylesheet" href="/static/css/curriculum_modification.css">
 <script src="/static/js/graph.js" defer></script>
 {{ end }}
 {{ define "body" }}
@@ -9,9 +8,9 @@
     <a href="/">
         <img id="logo" src="/static/media/logo.svg">
     </a>
-    <a href="/teach/proposals">Curriculum design</a>
-    <a href="/teach/tasks">Tasks</a>
-    <a href="/teach/certifications">certifications</a>
+    <a href="/curriculum-modification/proposals">Curriculum design</a>
+    <a href="/curriculum-modification/tasks">Tasks</a>
+    <a href="/curriculum-modification/certifications">certifications</a>
 </nav>
 <main>
     <div id="poll">
@@ -19,11 +18,11 @@
         <p>{{ .Poll.Proposal.Description }}</p>
         <p>Yes votes: {{ .Poll.YesVotes }}</p>
         <p>No votes: {{ .Poll.NoVotes }}</p>
-        <button hx-post="/teach/poll/{{ .Poll.ID }}/yes"
+        <button hx-post="/curriculum-modification/poll/{{ .Poll.ID }}/yes"
                 hx-target="main"
                 hx-swap="outerHTML">Yes</button>
         <button class="red"
-                hx-post="/teach/poll/{{ .Poll.ID }}/no"
+                hx-post="/curriculum-modification/poll/{{ .Poll.ID }}/no"
                 hx-target="main"
                 hx-swap="outerHTML">No</button>
     </div>
@@ -34,7 +33,7 @@
             <li>{{ .Content }}</li>
             {{ end }}
         </ul>
-        <form hx-post="/teach/poll/{{ .Poll.ID }}/comment"
+        <form hx-post="/curriculum-modification/poll/{{ .Poll.ID }}/comment"
               hx-target="main"
               hx-swap="outerHTML">
             <input type="text" name="content" placeholder="Comment">
@@ -43,7 +42,7 @@
     </div>
     <div id="bottom-bar">
         <div id="polls">
-            <a href="/teach/polls">Back to polls</a>
+            <a href="/curriculum-modification/polls">Back to polls</a>
         </div>
     </div>
 </main>

@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
+func renderCurriculumModificationTemplate(w http.ResponseWriter, r *http.Request) {
 
 	activeProposalID := GetActiveProposalID(r)
 	openUnitIsProposed, openUnitID := GetOpenUnit(r)
@@ -67,11 +67,11 @@ func renderTeachTemplate(w http.ResponseWriter, r *http.Request) {
 		OpenUnit:       openUnit,
 	}
 
-	RenderTemplate(w, r, "teach.html.tmpl", data, nil)
+	RenderTemplate(w, r, "curriculum_modification.html.tmpl", data, nil)
 }
 
-func Teach(w http.ResponseWriter, r *http.Request) {
-	renderTeachTemplate(w, r)
+func CurriculumModification(w http.ResponseWriter, r *http.Request) {
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func CreateProposal(w http.ResponseWriter, r *http.Request) {
@@ -88,12 +88,12 @@ func CreateProposal(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: Set active proposal to the id
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func UpdateProposal(w http.ResponseWriter, r *http.Request) {
 	var id int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/update", &id)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/update", &id)
 
 	// Parse the form data
 	r.ParseForm()
@@ -108,30 +108,30 @@ func UpdateProposal(w http.ResponseWriter, r *http.Request) {
 	}
 	db.UpdateProposal(p)
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func DeleteProposal(w http.ResponseWriter, r *http.Request) {
 	var id int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d", &id)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d", &id)
 
 	db.DeleteProposal(id)
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func SubmitProposal(w http.ResponseWriter, r *http.Request) {
 	var id int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/submit", &id)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/submit", &id)
 
 	db.SubmitProposal(id)
 
-	http.Redirect(w, r, "/teach", http.StatusFound)
+	http.Redirect(w, r, "/curriculum-modification", http.StatusFound)
 }
 
 func CreateUnitCreation(w http.ResponseWriter, r *http.Request) {
 	var id int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_creation", &id)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/unit_creation", &id)
 
 	r.ParseForm()
 	name := r.Form.Get("name")
@@ -141,46 +141,46 @@ func CreateUnitCreation(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func UpdateUnitCreation(w http.ResponseWriter, r *http.Request) {
 	var proposal_id int64
 	var unit_id int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_creation/%d", &proposal_id, &unit_id)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/unit_creation/%d", &proposal_id, &unit_id)
 
 	r.ParseForm()
 	name := r.Form.Get("name")
 
 	db.UpdateUnitCreation(unit_id, name)
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func DeleteUnitCreation(w http.ResponseWriter, r *http.Request) {
 	var proposal_id int64
 	var change_id int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_creation/%d", &proposal_id, &change_id)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/unit_creation/%d", &proposal_id, &change_id)
 
 	db.DeleteUnitCreation(change_id)
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func CreateUnitDeletion(w http.ResponseWriter, r *http.Request) {
 	var proposal_id int64
 	var unit_id int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_deletion/%d", &proposal_id, &unit_id)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/unit_deletion/%d", &proposal_id, &unit_id)
 
 	db.CreateUnitDeletion(proposal_id, unit_id)
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func DeleteUnitDeletion(w http.ResponseWriter, r *http.Request) {
 	var proposal_id int64
 	var change_id int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_deletion/%d", &proposal_id, &change_id)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/unit_deletion/%d", &proposal_id, &change_id)
 
 	fmt.Println("Deleting unit deletion", change_id)
 	err := db.DeleteUnitDeletion(change_id)
@@ -188,35 +188,35 @@ func DeleteUnitDeletion(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func CreateUnitRename(w http.ResponseWriter, r *http.Request) {
 	var proposal_id int64
 	var unit_id int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_rename/%d", &proposal_id, &unit_id)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/unit_rename/%d", &proposal_id, &unit_id)
 
 	r.ParseForm()
 	name := r.Form.Get("name")
 
 	db.CreateUnitRename(proposal_id, unit_id, name)
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func DeleteUnitRename(w http.ResponseWriter, r *http.Request) {
 	var proposal_id int64
 	var change_id int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/unit_rename/%d", &proposal_id, &change_id)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/unit_rename/%d", &proposal_id, &change_id)
 
 	db.DeleteUnitRename(change_id)
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func CreateContentModification(w http.ResponseWriter, r *http.Request) {
 	var proposalID int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/content_modification/", &proposalID)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/content_modification/", &proposalID)
 
 	unitIsProposed, err := strconv.ParseBool(r.URL.Query().Get("unit_is_proposed"))
 	if err != nil {
@@ -249,26 +249,26 @@ func CreateContentModification(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func DeleteContentModification(w http.ResponseWriter, r *http.Request) {
 	var proposal_id int64
 	var change_id int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/content_modification/%d", &proposal_id, &change_id)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/content_modification/%d", &proposal_id, &change_id)
 
 	err := db.DeleteContentModification(change_id)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func ToggleDependency(w http.ResponseWriter, r *http.Request) {
 	// Get the proposal ID from the URL
 	var proposalID int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/toggle_dependency", &proposalID)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/toggle_dependency", &proposalID)
 
 	// Get the unit_table and unit_id and depends_on_table and depends_on_id from the URI
 	unitIsProposed, err := strconv.ParseBool(r.URL.Query().Get("unit_is_proposed"))
@@ -340,21 +340,21 @@ func ToggleDependency(w http.ResponseWriter, r *http.Request) {
 func DeleteDependencyCreation(w http.ResponseWriter, r *http.Request) {
 	var proposal_id int64
 	var change_id int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/dependency_creation/%d", &proposal_id, &change_id)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/dependency_creation/%d", &proposal_id, &change_id)
 
 	db.DeleteDependencyCreation(change_id)
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func DeleteDependencyDeletion(w http.ResponseWriter, r *http.Request) {
 	var proposal_id int64
 	var change_id int64
-	fmt.Sscanf(r.URL.Path, "/teach/proposal/%d/dependency_deletion/%d", &proposal_id, &change_id)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/proposal/%d/dependency_deletion/%d", &proposal_id, &change_id)
 
 	db.DeleteDependencyDeletion(change_id)
 
-	renderTeachTemplate(w, r)
+	renderCurriculumModificationTemplate(w, r)
 }
 
 func Polls(w http.ResponseWriter, r *http.Request) {
@@ -369,7 +369,7 @@ func Polls(w http.ResponseWriter, r *http.Request) {
 func Poll(w http.ResponseWriter, r *http.Request) {
 
 	var pollID int64
-	fmt.Sscanf(r.URL.Path, "/teach/poll/%d", &pollID)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/poll/%d", &pollID)
 
 	poll := db.GetPoll(pollID)
 
@@ -384,20 +384,20 @@ func Poll(w http.ResponseWriter, r *http.Request) {
 
 func VoteYes(w http.ResponseWriter, r *http.Request) {
 	var pollID int64
-	fmt.Sscanf(r.URL.Path, "/teach/poll/%d/yes", &pollID)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/poll/%d/yes", &pollID)
 
 	db.VoteYes(pollID)
 
-	redirectTo := fmt.Sprintf("/teach/poll/%d", pollID)
+	redirectTo := fmt.Sprintf("/curriculum-modification/poll/%d", pollID)
 	http.Redirect(w, r, redirectTo, http.StatusFound)
 }
 
 func VoteNo(w http.ResponseWriter, r *http.Request) {
 	var pollID int64
-	fmt.Sscanf(r.URL.Path, "/teach/poll/%d/no", &pollID)
+	fmt.Sscanf(r.URL.Path, "/curriculum-modification/poll/%d/no", &pollID)
 
 	db.VoteNo(pollID)
 
-	redirectTo := fmt.Sprintf("/teach/poll/%d", pollID)
+	redirectTo := fmt.Sprintf("/curriculum-modification/poll/%d", pollID)
 	http.Redirect(w, r, redirectTo, http.StatusFound)
 }

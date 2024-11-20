@@ -17,7 +17,7 @@
     - Restructure project.
 
     - Users
-    - Teach:
+    - Curriculum modification:
         - Proposals
             - [x] Creation
             - [x] Activation
