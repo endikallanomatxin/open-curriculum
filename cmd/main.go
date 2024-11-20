@@ -35,6 +35,11 @@ func main() {
 	// mux.HandleFunc("/profile", handlers.Profile)
 
 	// ----------------
+	// SETTINGS
+	// ----------------
+	mux.HandleFunc("/settings", handlers.Settings)
+
+	// ----------------
 	// LEARN
 	// ----------------
 

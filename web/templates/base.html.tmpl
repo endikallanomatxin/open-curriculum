@@ -105,7 +105,12 @@
                     <p>Log out</p>
                 </a>
                 {{ end }}
-                <a href="/settings">
+                <a hx-get="/settings"
+                   hx-target="main"
+                   hx-swap="innerHTML"
+                   hx-select="main"
+                   hx-replace-url="true"
+                   hx-on::after-request="collapseHeader()">
                     <img src="/static/media/settings.svg" alt="settings">
                     <p>Settings</p>
                 </a>
