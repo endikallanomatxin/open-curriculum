@@ -152,6 +152,8 @@ func (g *Graph) Sort() {
 	// Primero agrupa las unidades por grupos conectados y luego hace lo que busco.
 	// Los distintos grupos no están ordenador de forma inambigua.
 
+	// Un algoritmo de ordenamiento topológico que puede ser interesante es el de Kahn.
+
 	g.CalculateAccumulatedRelevances()
 
 	// Topological sort
