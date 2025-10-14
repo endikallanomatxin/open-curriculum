@@ -1,46 +1,44 @@
-# Use the latest Golang base image
-FROM golang:latest
+# syntax=docker/dockerfile:1.6
 
-# Set the current working directory inside the container
+ARG GO_VERSION=1.22
+FROM golang:${GO_VERSION}-bookworm AS base
 WORKDIR /app
-
-# Copy go.mod and go.sum files to the workspace
 COPY go.mod go.sum ./
-
-# Download all dependencies
 RUN go mod download
 
-# Update package lists
-RUN apt-get update
-
-# Install necessary packages for the DNS update tool
-RUN apt-get install -y curl perl libwww-perl vim
-
-# Copy the source from the current directory to the workspace
+# ─── DEV ──────────────────────────────────────────────────────────────────────
+FROM base AS dev
 COPY . .
+# Air para live reload
+RUN curl -fLo install.sh https://raw.githubusercontent.com/cosmtrek/air/master/install.sh \
+ && chmod +x install.sh && sh install.sh && mv ./bin/air /usr/local/bin/air
+EXPOSE 8080
+CMD ["air"]
 
-# Download and setup DNS update tool
-RUN wget https://dinahosting.com/utilidades/estandar/aplicaciones/dinaIP-consola.tar.gz
-RUN tar xzpf dinaIP-consola.tar.gz
-WORKDIR /app/dinaIP-consola
-RUN sh install.sh
+# ─── BUILD ────────────────────────────────────────────────────────────────────
+FROM base AS builder
+COPY . .
+ARG ENVIRONMENT=prod
+ENV ENV=${ENVIRONMENT}
+RUN CGO_ENABLED=0 GOOS=linux go build -o /out/main ./cmd/main.go
+
+# ─── PROD ─────────────────────────────────────────────────────────────────────
+FROM debian:bookworm-slim AS prod
 WORKDIR /app
+COPY --from=builder /out/main ./main
 
-ARG DINAHOSTING_DOMAIN
-ENV DINAHOSTING_DOMAIN=$DINAHOSTING_DOMAIN
-ARG DINAHOSTING_USER
-ENV DINAHOSTING_USER=$DINAHOSTING_USER
-ARG DINAHOSTING_PASSWORD
-ENV DINAHOSTING_PASSWORD=$DINAHOSTING_PASSWORD
+# (Opcional) herramientas para el actualizador de DNS
+RUN apt-get update \
+ && apt-get install -y curl perl libwww-perl ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
 
-# Build the Go app
-RUN go build -o main ./cmd/main.go
+# Instala dinaIP (si lo necesitas dentro del contenedor)
+RUN curl -fsSLo /tmp/dinaIP-consola.tar.gz \
+      https://dinahosting.com/utilidades/estandar/aplicaciones/dinaIP-consola.tar.gz \
+ && tar xzf /tmp/dinaIP-consola.tar.gz -C /tmp \
+ && sh /tmp/dinaIP-consola/install.sh
 
-# Expose port 80 to the outside world
-EXPOSE 80
-
-# Expose port 443 to the outside world
-EXPOSE 443
-
-# Command to run the executable
-CMD dinaip -u $DINAHOSTING_USER -p $DINAHOSTING_PASSWORD -a $DINAHOSTING_DOMAIN && ./main
+# Vars solo en runtime (no en build args)
+ENV DINAHOSTING_DOMAIN="" DINAHOSTING_USER="" DINAHOSTING_PASSWORD=""
+EXPOSE 80 443
+CMD sh -c 'dinaip -u "$DINAHOSTING_USER" -p "$DINAHOSTING_PASSWORD" -a "$DINAHOSTING_DOMAIN" && exec ./main'

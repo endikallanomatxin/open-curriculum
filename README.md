@@ -21,12 +21,22 @@ Made with go and postgresql.
 
 To run it:
 
-```bash
-sudo docker compose up --build 
-```
+- For development
+
+  ```bash
+  podman compose -f compose.yaml -f compose.dev.yaml up -d
+  ```
+
+- For production:
+
+  ```bash
+  podman compose -p open-curriculum --env-file .env -f compose.yaml -f compose.prod.yaml up -d
+  ```
+
+To execute stuff into a container:
 
 ```bash
-sudo docker compose -f docker-compose.dev.yml up --build
+podman exec -it open-curriculum-db-1 bash
 ```
 
 To use the db:

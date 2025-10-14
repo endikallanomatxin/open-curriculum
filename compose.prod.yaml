@@ -1,0 +1,26 @@
+services:
+  app:
+    build:
+      target: prod
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      ENV: "prod"
+      DINAHOSTING_USER: ${DINAHOSTING_USER}
+      DINAHOSTING_PASSWORD: ${DINAHOSTING_PASSWORD}
+      DINAHOSTING_DOMAIN: ${DINAHOSTING_DOMAIN}
+    volumes:
+      - cert_data:/certs
+    restart: unless-stopped
+
+volumes:
+  cert_data:
+
+# For deployment use a .env file with:
+# DB_USER=...
+# DB_PASSWORD=...
+# DB_NAME=...
+# DINAHOSTING_USER=...
+# DINAHOSTING_PASSWORD=...
+# DINAHOSTING_DOMAIN=...
