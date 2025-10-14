@@ -45,7 +45,7 @@ https://www.fundaciones.org/es/inicio
 
 
 - BBK Ekin.
-    
+
     https://www.bbk.eus/proiektuak/bbk-ekin-emprendedores/?hsCtaTracking=082132c2-825c-496d-9197-c5d003ff4be8%7Ce981ce04-e3db-4af4-87c5-e89f6d8ee22d
 
     12/17
@@ -59,6 +59,9 @@ https://www.fundaciones.org/es/inicio
 
 - NLNet Foundation
     We support organisations and people who contribute to an open internet for all. We fund projects that help fix the internet through open hardware, open software ...
+
+- Mozilla foundation
+    https://foundation.mozilla.org/en/what-we-fund/
 
 - Mirar programas de universidades
 
