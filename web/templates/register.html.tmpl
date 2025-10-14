@@ -1,3 +1,7 @@
+{{ define "head" }}
+<title>Log in</title>
+{{ end }}
+{{ define "header" }}
 <form id="register-form" action="/register" method="post">
     <label for="email">Email:</label>
     <input type="email" name="email" id="email" required />
@@ -7,4 +11,5 @@
 </form>
 {{ if .Message }}
 <div id="message"></div>
+{{ end }}
 {{ end }}

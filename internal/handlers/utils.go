@@ -107,7 +107,13 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 	if lang == "en" {
 		tmplLang = tmpl
 	} else {
-		tmplLang = tmpl[:len(tmpl)-5] + "-" + lang + ".html.tmpl"
+		var tmplLangCandidate = tmpl[:len(tmpl)-5] + "-" + lang + ".html.tmpl"
+		// Check if the language-specific template exists
+		if _, err := template.ParseFiles("web/templates/" + tmplLangCandidate); err == nil {
+			tmplLang = tmplLangCandidate
+		} else {
+			tmplLang = tmpl // Fallback to default template
+		}
 	}
 
 	// Add custom functions to the template
@@ -190,6 +196,8 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 		log.Printf("Error executing template: %v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+
+	log.Printf("Rendered template: %s for language: %s", tmplLang, lang)
 }
 
 // TODO: Put this stuff into services
