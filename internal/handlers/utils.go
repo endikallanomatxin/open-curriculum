@@ -127,6 +127,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 		// Fallback to the default template if language-specific one fails
 		t, err = template.New("base.html.tmpl").Funcs(funcs).ParseFiles("web/templates/base.html.tmpl", "web/templates/"+tmpl)
 		if err != nil {
+			log.Printf("Error parsing template files: %v", err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -149,10 +150,12 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 			if m, ok := data.(map[string]interface{}); ok {
 				newdata = m
 			} else {
+				log.Printf("Data map has incorrect type: %T", data)
 				http.Error(w, "Data type not supported", http.StatusInternalServerError)
 				return
 			}
 		default:
+			log.Printf("Unsupported data type: %T", data)
 			http.Error(w, "Unsupported data type", http.StatusInternalServerError)
 			return
 		}
@@ -185,6 +188,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 			}
 			return
 		} else {
+			log.Printf("Invalid block type: %T", block)
 			http.Error(w, "Invalid block type", http.StatusInternalServerError)
 			return
 		}
@@ -195,9 +199,8 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data in
 	if err != nil {
 		log.Printf("Error executing template: %v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-
-	log.Printf("Rendered template: %s for language: %s", tmplLang, lang)
 }
 
 // TODO: Put this stuff into services

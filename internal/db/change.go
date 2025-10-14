@@ -227,24 +227,24 @@ func GetProposalChanges(proposalId int64) []models.Change {
 		changes = append(changes, c)
 	}
 
-	rows, err = db.Query(`
-		SELECT id, unit_id, from_line, to_line, content
-		FROM document_modifications
-		WHERE proposal_id = $1
-	`, proposalId)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer rows.Close()
+	// rows, err = db.Query(`
+	// 	SELECT id, unit_id, from_line, to_line, content
+	// 	FROM document_modifications
+	// 	WHERE proposal_id = $1
+	// `, proposalId)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// defer rows.Close()
 
-	for rows.Next() {
-		var c models.ContentModification
-		err := rows.Scan(&c.ID, &c.UnitID, &c.Content)
-		if err != nil {
-			fmt.Println(err)
-		}
-		changes = append(changes, c)
-	}
+	// for rows.Next() {
+	// 	var c models.ContentModification
+	// 	err := rows.Scan(&c.ID, &c.UnitID, &c.Content)
+	// 	if err != nil {
+	// 		fmt.Println(err)
+	// 	}
+	// 	changes = append(changes, c)
+	// }
 
 	return changes
 }

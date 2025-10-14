@@ -3,48 +3,39 @@
 <link rel="stylesheet" href="/static/css/curriculum_modification.css">
 <script src="/static/js/graph.js" defer></script>
 {{ end }}
-{{ define "body" }}
-<nav id="top_bar">
-    <a href="/">
-        <img id="logo" src="/static/media/logo.svg">
-    </a>
-    <a href="/curriculum-modification/proposals">Curriculum design</a>
-    <a href="/curriculum-modification/tasks">Tasks</a>
-    <a href="/curriculum-modification/certifications">certifications</a>
-</nav>
-<main>
-    <div id="poll">
-        <h2>{{ .Poll.Proposal.Title }}</h2>
-        <p>{{ .Poll.Proposal.Description }}</p>
-        <p>Yes votes: {{ .Poll.YesVotes }}</p>
-        <p>No votes: {{ .Poll.NoVotes }}</p>
-        <button hx-post="/curriculum-modification/poll/{{ .Poll.ID }}/yes"
-                hx-target="main"
-                hx-swap="outerHTML">Yes</button>
-        <button class="red"
-                hx-post="/curriculum-modification/poll/{{ .Poll.ID }}/no"
-                hx-target="main"
-                hx-swap="outerHTML">No</button>
+{{ define "main" }}
+<script>collapseHeader();</script>
+<div id="poll">
+    <h2>{{ .Poll.Proposal.Title }}</h2>
+    <p>{{ .Poll.Proposal.Description }}</p>
+    <p>Yes votes: {{ .Poll.YesVotes }}</p>
+    <p>No votes: {{ .Poll.NoVotes }}</p>
+    <button hx-post="/curriculum-modification/poll/{{ .Poll.ID }}/yes"
+            hx-target="main"
+            hx-swap="outerHTML">Yes</button>
+    <button class="red"
+            hx-post="/curriculum-modification/poll/{{ .Poll.ID }}/no"
+            hx-target="main"
+            hx-swap="outerHTML">No</button>
+</div>
+<div>
+    <h3>Comments</h3>
+    <ul>
+        {{ range .Comments }}
+        <li>{{ .Content }}</li>
+        {{ end }}
+    </ul>
+    <form hx-post="/curriculum-modification/poll/{{ .Poll.ID }}/comment"
+          hx-target="main"
+          hx-swap="outerHTML">
+        <input type="text" name="content" placeholder="Comment">
+        <button type="submit">Comment</button>
+    </form>
+</div>
+<div id="bottom-bar">
+    <div id="polls">
+        <a href="/curriculum-modification/polls">Back to polls</a>
     </div>
-    <div>
-        <h3>Comments</h3>
-        <ul>
-            {{ range .Comments }}
-            <li>{{ .Content }}</li>
-            {{ end }}
-        </ul>
-        <form hx-post="/curriculum-modification/poll/{{ .Poll.ID }}/comment"
-              hx-target="main"
-              hx-swap="outerHTML">
-            <input type="text" name="content" placeholder="Comment">
-            <button type="submit">Comment</button>
-        </form>
-    </div>
-    <div id="bottom-bar">
-        <div id="polls">
-            <a href="/curriculum-modification/polls">Back to polls</a>
-        </div>
-    </div>
-</main>
+</div>
 {{ end }}
 

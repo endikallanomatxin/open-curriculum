@@ -2,16 +2,15 @@
 <title>Units</title>
 <link rel="stylesheet" href="/static/css/curriculum-modification.css" />
 <script src="/static/js/graph.js" defer></script>
-{{ end }} {{ define "body" }}
+{{ end }} 
+
+{{ define "main" }}
 <nav id="top_bar">
-    <a href="/">
-        <img id="logo" src="/static/media/logo.svg" />
-    </a>
     <a href="/curriculum-modification/proposals">Curriculum design</a>
     <a href="/curriculum-modification/tasks">Tasks</a>
     <a href="/curriculum-modification/certifications">certifications</a>
 </nav>
-<main>
+<script>collapseHeader();</script>
     <div id="polls">
         <h2>Polls</h2>
         {{ range .Polls }}
@@ -24,5 +23,4 @@
             <a href="/curriculum-modification">Back to the curriculum editor</a>
         </div>
     </div>
-</main>
 {{ end }}
