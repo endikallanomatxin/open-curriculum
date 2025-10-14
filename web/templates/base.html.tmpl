@@ -86,6 +86,17 @@
                     <img src="/static/media/learn.svg" alt="learn">
                     <p>Learn</p>
                 </a>
+
+                <a hx-get="/opportunities"
+                   hx-target="main"
+                   hx-swap="innerHTML"
+                   hx-select="main"
+                   hx-replace-url="true"
+                   hx-on::after-request="collapseHeader()">
+                    <img src="/static/media/opportunities.svg" alt="opportunities">
+                    <p>Opportunities</p>
+                </a>
+
                 <a hx-get="/curriculum-modification"
                    hx-target="main"
                    hx-swap="innerHTML"
