@@ -1,5 +1,9 @@
 # Open curriculum
 
+<p align="center">
+  <img src="web/static/media/logo.svg" alt="Open curriculum logo" width="200"/>
+</p>
+
 Made with go and postgresql.
 
 ## Code organizaton
