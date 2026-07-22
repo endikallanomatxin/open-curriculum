@@ -1,0 +1,15 @@
+{
+  "name": "open-curriculum-chatgpt-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "npm run build && node --check dist/assets/app.js && node --check dist/server/index.js && node --check dist/server/lib.js && node --check scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "verify": "npm run test && npm run check"
+  }
+}
