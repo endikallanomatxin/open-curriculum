@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Un currículo abierto, colaborativo y navegable como un grafo de conocimiento." />
+    <title>Open Curriculum</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <script type="module" src="/assets/app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#curriculum" aria-label="Open Curriculum, inicio">
+        <span class="brand-mark" aria-hidden="true">OC</span>
+        <span><strong>open curriculum</strong><small>aprendizaje como bien común</small></span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <a href="#curriculum" data-nav="curriculum">Currículo</a>
+        <a href="#proposals" data-nav="proposals">Propuestas</a>
+        <a href="#principles" data-nav="principles">Principios</a>
+      </nav>
+      <div id="identity" class="identity" aria-live="polite"></div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <p class="eyebrow">Prototipo funcional · versión 0.1</p>
+          <h1 id="hero-title">El conocimiento no debería empezar de cero en cada aula.</h1>
+          <p class="hero-copy">Un currículo común, abierto y revisado de forma colaborativa. Las unidades forman un grafo: cada persona puede ver qué necesita aprender, proponer mejoras y seguir su propio ritmo.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#curriculum">Explorar el currículo</a>
+            <button class="button secondary" id="new-proposal-button" type="button">Proponer una mejora</button>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="Estado del proyecto">
+          <p>Estado del prototipo</p>
+          <dl id="stats" class="stats"></dl>
+          <div id="storage-status" class="storage-status"></div>
+        </aside>
+      </section>
+
+      <section id="curriculum" class="page-section" aria-labelledby="curriculum-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Modo aprendizaje</p>
+            <h2 id="curriculum-title">Mapa del currículo</h2>
+            <p>Elige un objetivo para iluminar el camino de prerrequisitos que conduce hasta él.</p>
+          </div>
+          <div class="toolbar">
+            <label>
+              <span>Buscar</span>
+              <input id="search-input" type="search" placeholder="Unidad o tema" />
+            </label>
+            <label>
+              <span>Grupo</span>
+              <select id="group-filter"><option value="">Todos</option></select>
+            </label>
+            <label>
+              <span>Objetivo</span>
+              <select id="target-select"><option value="">Sin objetivo</option></select>
+            </label>
+          </div>
+        </div>
+        <div class="legend" aria-label="Leyenda">
+          <span><i class="dot path"></i> Ruta al objetivo</span>
+          <span><i class="dot completed"></i> Completada</span>
+          <span><i class="dot active"></i> En progreso</span>
+        </div>
+        <div id="graph-shell" class="graph-shell">
+          <svg id="graph-lines" class="graph-lines" aria-hidden="true"></svg>
+          <div id="graph" class="graph" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="proposals" class="page-section alternate" aria-labelledby="proposals-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Desarrollo abierto</p>
+            <h2 id="proposals-title">Propuestas y votación</h2>
+            <p>El currículo publicado permanece estable. Los cambios se debaten y se aplican únicamente después de ser aceptados.</p>
+          </div>
+          <button class="button primary" id="new-proposal-button-secondary" type="button">Nueva propuesta</button>
+        </div>
+        <div class="proposal-layout">
+          <div>
+            <div class="proposal-filters" role="group" aria-label="Filtrar propuestas">
+              <button class="chip selected" data-proposal-filter="open">Abiertas</button>
+              <button class="chip" data-proposal-filter="all">Todas</button>
+              <button class="chip" data-proposal-filter="accepted">Aceptadas</button>
+            </div>
+            <div id="proposal-list" class="proposal-list" aria-live="polite"></div>
+          </div>
+          <aside id="proposal-detail" class="proposal-detail empty-state">
+            <p>Selecciona una propuesta para ver el cambio, votar y participar en la discusión.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="principles" class="page-section principles" aria-labelledby="principles-title">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">Del manifiesto al producto</p>
+            <h2 id="principles-title">Principios que gobiernan el diseño</h2>
+          </div>
+        </div>
+        <div class="principle-grid">
+          <article><span>01</span><h3>Dominio antes que calendario</h3><p>El tiempo puede variar; la comprensión mínima necesaria para avanzar no.</p></article>
+          <article><span>02</span><h3>Un currículo, muchas rutas</h3><p>La estructura es compartida, pero cada estudiante puede elegir metas y ritmo.</p></article>
+          <article><span>03</span><h3>El mejor contenido se acumula</h3><p>Las explicaciones y recursos se mejoran sobre una base común en lugar de repetirse de forma aislada.</p></article>
+          <article><span>04</span><h3>Gobernanza visible</h3><p>Cada modificación deja una propuesta, votos, discusión y un registro de decisión.</p></article>
+          <article><span>05</span><h3>Contenido y certificación separados</h3><p>Aprender es abierto; las instituciones pueden certificar ese aprendizaje sin controlar el acceso al conocimiento.</p></article>
+          <article><span>06</span><h3>Abierto por defecto</h3><p>El currículo, sus dependencias y sus recursos deben poder consultarse y reutilizarse libremente.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p><strong>Open Curriculum</strong> · prototipo experimental construido sobre ChatGPT Sites.</p>
+      <p>Los datos curriculares viven en D1 y los archivos en R2; el navegador no es la fuente de verdad.</p>
+    </footer>
+
+    <dialog id="unit-dialog" class="modal">
+      <div id="unit-dialog-content"></div>
+      <form method="dialog" class="modal-close"><button aria-label="Cerrar">×</button></form>
+    </dialog>
+
+    <dialog id="proposal-dialog" class="modal proposal-modal">
+      <form id="proposal-form" enctype="multipart/form-data">
+        <header>
+          <p class="eyebrow">Contribuir al currículo</p>
+          <h2 id="proposal-form-title">Nueva propuesta</h2>
+          <button type="button" class="icon-button" id="close-proposal-dialog" aria-label="Cerrar">×</button>
+        </header>
+        <input type="hidden" name="kind" id="proposal-kind" value="create_unit" />
+        <input type="hidden" name="targetUnitId" id="proposal-target-id" />
+        <div class="form-grid">
+          <label class="wide"><span>Título de la unidad</span><input name="title" id="proposal-title" maxlength="160" required /></label>
+          <label><span>Grupo</span><input name="groupName" id="proposal-group" maxlength="100" value="General" required /></label>
+          <label><span>Idioma base</span><select name="locale" id="proposal-locale"><option value="es">Español</option><option value="en">English</option><option value="eu">Euskara</option></select></label>
+          <label class="wide"><span>Resumen</span><textarea name="summary" id="proposal-summary" rows="3" maxlength="700" required></textarea></label>
+          <label class="wide"><span>Contenido en Markdown</span><textarea name="content" id="proposal-content" rows="9" maxlength="100000" placeholder="# Título&#10;&#10;Explicación, objetivos y estructura..."></textarea></label>
+          <fieldset class="wide">
+            <legend>Prerrequisitos</legend>
+            <div id="prerequisite-options" class="prerequisite-options"></div>
+            <input type="hidden" name="prerequisiteIds" id="proposal-prerequisites" />
+          </fieldset>
+          <label class="wide"><span>Justificación del cambio</span><textarea name="rationale" id="proposal-rationale" rows="4" maxlength="4000" required placeholder="Qué problema resuelve y por qué esta propuesta mejora el currículo"></textarea></label>
+          <label class="wide file-field"><span>Recurso opcional (máx. 15 MB)</span><input type="file" name="file" accept=".pdf,.md,.txt,.png,.jpg,.jpeg,.webp,.svg,.mp3,.ogg,.mp4" /><small>El archivo se almacena en R2 y solo se publica si la propuesta es aceptada.</small></label>
+          <label class="wide"><span>Título del recurso</span><input name="fileTitle" maxlength="160" placeholder="Opcional; se usa el nombre del archivo por defecto" /></label>
+        </div>
+        <div id="proposal-form-message" class="form-message" role="status"></div>
+        <footer class="modal-actions">
+          <button type="button" class="button secondary" id="cancel-proposal">Cancelar</button>
+          <button type="submit" class="button primary">Enviar propuesta</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
